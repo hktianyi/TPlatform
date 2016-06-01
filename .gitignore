@@ -1,0 +1,19 @@
+# dist #
+bin
+out
+build
+target
+*.class
+
+# IDE & TOOL properties #
+.classpath
+.project
+.settings
+.gradle
+.idea
+*.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear

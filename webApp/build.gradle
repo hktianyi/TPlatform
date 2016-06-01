@@ -1,0 +1,37 @@
+group 'org.tplatform'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+
+def env = System.getProperty("env") ? System.getProperty("env") : "dev"
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources/","src/main/resources/$env"]
+        }
+    }
+}
+
+ext.versions = [
+        tiles        : '3.0.5'
+]
+
+dependencies {
+    compile project(':facet')
+    compile project(':service')
+
+    compile(
+            // tiles
+            "org.apache.tiles:tiles-extras:${versions.tiles}",
+            "org.apache.tiles:tiles-servlet:${versions.tiles}",
+            "org.apache.tiles:tiles-jsp:${versions.tiles}",
+
+            "taglibs:standard:1.1.2",
+            "javax.servlet:jstl:1.2",
+            "javax.servlet:javax.servlet-api:3.0.1"
+    )
+
+}

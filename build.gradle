@@ -1,0 +1,32 @@
+group 'org.tplatform'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    apply plugin: 'idea'
+}
+
+idea {
+    module {
+        downloadSources = false
+        downloadJavadoc = false
+    }
+    project {
+        jdkName = 1.8
+        languageLevel = 1.8
+        vcs = 'Git'
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+        testCompile group: 'org.springframework', name: 'spring-test', version: '4.2.6.RELEASE'
+    }
+}

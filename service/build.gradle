@@ -1,0 +1,28 @@
+group 'org.tplatform'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+ext.versions = [
+        mybatis       : '3.4.0',
+        mybatis_spring: '1.3.0',
+        mapper        : '3.3.8',
+
+        druid         : '1.0.20',
+        mysql         : '5.1.37'
+]
+
+dependencies {
+    compile project(':facet')
+    compile(
+            "org.mybatis:mybatis:${versions.mybatis}",
+            "org.mybatis:mybatis-spring:${versions.mybatis_spring}",
+            "tk.mybatis:mapper:${versions.mapper}",
+
+            "com.alibaba:druid:${versions.druid}",
+            "mysql:mysql-connector-java:${versions.mysql}",
+
+            "org.apache.httpcomponents:httpclient:4.3.6",
+            "redis.clients:jedis:2.6.2"
+    )
+}
