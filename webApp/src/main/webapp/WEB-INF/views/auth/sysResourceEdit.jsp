@@ -62,7 +62,7 @@
 <script type="text/javascript">
   $(function () {
     if(!$('#id').val()) {
-      $('#pid').val(window.sessionStorage.getItem("pid"));
+      $('#pid').val(window.sessionStorage.getItem("pid") || 0);
       window.sessionStorage.removeItem("pid");
     }
   });

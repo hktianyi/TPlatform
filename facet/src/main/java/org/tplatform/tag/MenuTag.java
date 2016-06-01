@@ -41,12 +41,12 @@ public class MenuTag extends TagSupport {
                 current[0] = true;
                 subMenu.append("<li class=\"nav-item active open\">")
                     .append("<a href=\"javascript:void(0);\" data-action=\"").append(child.getAction()).append("\" class=\"nav-link\">")
-                    .append("<i class=\"").append(child.getIcon()).append("\"></i><span class=\"title\">").append(child.getName()).append("</span></a></li>");
+                    .append("<i class=\"fa fa-").append(child.getIcon()).append("\"></i><span class=\"title\">").append(child.getName()).append("</span></a></li>");
 
               } else {
                 subMenu.append("<li class=\"nav-item\">")
                     .append("<a href=\"javascript:void(0);\" data-action=\"").append(child.getAction()).append("\" class=\"nav-link\">")
-                    .append("<i class=\"").append(child.getIcon()).append("\"></i><span class=\"title\">").append(child.getName()).append("</span></a></li>");
+                    .append("<i class=\"fa fa-").append(child.getIcon()).append("\"></i><span class=\"title\">").append(child.getName()).append("</span></a></li>");
 
               }
             });
@@ -54,7 +54,7 @@ public class MenuTag extends TagSupport {
           }
           html.append("<li class=\"nav-item" + (current[0] ? " active open" : "") + "\">")
               .append("<a href=\"javascript:void(0);\" data-action=\"").append(resource.getAction()).append("\" class=\"nav-link nav-toggle\">")
-              .append("<i class=\"").append(resource.getIcon()).append("\"></i><span class=\"title\">").append(resource.getName()).append("</span>")
+              .append("<i class=\"fa fa-").append(resource.getIcon()).append("\"></i><span class=\"title\">").append(resource.getName()).append("</span>")
               .append(hasChildren ? "<span class=\"arrow\"></span>" : "").append("</a>").append(subMenu).append("</li>");
         });
       }

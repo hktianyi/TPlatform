@@ -6,10 +6,24 @@
     background: none !important;
   }
 </style>
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <a href="#">首页</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <span>菜单管理</span>
+    </li>
+  </ul>
+  <div class="page-toolbar">
+    <button type="button" class="btn blue btn-outline"><i class="fa fa-plus"></i> 添加</button>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
-    <table id="treeGrid" class="easyui-treegrid"></table>
-    <div id="rightKey" class="easyui-menu" style="width:120px;">
+    <table id="treeGrid" class="table table-striped table-bordered table-hover table-header-fixed easyui-treegrid"></table>
+    <div id="rightKey" class="easyui-menu hide" style="width:120px;">
       <div onclick="curdTree('append')" data-options="iconCls:'icon-add'">添加同级</div>
       <div onclick="curdTree('append', 'sub')" data-options="iconCls:'icon-add'">添加下级</div>
       <div onclick="curdTree('update')" data-options="iconCls:'icon-edit'">修改</div>
@@ -21,20 +35,21 @@
   </div>
 </div>
 <script type="text/javascript" src="${_PATH}/static/plugins/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${_PATH}/static/plugins/jquery-easyui/plugins/treegrid-dnd.js"></script>
 <script type="text/javascript">
   var treeGrid;
   $(function () {
     treeGrid = $('#treeGrid').treegrid({
-      url: _PATH + '/sysResource/loadTree',
-      loadFilter: function (resp) {
-        resp.data.forEach(function (item) {
-          item.timestamp = moment(item.timestamp).format('YYYY-M-D H:m');
-          item.status = 'VALID' === item.status ? '有效' : '无效';
-          item.iconCls = item.icon;
-          item.icon = '<i class="' + item.icon + '"></i>';
-          if (!item.action) item.state = 'closed';
+      loader: function (param, success, error) {
+        $.getJSON(_PATH + '/${MODULE_NAME}/loadTree', param, function (resp) {
+          resp.data.forEach(function (item) {
+            item.timestamp = moment(item.timestamp).format('YYYY-M-D H:m');
+            item.status = 'VALID' === item.status ? '有效' : '无效';
+            item.iconCls = 'fa fa-' + item.icon;
+            if (!item.action) item.state = 'closed';
+          });
+          success(resp.data);
         });
-        return resp.data;
       },
       idField: 'id',
       treeField: 'name',
@@ -47,6 +62,15 @@
         {field: 'sort', title: '排序号', width: '10%'},
         {field: 'timestamp', title: '创建时间', width: '10%'}
       ]],
+      onLoadSuccess: function (row) {
+        treeGrid.treegrid('enableDnd');
+        $('#rightKey').removeClass('hide');
+      },
+      onBeforeDrop: function (targetRow, sourceRow) {
+        var pid = targetRow && targetRow.id;
+        treeGrid.treegrid('expand', pid);
+        $.post(_PATH + '/${MODULE_NAME}/updatePid', {pid: pid, id: sourceRow.id});
+      },
       onContextMenu: function (e, row) {
         if (row) {
           e.preventDefault();
@@ -59,33 +83,15 @@
       }
     });
   });
-  function append() {
-    idIndex++;
-    var d1 = new Date();
-    var d2 = new Date();
-    d2.setMonth(d2.getMonth() + 1);
-    var node = $('#tg').treegrid('getSelected');
-    $('#tg').treegrid('append', {
-      parent: node.id,
-      data: [{
-        id: idIndex,
-        name: 'New Task' + idIndex,
-        persons: parseInt(Math.random() * 10),
-        begin: $.fn.datebox.defaults.formatter(d1),
-        end: $.fn.datebox.defaults.formatter(d2),
-        progress: parseInt(Math.random() * 100)
-      }]
-    })
-  }
   function curdTree(oper, level) {
     var layerIndex;
     var node = treeGrid.treegrid('getSelected');
     if (!node) return;
     switch (oper) {
       case 'append':
-        if(level === 'sub') {
+        if (level === 'sub') {
           window.sessionStorage.setItem("pid", node.id);
-        }else {
+        } else {
           window.sessionStorage.setItem("pid", node.pid);
         }
         edit('/sysResource/edit');

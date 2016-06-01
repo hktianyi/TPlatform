@@ -47,6 +47,7 @@
     $.fn.dataTable.ext.errMode = 'throw';
     $.fn.dataTable.defaults = $.extend($.fn.dataTable.defaults, {
       language: {'sUrl': _PATH + '/static/plugins/datatables/zh-cn.lang'},
+      dom:"<'row'<'col-sm-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'l><'col-sm-7'p>>",
       lengthMenu: [[10, 25, 50, -1], [10, 25, 50, '全部']], info: false, stateSave: true,
       processing: true, serverSide: true, deferRender: true, searching: false, ordering: false, pageLength: 50,
       fnCreatedRow: function (nRow, aData, iDataIndex) {
@@ -61,6 +62,10 @@
       orientation: 'bottom right'
     });
     $(".date-picker").datepicker();
+
+    $('.page-toolbar').on('click', 'button:has(".fa-plus")', function () {
+      edit('/${MODULE_NAME}/edit');
+    });
   })(window);
   //序列化table数据
   function serializeTable($TABLE) {

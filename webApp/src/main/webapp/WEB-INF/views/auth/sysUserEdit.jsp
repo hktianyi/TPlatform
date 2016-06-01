@@ -4,7 +4,7 @@
   <div class="col-md-12">
     <div class="portlet box purple">
       <div class="portlet-title">
-        <div class="caption"><i class="fa fa-gift"></i> 菜单信息</div>
+        <div class="caption"><i class="fa fa-gift"></i> 用户信息</div>
       </div>
       <div class="portlet-body">
         <form role="form" id="editForm">
@@ -61,7 +61,7 @@
 </div>
 <script type="text/javascript">
   function save() {
-    $.ajax(_PATH + '/sysResource/save', {
+    $.ajax(_PATH + '/${MODULE_NAME}/save', {
       type: 'POST',
       data: $('#editForm').serialize(),
       success: function (resp) {
