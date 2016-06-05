@@ -3,7 +3,6 @@ package org.tplatform.auth.entity;
 import lombok.Data;
 import org.tplatform.core.entity.BaseEntity;
 
-import javax.persistence.Column;
 import javax.persistence.Table;
 
 /**
@@ -13,6 +12,7 @@ import javax.persistence.Table;
 @Data
 @Table(name = "sys_auth_role")
 public class SysRole extends BaseEntity {
-  @Column(length = 16)
+  private Long pid;
   private String name;
+  private String icon;
 }

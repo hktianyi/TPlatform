@@ -20,6 +20,11 @@
     <!-- BEGIN TOP NAVIGATION MENU -->
     <div class="top-menu">
       <ul class="nav navbar-nav pull-right">
+        <li class="dropdown">
+          <a href="http://www.keenthemes.com/preview/metronic/theme/admin_1/" target="_blank" class="dropdown-toggle">
+            <i class="icon-social-dribbble"></i>
+          </a>
+        </li>
         <!-- BEGIN USER LOGIN DROPDOWN -->
         <li class="dropdown dropdown-user">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -57,7 +62,7 @@
             </li>--%>
             <li>
               <a href="${_PATH}/logout.html">
-                <i class="icon-key"></i> 退出 </a>
+                <i class="icon-power"></i> 退出 </a>
             </li>
           </ul>
         </li>
@@ -65,7 +70,7 @@
         <!-- BEGIN QUICK SIDEBAR TOGGLER -->
         <li class="dropdown dropdown-quick-sidebar-toggler">
           <a href="javascript:;" class="dropdown-toggle">
-            <i class="icon-logout"></i>
+            <i class="icon-bubbles"></i>
           </a>
         </li>
         <!-- END QUICK SIDEBAR TOGGLER -->

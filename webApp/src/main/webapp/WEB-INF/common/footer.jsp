@@ -26,11 +26,10 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="${_PATH}/static/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/layer/layer.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/pace.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/moment.min.js" type="text/javascript"></script>
-<script src="${_PATH}/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"
-        type="text/javascript"></script>
-<script src="${_PATH}/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"
-        type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/bootstrap-editable/js/bootstrap-editable.min.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
@@ -42,12 +41,41 @@
 <script src="${_PATH}/static/plugins/jquery-validation/additional-methods.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+  // 编辑
+  function edit(id, url) {
+    layer.open({
+      type: 2,
+      shadeClose: true,
+      title: '&nbsp;', //不显示标题
+      shift: 0,
+      shade: 0.6,
+      maxmin: true,
+      moveType: 1,
+      btn: ['确认', '取消'],
+      area: ['800px', '500px'],
+      content: (url || (_MODULE_NAME + '/edit')) + '?layer=1&id=' + (id || ''),
+      success: function(layero, index){
+        console.log(layero, index);
+      }
+    });
+  }
+  // 编辑
+  function del(id, url) {
+    layer.confirm('确认删除？', function () {
+      $.post(url || (_MODULE_NAME + '/delete/'+id), function (resp) {
+        layer.alert(resp.data);
+        window.location.reload();
+      })
+    });
+  }
   !(function () {
+    window.alert = layer.alert;
+    window.confim = layer.confim;
     // DataTable配置
     $.fn.dataTable.ext.errMode = 'throw';
     $.fn.dataTable.defaults = $.extend($.fn.dataTable.defaults, {
       language: {'sUrl': _PATH + '/static/plugins/datatables/zh-cn.lang'},
-      dom:"<'row'<'col-sm-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'l><'col-sm-7'p>>",
+      dom: "<'row'<'col-sm-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'l><'col-sm-7'p>>",
       lengthMenu: [[10, 25, 50, -1], [10, 25, 50, '全部']], info: false, stateSave: true,
       processing: true, serverSide: true, deferRender: true, searching: false, ordering: false, pageLength: 50,
       fnCreatedRow: function (nRow, aData, iDataIndex) {
@@ -64,81 +92,61 @@
     $(".date-picker").datepicker();
 
     $('.page-toolbar').on('click', 'button:has(".fa-plus")', function () {
-      edit('/${MODULE_NAME}/edit');
+      edit();
     });
   })(window);
-  //序列化table数据
-  function serializeTable($TABLE) {
-    var $rows = $TABLE.find('tr:not(:hidden)');
-    var headers = [];
-    var index = [];
-    var data = [];
-    var i = 0;
-    // Get the headers (add special header logic here)
-    $($rows.first()).find('th').each(function () {
-      if (typeof $(this).data("name") !== 'undefined') {
-        headers.push($(this).data("name"));
-        index.push(i);
+  (function ($) {
+    'use strict';
+    $.fn.dataList = function (options) {
+      if ($(this).hasClass('dataTable')) {
+        $(this).draw();
+        return;
       }
-      i++;
-    });
-
-    // Turn all existing rows into a loopable array
-    $rows.not(":first").each(function () {
-      var $td = $(this).find('td');
-      var h = {};
-
-      // Use the headers from earlier to name our hash keys
-      headers.forEach(function (header, i) {
-        var input = $td.eq(index[i]).find('input');
-        h[header] = (input.length > 0 && input.val()) || $td.eq(index[i]).data("val") || $td.eq(index[i]).text().replace(/^\s+|\s+$/g, "");
-      });
-
-      data.push(h);
-    });
-    return data;
-  }
-  // 编辑
-  function edit(url, id) {
-    layer.open({
-      type: 2,
-      shadeClose: true,
-      title: false, //不显示标题
-      closeBtn: 2, //关闭按钮
-      shift: 2,
-      shade: 0.6,
-      area: ['800px', '500px'],
-      content: _PATH + url + '?layer=1&id=' + (id || '')
-    });
-  }
-  // 数据列表
-  function getDataList(options) {
-    if (typeof dataTable !== 'undefined') {
-      dataTable.draw();
-      return;
-    }
-    var setting = {
-      url: "/${MODULE_NAME}/load",
-      data: []
-    };
-    $.extend(setting, options);
-    dataTable = $("#dataTable").DataTable({
-      "ajax": {
-        "url": _PATH + setting.url,
-        "type": "POST",
-        "data": function (params) {
-          setting.data.forEach(function (item) {
-            params[item.key] = params[item.value];
-          });
+      var setting = {
+        url: _MODULE_NAME + '/load',
+        type: 'POST'
+      };
+      $.extend(true, setting, options);
+      return $(this).DataTable({
+        'ajax': {
+          'url': setting.url,
+          'type': setting.type,
+          'data': function (params) {
+            if (setting.data)
+              $.extend(params, setting.data);
+          }
         },
-        "dataSrc": function (resp) {
-          resp.data.forEach(function (item) {
-            item.timestamp = moment(item.timestamp).format('YYYY-M-D H:m');
-          });
-          return resp.data;
+        'columns': setting.columns
+      });
+    };
+
+    //序列化table数据
+    $.fn.serializeTable = function ($TABLE) {
+      var $rows = $TABLE.find('tr:not(:hidden)');
+      var headers = [];
+      var index = [];
+      var data = [];
+      var i = 0;
+      // Get the headers (add special header logic here)
+      $($rows.first()).find('th').each(function () {
+        if (typeof $(this).data("name") !== 'undefined') {
+          headers.push($(this).data("name"));
+          index.push(i);
         }
-      },
-      "columns": setting.columns
-    });
-  }
+        i++;
+      });
+      // Turn all existing rows into a loopable array
+      $rows.not(":first").each(function () {
+        var $td = $(this).find('td');
+        var h = {};
+        // Use the headers from earlier to name our hash keys
+        headers.forEach(function (header, i) {
+          var input = $td.eq(index[i]).find('input');
+          h[header] = (input.length > 0 && input.val()) || $td.eq(index[i]).data("val") || $td.eq(index[i]).text().replace(/^\s+|\s+$/g, "");
+        });
+        data.push(h);
+      });
+      return data;
+    };
+  })(jQuery);
 </script>

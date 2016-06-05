@@ -22,7 +22,7 @@
 <div class="page-container">
   <div class="page-content-wrapper">
     <div class="page-content">
-      <tiles:insertAttribute name="body" ignore="true"/>
+      <tiles:insertAttribute name="body"/>
     </div>
   </div>
 </div>

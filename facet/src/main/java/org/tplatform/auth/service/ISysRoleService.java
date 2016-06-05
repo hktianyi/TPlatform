@@ -12,4 +12,12 @@ import java.util.Set;
 public interface ISysRoleService extends IBaseService<SysRole> {
 
   Set<SysRole> findByUserId(Long userId, StatusEnum status);
+
+  /**
+   * 支持拖拽
+   * @param id
+   * @param pid
+   * @return
+   */
+  public boolean updatePid(Long id, Long pid);
 }

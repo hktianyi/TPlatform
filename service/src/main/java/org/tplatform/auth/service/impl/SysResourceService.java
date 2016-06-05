@@ -50,4 +50,14 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
     return result.stream().filter(sysResource -> sysResource.getPid() == 0).collect(Collectors.toList());
   }
 
+
+  /**
+   * 支持拖拽
+   * @param id
+   * @param pid
+   * @return
+   */
+  public boolean updatePid(Long id, Long pid) {
+    return sysResourceMapper.updatePid(id, pid) > 0;
+  }
 }

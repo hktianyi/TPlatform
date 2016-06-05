@@ -1,15 +1,17 @@
 <%@ page pageEncoding="UTF-8" language="java" %>
-<link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/bootstrap/easyui.css" type="text/css"/>
+<link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/material/easyui.css" type="text/css"/>
 <link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/icon.css" type="text/css"/>
 <style>
-  .tree-folder, .tree-folder-open, .tree-file {
-    background: none !important;
-  }
+  .tree-folder, .tree-folder-open, .tree-file { background: none !important; }
 </style>
 <div class="page-bar">
   <ul class="page-breadcrumb">
     <li>
-      <a href="#">首页</a>
+      <a href="${_PATH}/main.html">首页</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a href="#">权限管理</a>
       <i class="fa fa-angle-right"></i>
     </li>
     <li>
@@ -20,9 +22,9 @@
     <button type="button" class="btn blue btn-outline"><i class="fa fa-plus"></i> 添加</button>
   </div>
 </div>
-<div class="row">
+<div class="row" style="margin-top: 6px;">
   <div class="col-md-12">
-    <table id="treeGrid" class="table table-striped table-bordered table-hover table-header-fixed easyui-treegrid"></table>
+    <table id="treeGrid" class="easyui-treegrid"></table>
     <div id="rightKey" class="easyui-menu hide" style="width:120px;">
       <div onclick="curdTree('append')" data-options="iconCls:'icon-add'">添加同级</div>
       <div onclick="curdTree('append', 'sub')" data-options="iconCls:'icon-add'">添加下级</div>
@@ -94,7 +96,7 @@
         } else {
           window.sessionStorage.setItem("pid", node.pid);
         }
-        edit('/sysResource/edit');
+        edit();
         break;
       case 'remove':
         layerIndex = layer.confirm('确认删除？', {
@@ -114,7 +116,7 @@
         });
         break;
       case 'update':
-        edit('/sysResource/edit', node.id);
+        edit(node.id);
         break;
       default:
         treeGrid.treegrid(oper, node.id);

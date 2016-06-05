@@ -28,4 +28,11 @@ public interface ISysResourceService extends IBaseService<SysResource> {
    */
   List<SysResource> findMenuTree(String roleId, StatusEnum status);
 
+  /**
+   * 支持拖拽
+   * @param id
+   * @param pid
+   * @return
+   */
+  public boolean updatePid(Long id, Long pid);
 }

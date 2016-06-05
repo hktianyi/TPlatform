@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
  * 角色业务类
- *
+ * <p>
  * Created by Tianyi on 2016/5/28.
  */
 @Service
@@ -23,5 +23,15 @@ public class SysRoleService extends BaseService<SysRole> implements ISysRoleServ
 
   public Set<SysRole> findByUserId(Long userId, StatusEnum status) {
     return sysRoleMapper.findByUserId(userId, status);
+  }
+
+  /**
+   * 支持拖拽
+   * @param id
+   * @param pid
+   * @return
+   */
+  public boolean updatePid(Long id, Long pid) {
+    return sysRoleMapper.updatePid(id, pid) > 0;
   }
 }
