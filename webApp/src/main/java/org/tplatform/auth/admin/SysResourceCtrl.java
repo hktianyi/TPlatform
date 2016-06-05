@@ -34,7 +34,6 @@ public class SysResourceCtrl extends BaseCtrl<SysResource> {
     return RespBody.ok(sysResourceService.find(sysResource));
   }
 
-
   /**
    * 拖拽节点
    *
@@ -45,10 +44,7 @@ public class SysResourceCtrl extends BaseCtrl<SysResource> {
   @RequestMapping("/updatePid")
   @ResponseBody
   public RespBody updatePid(@RequestParam Long id, @RequestParam(required = false, defaultValue = "0") Long pid) {
-    SysResource sysResource = new SysResource();
-    sysResource.setId(id);
-    sysResource.setPid(pid);
-    return RespBody.ok(sysResourceService.update(sysResource));
+    return RespBody.ok(sysResourceService.updatePid(id, pid));
   }
 
 }

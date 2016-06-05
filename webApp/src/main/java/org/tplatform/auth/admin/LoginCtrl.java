@@ -79,6 +79,7 @@ public class LoginCtrl {
   @RequestMapping(value = "/main.html", method = RequestMethod.GET)
   public String main(ModelMap modelMap) {
     modelMap.put("title", "TPlatform");
+    modelMap.put("body", "/sys/dashboard.jsp");
     return "/main.jsp";
   }
 
