@@ -3,6 +3,7 @@ package org.tplatform.tag;
 import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.entity.SysUser;
 import org.tplatform.auth.service.ISysResourceService;
+import org.tplatform.constant.GlobalConstant;
 import org.tplatform.core.fsm.StatusEnum;
 import org.tplatform.framework.log.Logger;
 import org.tplatform.framework.util.SpringContextUtil;
@@ -22,7 +23,7 @@ public class MenuTag extends TagSupport {
     List<SysResource> resources;
     StringBuilder roleId = new StringBuilder();
     StringBuilder html = new StringBuilder();
-    SysUser user = (SysUser) SpringContextUtil.getSession().getAttribute("user");
+    SysUser user = (SysUser) SpringContextUtil.getSession().getAttribute(GlobalConstant.SESSION_USER_KEY);
     if (user != null && user.getRoles() != null) {
       user.getRoles().stream().forEach(sysRole -> roleId.append(",").append(sysRole.getId()));
     }

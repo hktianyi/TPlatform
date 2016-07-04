@@ -14,7 +14,7 @@ public class SysConf extends BaseEntity {
   private Long pId;
   @Column(length = 10)
   private String type;
-  @Column(length = 32, unique = true)
+  @Column(name = "confKey", length = 32, unique = true)
   private String confKey;
   @Column(length = 20)
   private String name;

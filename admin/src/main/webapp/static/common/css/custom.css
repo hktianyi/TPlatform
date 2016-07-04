@@ -1,0 +1,14 @@
+/* here you can put your own css to customize and override the theme */
+/*头部颜色*/
+/*.page-header.navbar {background-color:#09c}*/
+/*.page-header.navbar .top-menu .navbar-nav>li.dropdown .dropdown-toggle>i {color:#fff}*/
+/*.page-header.navbar .top-menu .navbar-nav>li.dropdown-language>.dropdown-toggle>.langname, .page-header.navbar .top-menu .navbar-nav>li.dropdown-member>.dropdown-toggle>.username, .page-header.navbar .top-menu .navbar-nav>li.dropdown-member>.dropdown-toggle>i {color:#fff}*/
+/*.page-header.navbar .top-menu .navbar-nav>li.dropdown .dropdown-toggle:hover, .page-header.navbar .top-menu .navbar-nav>li.dropdown.open .dropdown-toggle {background-color:#008fbf}*/
+
+.page-header.navbar .page-logo .logo-default{height: 46px;margin:0 0 0 -20px}
+.user-login-5 .login-logo{height: 46px;}
+.table{table-layout:fixed;}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{min-height:23px;line-height:1.231;padding:6px 4px;word-wrap:break-word;word-break:break-all;}
+.table>thead>tr>th{background:#E8E8E8;}
+.table td, .table th{text-align:center;vertical-align:middle;}
+.align-left{text-align:left !important;vertical-align:middle;}

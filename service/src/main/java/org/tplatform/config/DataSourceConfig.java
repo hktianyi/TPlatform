@@ -117,12 +117,12 @@ public class DataSourceConfig {
   @DependsOn("sqlSessionFactory")
   public MapperScannerConfigurer mapperScannerConfigurer() {
     MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-    mapperScannerConfigurer.setBasePackage("org.tplatform.**.mapper");
+    mapperScannerConfigurer.setBasePackage("org.**.mapper");
     mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
 
     MapperHelper mapperHelper = new MapperHelper();
     Config config = new Config();
-    config.setStyle(Style.camelhumpAndLowercase);
+    config.setStyle(Style.normal);
     mapperHelper.setConfig(config);
     mapperHelper.registerMapper(Mapper.class);
     mapperScannerConfigurer.setMapperHelper(mapperHelper);

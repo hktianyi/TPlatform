@@ -9,6 +9,6 @@ import tk.mybatis.mapper.common.Mapper;
  */
 public interface SysConfMapper extends Mapper<SysConf> {
 
-  @Select("select val from sys_conf where confKey = #{confKey}")
+  @Select("select val from sys_conf where confkey = #{confKey}")
   String findVal(String confKey);
 }

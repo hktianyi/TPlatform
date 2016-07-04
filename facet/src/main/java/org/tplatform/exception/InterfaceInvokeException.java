@@ -1,4 +1,4 @@
-package org.tplatform.xception;
+package org.tplatform.exception;
 
 /**
  * 为定义的参数类型异常

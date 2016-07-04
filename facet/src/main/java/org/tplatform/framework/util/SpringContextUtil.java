@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.tplatform.constant.GlobalConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -84,13 +85,24 @@ public class SpringContextUtil implements ApplicationContextAware {
    * @return
    */
   public static String getOperator() {
-    Object object = getSession().getAttribute("user");
+    Object object = getSession().getAttribute(GlobalConstant.SESSION_USER_KEY);
     if (object != null) {
       try {
-        Field field = object.getClass().getDeclaredField("username");
+        Field field = object.getClass().getDeclaredField("id");
         field.setAccessible(true);
         return String.valueOf(field.get(object));
       } catch (NoSuchFieldException e) {
+        if(object.getClass().getGenericSuperclass()!=null) {
+          try {
+            Field field = object.getClass().getSuperclass().getDeclaredField("id");
+            field.setAccessible(true);
+            return String.valueOf(field.get(object));
+          } catch (NoSuchFieldException e1) {
+            e1.printStackTrace();
+          } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+          }
+        }
         e.printStackTrace();
       } catch (IllegalAccessException e) {
         e.printStackTrace();

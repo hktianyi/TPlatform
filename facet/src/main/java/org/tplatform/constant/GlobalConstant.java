@@ -27,6 +27,7 @@ public class GlobalConstant {
   /**
    * 系统常量
    */
+  public final static String SESSION_USER_KEY = "user";
   public final static String SYSTEM_APPLICATION_NAME = "APP_NAME";
   public final static String APP_MODULE_NAME = "MODULE_NAME";
   public final static String SYSTEM_SERVLET_PATH = "_PATH";
@@ -71,5 +72,16 @@ public class GlobalConstant {
   public static final String PLATFORM_OTHER = "Other";
 
   public static final String DF_AUTO_OPERATOR = "AUTO";
+
+
+  //
+  public static final String REG_EMAIL_SUBJECT = "艾菲注册激活";
+  public static final String REG_EMAIL_TEXT = "";
+  public static final String EMAIL_FROM = "support@effie-greaterchina.org";
+
+
+  // 邮件类型
+  public static final int REG_EMIAL = 0;
+  public static final int FORGET_PASSWORD_EMAIL = 1;
 
 }
