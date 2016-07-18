@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @EnableScheduling
 @EnableCaching
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"org.tplatform", "org.effiechina"}, basePackageClasses = {Service.class, Component.class})
+@ComponentScan(basePackages = {"org.tplatform"}, basePackageClasses = {Service.class, Component.class})
 public class SpringConfig {
 
   @Bean

@@ -57,7 +57,7 @@ public class DictionaryCtrl extends BaseCtrl<Dictionary> {
   @RequestMapping("/saveDictionary")
   @ResponseBody
   public RespBody saveDictionary(Dictionary dictionary) {
-    dictionary.setTimestamp(DateUtil.getTimeInMillis());
+    dictionary.setCreateTime(DateUtil.getCurrentDate());
     dictionary.setOperator(SpringContextUtil.getOperator());
     if (dictionary.getId() != null) dictionaryService.update(dictionary);
     else dictionaryService.save(dictionary);
@@ -94,7 +94,7 @@ public class DictionaryCtrl extends BaseCtrl<Dictionary> {
   @ResponseBody
   public RespBody saveDictionaryType(@PathVariable String menuType, DictionaryType dictionaryType) {
     dictionaryType.setMenuType(menuType);
-    dictionaryType.setTimestamp(DateUtil.getTimeInMillis());
+    dictionaryType.setCreateTime(DateUtil.getCurrentDate());
     dictionaryType.setOperator(SpringContextUtil.getOperator());
     if (dictionaryType.getId() != null) dictionaryTypeService.update(dictionaryType);
     else dictionaryTypeService.save(dictionaryType);

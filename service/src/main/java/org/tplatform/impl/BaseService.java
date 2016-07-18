@@ -24,7 +24,7 @@ public abstract class BaseService<E extends BaseEntity> implements IBaseService<
 
   // 新增
   public int save(E e) {
-    e.setTimestamp(DateUtil.getTimeInMillis());
+    e.setCreateTime(DateUtil.getCurrentDate());
     e.setOperator(SpringContextUtil.getOperator());
     return mapper.insert(e);
   }

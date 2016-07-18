@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.tplatform.core.entity.DFElementRecord;
 import org.tplatform.core.entity.DynamicForm;
-import org.tplatform.framework.util.DateUtil;
 import org.tplatform.framework.util.SpringContextUtil;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -51,14 +50,12 @@ public interface DynamicFormMapper extends Mapper<DynamicForm> {
      * @return
      */
     public String insertRecords(List<DFElementRecord> list) {
-      Long timestamp = DateUtil.getTimeInMillis();
       String operator = SpringContextUtil.getOperator();
       StringBuilder sql = new StringBuilder();
       sql.append("DELETE FROM sys_df_record WHERE formId = #{list[0].formId} and recordId = #{list[0].recordId};\n");
-      sql.append("INSERT INTO sys_df_record (timestamp, operator, status, formId, recordId, eleName, eleValue) VALUES");
+      sql.append("INSERT INTO sys_df_record (operator, status, formId, recordId, eleName, eleValue) VALUES");
       for (int i = 0, size = list.size(); i < size; i++) {
-        sql.append("(").append(timestamp)
-            .append(",'").append(operator).append("',")
+        sql.append("('").append(operator).append("',")
             .append("#{list[").append(i).append("].status},")
             .append("#{list[").append(i).append("].formId},")
             .append("#{list[").append(i).append("].recordId},")

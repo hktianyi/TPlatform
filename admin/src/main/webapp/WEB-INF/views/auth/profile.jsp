@@ -136,7 +136,7 @@
                     </div>
                     <div class="form-group">
                       <label class="control-label">加入时间</label>
-                      <input type="text" class="form-control" name="timestamp" value="${user.timestamp}" disabled="disabled"/>
+                      <input type="text" class="form-control" name="createTime" value="${user.createTime}" disabled="disabled"/>
                     </div>
                     <div class="margiv-top-10">
                       <button type="submit" class="btn green"> 修改 </button>

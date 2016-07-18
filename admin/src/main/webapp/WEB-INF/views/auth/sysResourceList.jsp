@@ -45,7 +45,7 @@
       loader: function (param, success, error) {
         $.getJSON(_PATH + '/${MODULE_NAME}/loadTree', param, function (resp) {
           resp.data.forEach(function (item) {
-            item.timestamp = moment(item.timestamp).format('YYYY-M-D H:m');
+            item.createTime = moment(item.createTime).format('YYYY-M-D H:m');
             item.status = 'VALID' === item.status ? '有效' : '无效';
             item.iconCls = 'fa fa-' + item.icon;
             if (!item.action) item.state = 'closed';
@@ -62,7 +62,7 @@
         {field: 'action', title: '路径', width: '30%'},
         {field: 'status', title: '状态', width: '10%'},
         {field: 'sort', title: '排序号', width: '10%'},
-        {field: 'timestamp', title: '创建时间', width: '10%'}
+        {field: 'createTime', title: '创建时间', width: '10%'}
       ]],
       onLoadSuccess: function (row) {
         treeGrid.treegrid('enableDnd');

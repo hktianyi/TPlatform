@@ -69,12 +69,21 @@ dependencies {
             "org.jsoup:jsoup:1.8.3",
 
             // 分布式
-            "org.apache.zookeeper:zookeeper:3.4.8",
-            "com.101tec:zkclient:0.8",
             "org.javassist:javassist:3.20.0-GA"
     )
     compile('com.alibaba:dubbo:2.5.3') {
         transitive = true
         exclude group: 'org.springframework'
+        exclude group: 'org.jboss.netty'
+    }
+    compile('org.apache.zookeeper:zookeeper:3.4.8') {
+        transitive = true
+        exclude group: 'org.slf4j'
+        exclude group: 'log4j'
+    }
+    compile('com.101tec:zkclient:0.8') {
+        transitive = true
+        exclude group: 'org.slf4j'
+        exclude group: 'log4j'
     }
 }

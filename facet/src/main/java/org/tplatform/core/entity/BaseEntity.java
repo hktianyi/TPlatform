@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -23,8 +22,8 @@ public abstract class BaseEntity implements Serializable {
   @Column(length = 20)
   protected Long id;
   // 创建时间
-  @Transient
-  protected Long timestamp;
+  @Column(columnDefinition = "datetime")
+  protected Date createTime;
   // 操作员
   protected String operator;
   // 状态

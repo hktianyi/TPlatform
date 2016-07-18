@@ -49,7 +49,7 @@ public class WebAppConfig implements WebApplicationInitializer {
     encodingFilter.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC);
 
     // 应用初始化配置参数
-    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, "Effie");
+    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, "TPlatform");
     servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
     servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
 

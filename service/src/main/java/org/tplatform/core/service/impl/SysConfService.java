@@ -52,7 +52,7 @@ public class SysConfService extends BaseService<SysConf> implements ISysConfServ
     sysConf.setConfKey(confKey);
     sysConf.setVal(value);
     sysConf.setOperator(SpringContextUtil.getOperator());
-    sysConf.setTimestamp(DateUtil.getTimeInMillis());
+    sysConf.setCreateTime(DateUtil.getCurrentDate());
     sysConf.setStatus(StatusEnum.VALID);
     return sysConfMapper.insert(sysConf) > 0;
   }
