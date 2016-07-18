@@ -9,6 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.tplatform.framework.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,17 +23,26 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class ViewInterceptor {
 
-  @Pointcut("execution(String org.tplatform..*Ctrl.*(..))")
+  @Pointcut("execution(String org..*Ctrl.*(..))")
   public void setViewName() {
   }
 
+  /**
+   * 视图拦截器，强制返回装饰页（参数 layer = 1 时返回弹层layer.jsp， 否则返回 main.jsp）
+   *
+   * @param pjp
+   * @return
+   * @throws Throwable
+   */
   @Around("setViewName()")
   public Object after(ProceedingJoinPoint pjp) throws Throwable {
     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     String viewName = String.valueOf(pjp.proceed());
     if (viewName != null && !"/login.jsp".equals(viewName) && !"/main.jsp".equals(viewName) && viewName.matches("^/.*\\.jsp$")) {
       request.setAttribute("body", viewName);
-      viewName = "1".equals(request.getParameter("layer")) ? "layer.jsp" : "/main.jsp";
+      String layer = request.getParameter("layer");
+      if (StringUtil.isEmpty(layer)) viewName = "/main.jsp";
+      else if ("1".equals(layer)) viewName = "/layer.jsp";
     }
     return viewName;
   }

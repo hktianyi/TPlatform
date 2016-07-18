@@ -23,17 +23,34 @@ public class SysInfoCtrl extends BaseCtrl<SysInfo> {
   @Autowired
   private ISysInfoService sysInfoService;
 
+  /**
+   * 系统基础信息
+   * @param modelMap
+   * @return
+   */
   @RequestMapping("/dashboard")
   public String dashbord(ModelMap modelMap) {
     modelMap.put("data", ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class));
     return "/sys/dashboard.jsp";
   }
 
-
+  /**
+   * 刷新数据
+   * @return
+   */
   @RequestMapping("/refresh")
   @ResponseBody
   public RespBody refresh() {
     return RespBody.ok(ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class));
+  }
+
+  /**
+   * 数据源监控
+   * @return
+   */
+  @RequestMapping("/druidStatView")
+  public String druidStatView() {
+    return "/sys/druidStatView.jsp";
   }
 
 }

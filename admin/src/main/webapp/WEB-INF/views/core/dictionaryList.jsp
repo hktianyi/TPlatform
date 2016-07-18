@@ -1,5 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <a href="${_PATH}/main.html">首页</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <span>系统管理</span>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <span>字典管理</span>
+    </li>
+  </ul>
+</div>
 <div class="row">
   <div class="col-md-4">
     <div class="portlet light portlet-fit full-height-content full-height-content-scrollable bordered">
@@ -157,4 +172,3 @@
     });
   }
 </script>
-</html>

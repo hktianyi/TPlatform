@@ -34,10 +34,10 @@
             <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown-menu">
-            <%--<li>
-              <a href="#">
-                <i class="icon-member"></i> 个人中心 </a>
-            </li>--%>
+            <li>
+              <a href="${_PATH}/sysUser/profile">
+                <i class="fa fa-user"></i> 个人中心 </a>
+            </li>
             <%--<li>
               <a href="page_calendar.html">
                 <i class="icon-calendar"></i> My Calendar </a>

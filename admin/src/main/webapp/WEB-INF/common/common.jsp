@@ -36,6 +36,7 @@
 <!-- END THEME LAYOUT STYLES -->
 <%--<link rel="shortcut icon" href="${_PATH}/favicon.ico" type="image/x-icon" />--%>
 <script src="${_PATH}/static/plugins/jquery/jquery-2.2.2.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.js" type="text/javascript"></script>
 <script type="text/javascript">
     var _PATH = '${_PATH}', _MODULE_NAME = _PATH + '/${MODULE_NAME}';
 </script>

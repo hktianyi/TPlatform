@@ -33,6 +33,7 @@ public class GlobalConstant {
   public final static String SYSTEM_SERVLET_PATH = "_PATH";
   public final static String SYSTEM_SERVLET_VERSION = "_VERSION";
   public final static String SYSTEM_SERVLET_NAME_SPRINGMVC = "spring-mvc";
+  public final static String SYSTEM_SERVLET_NAME_DRUIDSTATVIEW = "druid-stat-view";
 
   /**
    * 错误页面
@@ -61,27 +62,5 @@ public class GlobalConstant {
   public final static String CACHE_CM_MOBILE_CODE = "CM_MOBILE_CODE_";
   public final static String CACHE_WC_TICKET = "WC_TICKET_";
   /* -----------------------------------缓存KEY结束-------------------------------------- */
-  
-  
-  public static final String TRANSFER_MODEL_ELENAME = "cooperateType_1"; //换量模式elename
-  public static final String TRANSFER_RATIO_ELENAME = "transferRatioStar_1"; // 换量比例elename
-  
-  public static final String PLATFORM_ANDROID = "Android";
-  public static final String PLATFORM_IOS = "IOS";
-  public static final String PLATFORM_WECHAT = "WeChat";
-  public static final String PLATFORM_OTHER = "Other";
-
-  public static final String DF_AUTO_OPERATOR = "AUTO";
-
-
-  //
-  public static final String REG_EMAIL_SUBJECT = "艾菲注册激活";
-  public static final String REG_EMAIL_TEXT = "";
-  public static final String EMAIL_FROM = "support@effie-greaterchina.org";
-
-
-  // 邮件类型
-  public static final int REG_EMIAL = 0;
-  public static final int FORGET_PASSWORD_EMAIL = 1;
 
 }

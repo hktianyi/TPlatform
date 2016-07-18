@@ -9,4 +9,6 @@ import org.tplatform.core.service.IBaseService;
 public interface ISysUserService extends IBaseService<SysUser> {
 
   SysUser findByUsername(String username);
+
+  boolean updateAccount(SysUser sysUser);
 }

@@ -23,4 +23,8 @@ public class SysUserService extends BaseService<SysUser> implements ISysUserServ
     sysUser.setUsername(username);
     return sysUserMapper.selectOne(sysUser);
   }
+
+  public boolean updateAccount(SysUser sysUser) {
+    return sysUserMapper.updateByPrimaryKeySelective(sysUser) > 0;
+  }
 }

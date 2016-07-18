@@ -90,9 +90,8 @@ public class LoginCtrl {
    */
   @RequestMapping(value = "/logout.html", method = RequestMethod.GET)
   public String logout() {
-    throw new RuntimeException("123");
-//    session.removeAttribute(GlobalConstant.SESSION_USER_KEY);
-//    return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/login";
+    session.removeAttribute(GlobalConstant.SESSION_USER_KEY);
+    return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/login";
   }
 
 }

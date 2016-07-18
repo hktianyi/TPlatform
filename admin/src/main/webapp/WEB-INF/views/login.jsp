@@ -10,19 +10,31 @@
   <link href="${_PATH}/static/pages/login/login.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body class="login">
+<!-- BEGIN LOGO -->
 <div class="logo">
   <a href="index.html">
     <img src="${_PATH}/static/common/img/logo.png" alt="" /> </a>
 </div>
+<!-- END LOGO -->
 <!-- BEGIN LOGIN -->
 <div class="content">
   <!-- BEGIN LOGIN FORM -->
   <form action="${_PATH}/login" class="login-form" method="post">
     <h3 class="form-title font-green">${APP_NAME}</h3>
-    <div class="alert alert-danger display-hide">
-      <button class="close" data-close="alert"></button>
-      <span> 请输入用户名和密码. </span>
-    </div>
+    <c:choose>
+      <c:when test="${not empty errorMsg}">
+        <div class="alert alert-danger">
+          <button class="close" data-close="alert"></button>
+          <span>${errorMsg}</span>
+        </div>
+      </c:when>
+      <c:otherwise>
+        <div class="alert alert-danger display-hide">
+          <button class="close" data-close="alert"></button>
+          <span>请输入用户名和密码！</span>
+        </div>
+      </c:otherwise>
+    </c:choose>
     <div class="form-group">
       <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
       <label class="control-label visible-ie8 visible-ie9">用户名</label>

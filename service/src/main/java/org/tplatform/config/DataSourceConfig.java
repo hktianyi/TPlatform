@@ -87,10 +87,10 @@ public class DataSourceConfig {
 //    properties.put("offsetAsPageNum", true);
 //    该参数默认为false
 //    设置为true时，使用RowBounds分页会进行count查询
-//    properties.put("rowBoundsWithCount", true);
+    properties.put("rowBoundsWithCount", true);
 //    设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果
 //    （相当于没有执行分页查询，但是返回结果仍然是Page类型）-->
-//    properties.put("pageSizeZero", true);
+    properties.put("pageSizeZero", true);
 //    3.3.0版本可用 - 分页参数合理化，默认false禁用
 //    启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
 //    禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
@@ -101,7 +101,7 @@ public class DataSourceConfig {
 //    不理解该含义的前提下，不要随便复制该配置
 //    properties.put("params", "pageNum=start;pageSize=length;");
 //    支持通过Mapper接口参数来传递分页参数
-//    properties.put("supportMethodsArguments", false);
+    properties.put("supportMethodsArguments", false);
 //    always总是返回PageInfo类型,check检查返回类型是否为PageInfo,none返回Page
     properties.put("returnPageInfo", "always");
 

@@ -1,5 +1,6 @@
 package org.tplatform.config;
 
+import com.alibaba.druid.support.http.StatViewServlet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -8,6 +9,7 @@ import org.springframework.web.util.IntrospectorCleanupListener;
 import org.tplatform.constant.GlobalConstant;
 import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.framework.util.DateUtil;
+import org.tplatform.listener.SessionListener;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -38,6 +40,7 @@ public class WebAppConfig implements WebApplicationInitializer {
 
     // Spring 刷新Introspector防止内存泄露
     servletContext.addListener(new IntrospectorCleanupListener());
+    servletContext.addListener(new SessionListener());
 
     // 字符集过滤
     FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encodingFilter", new CharacterEncodingFilter());
@@ -55,5 +58,9 @@ public class WebAppConfig implements WebApplicationInitializer {
     authenticationFilter.setInitParameter("urlRegex", "^/(login|static)+.*$");
     authenticationFilter.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC);
 
+    // druid数据源监控
+    ServletRegistration.Dynamic druid = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_DRUIDSTATVIEW, new StatViewServlet());
+    druid.addMapping("/sysInfo/druid/*");
+    springMvc.setLoadOnStartup(2);
   }
 }

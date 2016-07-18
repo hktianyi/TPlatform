@@ -59,7 +59,6 @@
     </div>
   </div>
 </div>
-<script src="${_PATH}/static/plugins/jquery/jquery-2.2.2.min.js" type="text/javascript"></script>
 <script type="text/javascript">
   function save() {
     $.ajax(_PATH + '/dictionary/saveDictionaryType/${menuType}', {

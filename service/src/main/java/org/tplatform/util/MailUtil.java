@@ -1,6 +1,5 @@
 package org.tplatform.util;
 
-import org.tplatform.framework.util.Hex;
 import org.tplatform.framework.util.SpringContextUtil;
 import org.tplatform.core.service.impl.SysConfService;
 import org.tplatform.framework.util.StringUtil;

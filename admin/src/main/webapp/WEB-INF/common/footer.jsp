@@ -5,8 +5,7 @@
     <i class="icon-arrow-up"></i>
   </div>
 </div>
-<div class="copyright"> 2016 © ${APP_NAME}. 后台管理系统.</div>
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<%--<div class="copyright"> 2016 © ${APP_NAME}. 后台管理系统.</div>--%>
 <!--[if lt IE 9]>
 <script src="../../static/plugins/respond.min.js"></script>
 <script src="../../static/plugins/excanvas.min.js"></script>
@@ -26,6 +25,7 @@
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="${_PATH}/static/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/layer/layer.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/layer/extend/layer.ext.js" type="text/javascript"></script>
 <%--<script src="${_PATH}/static/plugins/pace.min.js" type="text/javascript"></script>--%>
 <script src="${_PATH}/static/plugins/moment.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -39,7 +39,6 @@
 <!-- END THEME LAYOUT SCRIPTS -->
 <script src="${_PATH}/static/plugins/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/jquery-validation/additional-methods.min.js" type="text/javascript"></script>
-<script src="https://s11.cnzz.com/z_stat.php?id=1259806550&web_id=1259806550" language="JavaScript"></script>
 <script type="text/javascript">
   // 编辑
   function edit(id, url) {
@@ -75,8 +74,8 @@
     $.fn.dataTable.ext.errMode = 'throw';
     $.fn.dataTable.defaults = $.extend($.fn.dataTable.defaults, {
       language: {'sUrl': _PATH + '/static/plugins/datatables/zh-cn.lang'},
-      dom: "<'row'<'col-sm-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'l><'col-sm-7'p>>",
-      lengthMenu: [[10, 25, 50, -1], [10, 25, 50, '全部']], info: false, stateSave: true,
+      dom: "<'row'<'col-sm-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-3'l><'col-sm-3'i><'col-sm-6'p>>",
+      lengthMenu: [[10, 50, 100], [10, 50, 100]], info: true, stateSave: true,
       processing: true, serverSide: true, deferRender: true, searching: false, ordering: false, pageLength: 50,
       fnCreatedRow: function (nRow, aData, iDataIndex) {
         $('td:eq(0)', nRow).html(++iDataIndex);
