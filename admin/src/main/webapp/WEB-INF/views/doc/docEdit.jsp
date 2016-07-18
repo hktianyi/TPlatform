@@ -1,0 +1,177 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page pageEncoding="UTF-8" language="java" %>
+<link href="${_PATH}/static/plugins/jplayer/css/jplayer.blue.monday.min.css" rel="stylesheet" type="text/css"/>
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <a href="${_PATH}/main.html">首页</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <span>文章管理</span>
+    </li>
+  </ul>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-tag"></i>文章信息
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+          <input type="hidden" name="id" value="${data.id}">
+          <div class="form-body">
+            <h3 class="form-section">基础信息</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">标题:</label>
+                  <div class="col-md-9">
+                    <input class="form-control" name="title" value="${data.title}"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">文章类别:</label>
+                  <div class="col-md-9">
+                    <input class="form-control" name="type" value="${data.type}"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">状态:</label>
+                  <div class="col-md-9">
+                    <p class="form-control-static">
+                      <c:choose>
+                      <c:when test="${data.status eq 4}"><span id="bizStatus">待审核</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="btn-group btn-group-xs btn-group-solid">
+                      <button type="button" class="btn green" onclick="approve('${data.id}', true)">通过</button>
+                      <button type="button" class="btn red" onclick="approve('${data.id}', false)">不通过</button>
+                    </div>
+                    </c:when>
+                    <c:when test="${data.status eq 5}">审核通过</c:when>
+                    <c:when test="${data.status eq 6}">审核未通过</c:when>
+                    <c:otherwise>待付款</c:otherwise>
+                    </c:choose>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">关键词:</label>
+                  <div class="col-md-9">
+                    <input class="form-control" name="keyword" value="${data.keyword}"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">来源:</label>
+                  <div class="col-md-9">
+                    <input class="form-control" name="originAddress" value="${data.originAddress}"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">封面:</label>
+                  <div class="col-md-9">
+                    <input class="form-control" name="imgUrl" value="${data.imgUrl}"/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label col-md-3">作者:</label>
+                  <div class="col-md-9">
+                    <input class="form-control" name="author" value="${data.author}"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label col-md-2">摘要:</label>
+                  <div class="col-md-10">
+                    <textarea class="form-control" name="summary">${data.summary}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label col-md-2">内容:</label>
+                  <div class="col-md-10">
+                    <textarea class="form-control" id="context" name="context">${data.context}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-offset-3 col-md-9">
+                    <button type="submit" class="btn green">
+                      <i class="fa fa-pencil"></i> 保存
+                    </button>
+                    <button type="button" class="btn default" onclick="history.back()">取消</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%@include file="/WEB-INF/common/footer.jsp" %>
+<script type="text/javascript" src="${_PATH}/static/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+  $(function () {
+    CKEDITOR.replace('context');
+  });
+  $('form').validate({
+    submitHandler: function (form) {
+      $.ajax(_MODULE_NAME + '/save', {
+        type: 'POST',
+        data: $(form).serialize(),
+        success: function (resp) {
+          if (resp.statusCode === 200) {
+            layer.alert('保存成功!', function () {
+              window.location.href = _MODULE_NAME + '/list';
+            })
+          }
+        },
+        error: function (resp) {
+          layer.alert('保存失败!');
+          var img = new Image();
+          img.src = _PATH + '/sendJSError?s=' + _MODULE_NAME + '&e=' + encodeURIComponent(JSON.stringify(resp));
+        }
+      });
+    },
+    rules: {
+      title: 'required',
+      context: 'required'
+    }
+  });
+</script>
