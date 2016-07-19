@@ -30,14 +30,14 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="control-label col-md-3">标题:</label>
+                  <label class="control-label col-md-3"> * 标题:</label>
                   <div class="col-md-9">
                     <input class="form-control" name="title" value="${data.title}"/>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row">
+            <%--<div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label class="control-label col-md-3">文章类别:</label>
@@ -66,7 +66,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>--%>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
@@ -116,9 +116,9 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="control-label col-md-2">内容:</label>
+                  <label class="control-label col-md-2"> * 内容:</label>
                   <div class="col-md-10">
-                    <textarea class="form-control" id="context" name="context">${data.context}</textarea>
+                    <textarea class="form-control ckeditor" id="context" name="context">${data.context}</textarea>
                   </div>
                 </div>
               </div>
@@ -147,28 +147,7 @@
 <%@include file="/WEB-INF/common/footer.jsp" %>
 <script type="text/javascript" src="${_PATH}/static/plugins/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
-  $(function () {
-    CKEDITOR.replace('context');
-  });
   $('form').validate({
-    submitHandler: function (form) {
-      $.ajax(_MODULE_NAME + '/save', {
-        type: 'POST',
-        data: $(form).serialize(),
-        success: function (resp) {
-          if (resp.statusCode === 200) {
-            layer.alert('保存成功!', function () {
-              window.location.href = _MODULE_NAME + '/list';
-            })
-          }
-        },
-        error: function (resp) {
-          layer.alert('保存失败!');
-          var img = new Image();
-          img.src = _PATH + '/sendJSError?s=' + _MODULE_NAME + '&e=' + encodeURIComponent(JSON.stringify(resp));
-        }
-      });
-    },
     rules: {
       title: 'required',
       context: 'required'

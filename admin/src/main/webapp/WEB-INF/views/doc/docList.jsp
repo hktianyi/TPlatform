@@ -10,6 +10,9 @@
       <span>文章管理</span>
     </li>
   </ul>
+  <div class="page-toolbar">
+    <a href="${_PATH}/doc/edit" class="btn btn-circle blue btn-outline btn-xs">&nbsp;添加&nbsp;</a>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -52,6 +55,7 @@
           "sTitle": "操作", "data": function (data) {
           return '<div class="btn-group btn-group-xs btn-group-solid">' +
               '<a href="' + _PATH + '/doc/edit?id=' + data.id + '" type="button" class="btn btn-primary btn-xs">详情</a>' +
+              '<a href="javascript:del(\'' + data.id + '\');" type="button" class="btn btn-primary btn-xs red">删除</a>' +
               '</div>';
         }, "sWidth": "6%"
         }

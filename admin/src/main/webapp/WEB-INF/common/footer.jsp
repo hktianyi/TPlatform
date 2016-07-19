@@ -88,6 +88,8 @@
         $(element).valid();
       },
       submitHandler: function (form) {
+        for (var instance in CKEDITOR.instances)
+          CKEDITOR.instances[instance].updateElement();
         $.ajax(_MODULE_NAME + '/save', {
           type: 'POST',
           data: $(form).serialize(),
@@ -96,7 +98,7 @@
               layer.alert('保存成功!', function () {
                 try {
                   saveCallback && saveCallback()
-                } catch(e) {
+                } catch (e) {
                   window.location.href = _MODULE_NAME + '/list';
                 }
               })
