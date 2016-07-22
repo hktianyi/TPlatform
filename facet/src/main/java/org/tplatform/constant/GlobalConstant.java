@@ -13,6 +13,7 @@ public class GlobalConstant {
   public static final String PROJECT_ROOT_PATH = PROJECT_CLASS_PATH.replaceAll("WEB-INF/.*", "");// 项目根路径
 
   public final static String STREAM_DATA_NAME = "streamData";
+  public final static String FILE_DOMAIN = "http://f.changdiyun.com";
 
   /**
    * URL
