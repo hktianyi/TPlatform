@@ -16,7 +16,9 @@ sourceSets {
 }
 
 ext.versions = [
-        tiles        : '3.0.5'
+        tiles        : '3.0.5',
+        thymeleaf    : '3.0.1.RELEASE',
+        ognl         : '3.1.10'
 ]
 
 dependencies {
@@ -28,6 +30,9 @@ dependencies {
             "org.apache.tiles:tiles-extras:${versions.tiles}",
             "org.apache.tiles:tiles-servlet:${versions.tiles}",
             "org.apache.tiles:tiles-jsp:${versions.tiles}",
+            "ognl:ognl:${versions.ognl}",
+            "org.thymeleaf:thymeleaf:${versions.thymeleaf}",
+            "org.thymeleaf:thymeleaf-spring4:${versions.thymeleaf}",
 
             "taglibs:standard:1.1.2",
             "javax.servlet:jstl:1.2",

@@ -24,7 +24,7 @@ public class AccessKeyInterceptor extends HandlerInterceptorAdapter {
 //    URL u = new URL(referer);
 //    String host = u.getHost().toLowerCase();
 //    if(accessKey==null){
-//      Logger.e(this.getClass(), "====================================ILLEGAL ACCESS: ACCESS_KEY_MISSING!=======================");
+//      Logger.e("====================================ILLEGAL ACCESS: ACCESS_KEY_MISSING!=======================");
 //    }else{
 ////      IAccess access = accessService.getAccess(UserSessionUtils.getUserSession(request), accessKey);
 ////      if(access!=null){

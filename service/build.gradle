@@ -9,7 +9,9 @@ ext.versions = [
         mapper        : '3.3.8',
 
         druid         : '1.0.20',
-        mysql         : '5.1.37'
+        mysql         : '5.1.37',
+        h2            : '1.4.192',
+        hsqldb        : '2.3.4'
 ]
 
 dependencies {
@@ -21,6 +23,8 @@ dependencies {
 
             "com.alibaba:druid:${versions.druid}",
             "mysql:mysql-connector-java:${versions.mysql}",
+            "com.h2database:h2:${versions.h2}",
+            "org.hsqldb:hsqldb:${versions.hsqldb}",
 
             "org.apache.httpcomponents:httpclient:4.3.6",
             "redis.clients:jedis:2.6.2"

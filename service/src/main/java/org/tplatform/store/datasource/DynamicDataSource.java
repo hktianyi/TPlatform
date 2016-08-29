@@ -20,7 +20,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
   @Override
   protected Object determineCurrentLookupKey() {
-    Logger.d(this.getClass(), "===============================>Spring获取动态路由节点：" + DbContextHolder.getDbType());
+    Logger.d("===============================>Spring获取动态路由节点：" + DbContextHolder.getDbType());
     return DbContextHolder.getDbType();
   }
 }

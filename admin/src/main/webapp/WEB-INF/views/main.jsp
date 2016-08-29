@@ -14,7 +14,7 @@
 <!--[if IE 8]> <html class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <!--<![endif]-->
 <head>
   <tiles:insertAttribute name="common"/>

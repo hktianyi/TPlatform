@@ -84,19 +84,19 @@ public class ClassUtil {
                       // 添加到classes
                       classes.add(Class.forName(packageName + '.' + className));
                     } catch (ClassNotFoundException e) {
-                      Logger.e(ClassUtil.class, "找不到class：" + packageName + '.' + className, e);
+                      Logger.e("找不到class：" + packageName + '.' + className, e);
                     }
                   }
                 }
               }
             }
           } catch (IOException e) {
-            Logger.e(ClassUtil.class, "读jar异常：", e);
+            Logger.e("读jar异常：", e);
           }
         }
       }
     } catch (Exception e) {
-      Logger.e(ClassUtil.class, "getClasses：" + packageName, e);
+      Logger.e("getClasses：" + packageName, e);
     }
 
     return classes;
@@ -142,7 +142,7 @@ public class ClassUtil {
           classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
         } catch (ClassNotFoundException e) {
           // log.error("添加用户自定义视图类错误 找不到此类的.class文件");
-          Logger.e(ClassUtil.class, "findAndAddClassesInPackageByFile", e);
+          Logger.e("findAndAddClassesInPackageByFile", e);
         }
       }
     }

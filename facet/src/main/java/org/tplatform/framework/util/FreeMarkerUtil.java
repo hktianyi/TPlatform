@@ -44,9 +44,9 @@ public class FreeMarkerUtil {
       template.process(object, stringWriter);
       return stringWriter.toString();
     } catch (IOException e) {
-      Logger.e(FreeMarkerUtil.class, "根据模板名获取模板失败：" + ftlName, e);
+      Logger.e("根据模板名获取模板失败：" + ftlName, e);
     } catch (TemplateException e) {
-      Logger.e(FreeMarkerUtil.class, "渲染模板数据失败：" + ftlName, e);
+      Logger.e("渲染模板数据失败：" + ftlName, e);
     }
     return null;
   }

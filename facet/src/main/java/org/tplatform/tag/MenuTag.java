@@ -64,7 +64,7 @@ public class MenuTag extends TagSupport {
     try {
       this.pageContext.getOut().print(html.toString());
     } catch (IOException e) {
-      Logger.e(this.getClass(), "MenuTag", e);
+      Logger.e("MenuTag", e);
     }
     return SKIP_BODY;
   }

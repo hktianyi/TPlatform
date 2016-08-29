@@ -155,7 +155,7 @@ public class SchedulerService extends BaseService<SchedulingJob> implements ISch
         scheduler.start();
 //      transaction.commit();
 //    } catch (Exception e) {
-//      Logger.e(this.getClass(), "saveOrUpd", e);
+//      Logger.e("saveOrUpd", e);
 //      transaction.rollback();
 ////		} finally {
 ////			session.close();

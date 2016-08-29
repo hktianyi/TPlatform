@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 /**
  * 手动静态获取bean对象工具类
  */
-@Component
+@Component("springContextUtil")
 public class SpringContextUtil implements ApplicationContextAware {
 
   // spring 容器上下文对象

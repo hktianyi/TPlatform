@@ -50,7 +50,7 @@ public class MD5Util {
     try {
       return Hex.encodeHexStr(MessageDigest.getInstance(ALGORITHM).digest(saltedPass.getBytes()));
     } catch (NoSuchAlgorithmException e) {
-      Logger.e(MD5Util.class, "encode", e);
+      Logger.e("encode", e);
       return null;
     }
   }
@@ -67,7 +67,7 @@ public class MD5Util {
     try {
       return Hex.encodeHexStr(MessageDigest.getInstance(ALGORITHM).digest(saltedPass.getBytes()), toLowerCase);
     } catch (NoSuchAlgorithmException e) {
-      Logger.e(MD5Util.class, "encode", e);
+      Logger.e("encode", e);
       return null;
     }
   }
@@ -98,12 +98,12 @@ public class MD5Util {
       try {
         digestInputStream.close();
       } catch (Exception e) {
-        Logger.e(MD5Util.class, "encodeFile", e);
+        Logger.e("encodeFile", e);
       }
       try {
         fileInputStream.close();
       } catch (Exception e) {
-        Logger.e(MD5Util.class, "encodeFile", e);
+        Logger.e("encodeFile", e);
       }
     }
   }

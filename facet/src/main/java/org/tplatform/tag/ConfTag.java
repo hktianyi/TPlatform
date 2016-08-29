@@ -32,7 +32,7 @@ public class ConfTag extends TagSupport {
         pageContext.getOut().print(sysConfService.findVal(key));
 
     } catch (IOException e) {
-      Logger.e(this.getClass(), "配置标签异常", e);
+      Logger.e("配置标签异常", e);
     }
     return EVAL_BODY_INCLUDE;
   }

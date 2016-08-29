@@ -9,9 +9,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.tplatform.framework.util.SpringContextUtil;
 import org.tplatform.util.PropertyUtil;
 import tk.mybatis.mapper.code.Style;
 import tk.mybatis.mapper.common.Mapper;
@@ -28,6 +32,7 @@ import java.util.Properties;
  * Created by Tianyi on 2016/3/2.
  */
 @Configuration
+@DependsOn("springContextUtil")
 @EnableTransactionManagement(proxyTargetClass = true)
 public class DataSourceConfig {
 
@@ -56,6 +61,7 @@ public class DataSourceConfig {
 
   // JNDI数据源
   @Bean(name = "dataSource")
+  @Profile("prod")
   public DataSource dataSource() {
     try {
       return DruidDataSourceFactory.createDataSource(PropertyUtil.getProInfoMap("db"));
@@ -63,6 +69,13 @@ public class DataSourceConfig {
       e.printStackTrace();
       return null;
     }
+  }
+
+  @Bean(name = "dataSource")
+  @Profile("dev")
+  public DataSource embeddedDataSource() {
+    return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
+        .addScripts("classpath:dev/tplatform.sql").build();
   }
 
   // sqlSession模板
@@ -76,7 +89,7 @@ public class DataSourceConfig {
   @Bean(name = "sqlSessionFactory")
   public SqlSessionFactory sqlSessionFactory() throws Exception {
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-    sqlSessionFactoryBean.setDataSource(dataSource());
+    sqlSessionFactoryBean.setDataSource(SpringContextUtil.getBean(DataSource.class));
     sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/*.xml"));
 
     Properties properties = new Properties();
@@ -134,7 +147,7 @@ public class DataSourceConfig {
   @Bean(name = "transactionManager")
   public DataSourceTransactionManager transactionManager() throws NamingException {
     DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
-    dataSourceTransactionManager.setDataSource(dataSource());
+    dataSourceTransactionManager.setDataSource(SpringContextUtil.getBean(DataSource.class));
     return dataSourceTransactionManager;
   }
 }

@@ -2,6 +2,7 @@ package org.tplatform.auth.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,12 +31,18 @@ public class LoginCtrl {
   @Autowired
   private ISysRoleService sysRoleService;
 
+  @RequestMapping(value = "/", method = RequestMethod.GET)
+  public String index(Model model) {
+    model.addAttribute("recipient", "World");
+    return "index.html";
+  }
+
   /**
    * 登录页
    *
    * @return
    */
-  @RequestMapping(value = {"/login", "/"}, method = RequestMethod.GET)
+  @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
   public String login() {
     if (session.getAttribute(GlobalConstant.SESSION_USER_KEY) != null) {
       return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";

@@ -3,25 +3,22 @@
     <property name="APP_Name" value="falsework"/>
     <property name="dir" value="/logs/${APP_Name}/"/>
 
-    <!--<if condition='property("HOSTNAME").contains("window")'>
-        <then>-->
-            <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
-            <property name="LEVEL_ROOT" value="DEBUG"/>
-            <!-- 第三方日志过滤级别，防止刷屏 -->
-            <property name="LEVEL_OTHER" value="INFO"/>
-            <property name="LEVEL_SQL" value="TRACE"/>
-            <property name="LEVEL_SQL_RESULT" value="ERROR"/>
-        <!--</then>-->
-        <!--<else>-->
-            <!--&lt;!&ndash; TRACE < DEBUG < INFO < WARN < ERROR &ndash;&gt;-->
-            <!--<property name="LEVEL_ROOT" value="INFO"/>-->
-            <!--&lt;!&ndash; 第三方日志过滤级别，防止刷屏 &ndash;&gt;-->
-            <!--<property name="LEVEL_OTHER" value="WARN"/>-->
-            <!--<property name="LEVEL_SQL" value="WARN"/>-->
-            <!--<property name="LEVEL_SQL_RESULT" value="WARN"/>-->
-        <!--</else>-->
-    <!--</if>-->
-
+    <springProfile name="dev">
+        <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
+        <property name="LEVEL_ROOT" value="DEBUG"/>
+        <!-- 第三方日志过滤级别，防止刷屏 -->
+        <property name="LEVEL_OTHER" value="INFO"/>
+        <property name="LEVEL_SQL" value="TRACE"/>
+        <property name="LEVEL_SQL_RESULT" value="ERROR"/>
+    </springProfile>
+    <springProfile name="prod">
+        <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
+        <property name="LEVEL_ROOT" value="INFO"/>
+        <!-- 第三方日志过滤级别，防止刷屏 -->
+        <property name="LEVEL_OTHER" value="WARN"/>
+        <property name="LEVEL_SQL" value="WARN"/>
+        <property name="LEVEL_SQL_RESULT" value="WARN"/>
+    </springProfile>
 
     <appender name="StdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -42,9 +39,9 @@
     </appender>
 
     <!-- 程序异常日志 -->
-    <!--<logger name="com.performance" level="${LEVEL_ROOT}" addtivity="true">-->
-        <!--<appender-ref ref="SysAppender"/>-->
-    <!--</logger>-->
+    <logger name="org.tplatform" level="${LEVEL_ROOT}" addtivity="true">
+        <appender-ref ref="SysAppender"/>
+    </logger>
 
     <!-- 下面配置一些第三方包的日志过滤级别，避免刷屏 -->
     <logger name="org.apache.zookeeper" level="${LEVEL_OTHER}"/>
@@ -54,14 +51,14 @@
     <logger name="com.google" level="${LEVEL_OTHER}"/>
     <logger name="net.rubyeye" level="${LEVEL_OTHER}"/>
 
-    <!-- show parameters for mybatis sql 专为 Mybatis 定制 -->
-	<!--<logger name="com.ibatis" level="${LEVEL_SQL}" />
+    <!-- show parameters for mybatis sql -->
+	<logger name="com.ibatis" level="${LEVEL_SQL}" />
 	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="${LEVEL_SQL}" />
 	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="${LEVEL_SQL}" />
 	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="${LEVEL_SQL}" />
 	<logger name="java.sql.Connection" level="${LEVEL_SQL}" />
 	<logger name="java.sql.Statement" level="${LEVEL_SQL}" />
-	<logger name="java.sql.PreparedStatement" level="${LEVEL_SQL}" />-->
+	<logger name="java.sql.PreparedStatement" level="${LEVEL_SQL}" />
 
     <root level="${LEVEL_ROOT}">
         <appender-ref ref="StdoutAppender"/>

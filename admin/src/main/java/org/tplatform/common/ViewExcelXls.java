@@ -183,6 +183,11 @@ public class ViewExcelXls extends AbstractXlsView {
   private String reflectObjectFieldValue(Object obj, String fieldName) {
     Object value = null;
     try {
+      if(obj instanceof Map) {
+        Object v = ((Map) obj).get(fieldName);
+        return v == null ? "" : String.valueOf(v);
+      }
+
       if (props == null) {
         BeanInfo bi = Introspector.getBeanInfo(obj.getClass(), Object.class);
         props = bi.getPropertyDescriptors();
@@ -264,7 +269,7 @@ public class ViewExcelXls extends AbstractXlsView {
         }
       }
     } catch (Exception e) {
-      Logger.e(this.getClass(), "reflectObjectFieldValue", e);
+      Logger.e("reflectObjectFieldValue", e);
     }
     return value == null ? "" : value.toString();
   }

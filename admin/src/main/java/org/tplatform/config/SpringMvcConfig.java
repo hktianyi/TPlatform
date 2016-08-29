@@ -20,11 +20,12 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
-import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
-import org.springframework.web.servlet.view.tiles3.TilesView;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.tplatform.exception.PlatformMappingExceptionResolver;
+import org.tplatform.framework.util.SpringContextUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,33 +41,24 @@ import java.util.Properties;
 @EnableWebMvc
 @ComponentScan(basePackages = {"org.tplatform"}, basePackageClasses = {Controller.class, ControllerAdvice.class},
     includeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*.admin.*")})
-//@ImportResource("classpath:dubbo-consumer.xml")
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
-  // Apache Tiles
-  @Bean
-  public TilesConfigurer tilesConfigurer() {
-    TilesConfigurer tilesConfigurer = new TilesConfigurer();
-    tilesConfigurer.setDefinitions("");
-    return tilesConfigurer;
-  }
-
   // 视图解析器
   @Bean
-  public UrlBasedViewResolver urlBasedViewResolver() {
-    UrlBasedViewResolver urlBasedViewResolver = new UrlBasedViewResolver();
-    urlBasedViewResolver.setViewClass(TilesView.class);
-    urlBasedViewResolver.setOrder(2);
-    return urlBasedViewResolver;
-  }
+  public ThymeleafViewResolver thymeleafViewResolver() {
+    SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+    resolver.setApplicationContext(SpringContextUtil.getApplicationContext());
+    resolver.setPrefix("/WEB-INF/views/");
+    resolver.setTemplateMode(TemplateMode.HTML);
+    resolver.setCacheable(false);
 
-  // 视图解析器
-  @Bean
-  public InternalResourceViewResolver internalResourceViewResolver() {
-    InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
-    internalResourceViewResolver.setPrefix("/WEB-INF/views/");
-    internalResourceViewResolver.setOrder(1);
-    return internalResourceViewResolver;
+    SpringTemplateEngine engine = new SpringTemplateEngine();
+    engine.setTemplateResolver(resolver);
+
+    ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+    thymeleafViewResolver.setTemplateEngine(engine);
+    thymeleafViewResolver.setOrder(3);
+    return thymeleafViewResolver;
   }
 
   // 文件上传

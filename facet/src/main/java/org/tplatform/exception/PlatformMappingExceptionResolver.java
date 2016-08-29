@@ -34,10 +34,10 @@ public class PlatformMappingExceptionResolver extends SimpleMappingExceptionReso
           writer.write(e.getMessage());
           response.setStatus(404, e.getMessage());
           //将异常栈信息记录到日志中
-          Logger.e(this.getClass(), "统一异常处理", e);
+          Logger.e("统一异常处理", e);
           writer.flush();
         } catch (Exception ex) {
-          Logger.e(this.getClass(), "统一异常处理", ex);
+          Logger.e("统一异常处理", ex);
         }
         // 不进行页面跳转
         return null;

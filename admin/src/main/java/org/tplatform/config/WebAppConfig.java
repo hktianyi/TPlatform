@@ -1,6 +1,7 @@
 package org.tplatform.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -27,6 +28,14 @@ public class WebAppConfig implements WebApplicationInitializer {
   // 启动执行
   public void onStartup(ServletContext servletContext) throws ServletException {
 
+    System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "prod");
+    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "dev");
+
+    // 应用初始化配置参数
+    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, "TPlatform");
+    servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
+    servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
+
     // SpringMVC 入口
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
     mvcContext.register(SpringMvcConfig.class);
@@ -47,11 +56,6 @@ public class WebAppConfig implements WebApplicationInitializer {
     encodingFilter.setInitParameter("forceEncoding", "true");
     encodingFilter.setInitParameter("encoding", "UTF-8");
     encodingFilter.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC);
-
-    // 应用初始化配置参数
-    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, "TPlatform");
-    servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
-    servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
 
     // 权限过滤
     FilterRegistration.Dynamic authenticationFilter = servletContext.addFilter("authenticationFilter", new AuthenticationFilter());

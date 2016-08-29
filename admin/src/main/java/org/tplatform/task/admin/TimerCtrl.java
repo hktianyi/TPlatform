@@ -32,7 +32,7 @@ public class TimerCtrl extends BaseCtrl<SchedulingJob> {
 //      jsonMap.put("recordsTotal", count);
 //      jsonMap.put("recordsFiltered", count);
     } catch (Exception e) {
-      Logger.e(this.getClass(), "loadData", e);
+      Logger.e("loadData", e);
     }
     return jsonMap;
   }

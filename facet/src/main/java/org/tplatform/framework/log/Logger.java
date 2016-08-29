@@ -19,58 +19,57 @@ public final class Logger {
   private Logger() {
   }
 
-  /**
-   * INFO记录
-   *
-   * @param clazz
-   * @param msg
-   */
-  public static void d(Class clazz, String msg) {
-    LoggerFactory.getLogger(clazz).debug(msg);
+  private static String getClazzName() {
+    return Thread.currentThread().getStackTrace()[3].getClassName();
   }
 
   /**
    * INFO记录
    *
-   * @param clazz
    * @param msg
    */
-  public static void i(Class clazz, String msg) {
-    LoggerFactory.getLogger(clazz).info(msg);
+  public static void d(String msg) {
+    LoggerFactory.getLogger(getClazzName()).debug(msg);
+  }
+
+  /**
+   * INFO记录
+   *
+   * @param msg
+   */
+  public static void i(String msg) {
+    LoggerFactory.getLogger(getClazzName()).info(msg);
   }
 
   /**
    * 警告
    *
-   * @param clazz
    * @param msg
    */
-  public static void w(Class clazz, String msg) {
-    LoggerFactory.getLogger(clazz).warn(msg);
+  public static void w(String msg) {
+    LoggerFactory.getLogger(getClazzName()).warn(msg);
   }
 
   /**
    * 错误
    *
-   * @param clazz
    * @param msg
    */
-  public static void e(Class clazz, String msg) {
-    LoggerFactory.getLogger(clazz).error(msg);
+  public static void e(String msg) {
+    LoggerFactory.getLogger(getClazzName()).error(msg);
 //    MailUtil.sendSimple("zhangyuyong@yunqiandai.com", "zhangyuyong@yunqiandai.com", msg + "[" + clazz.getName() + "]", msg);
   }
 
   /**
    * 带异常信息的错误日志
    *
-   * @param clazz
    * @param msg
    * @param e
    */
-  public static void e(Class clazz, String msg, Exception e) {
-    String className = clazz.getName();
+  public static void e(String msg, Exception e) {
+    String className = getClazzName();
     String text = logStyle(className, msg, e);
-    LoggerFactory.getLogger(clazz).error(text);
+    LoggerFactory.getLogger(className).error(text);
 //    if(StringUtil.isNotEmpty(to))
 //      MailUtil.sendSimple("zhangyuyong@yunqiandai.com", "zhangyuyong@yunqiandai.com", msg + "[" + className + "]", text);
   }

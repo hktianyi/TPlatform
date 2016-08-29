@@ -39,7 +39,7 @@ public class SignUtil {
       byte[] digest = md.digest(content.toString().getBytes());
       tmpStr = byteToStr(digest);
     } catch (NoSuchAlgorithmException e) {
-      Logger.e(SignUtil.class, "checkSignature", e);
+      Logger.e("checkSignature", e);
     }
 
     content = null;

@@ -37,18 +37,18 @@
 ////            try {
 ////              schedulerService.startJob(schedulingJob);
 ////            } catch (ClassNotFoundException e) {
-////              Logger.e(this.getClass(), "taskStart", e);
+////              Logger.e("taskStart", e);
 ////            } catch (SchedulerException e) {
-////              Logger.e(this.getClass(), "taskStart", e);
+////              Logger.e("taskStart", e);
 ////            }
 ////          });
-//          Logger.i(this.getClass(), taskOwer + "定时任务初始化启动成功！");
+//          Logger.i(taskOwer + "定时任务初始化启动成功！");
 //        } else {
-//          Logger.i(this.getClass(), "taskOwer为空，定时任务无法启动！");
+//          Logger.i("taskOwer为空，定时任务无法启动！");
 //        }
 //      }
 //    } catch (Exception e) {
-//      Logger.e(this.getClass(), "taskStart:定时任务初始化启动失败！", e);
+//      Logger.e("taskStart:定时任务初始化启动失败！", e);
 //    }
 //  }
 //}
