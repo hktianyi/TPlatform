@@ -64,7 +64,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //        return getInstance().get(key);
 //      }
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "findObject", e);
+//      Logger.e("findObject", e);
 //      throw new NullPointerException();
 //    }
 //    return null;
@@ -81,11 +81,11 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //        getInstance().set(key, 0, value);
 //      }
 //    } catch (TimeoutException e) {
-//      Logger.e(CacheByMemcacheUtil.class, "add", e);
+//      Logger.e("add", e);
 //    } catch (InterruptedException e) {
-//      Logger.e(CacheByMemcacheUtil.class, "add", e);
+//      Logger.e("add", e);
 //    } catch (MemcachedException e) {
-//      Logger.e(CacheByMemcacheUtil.class, "add", e);
+//      Logger.e("add", e);
 //    }
 //  }
 //
@@ -102,7 +102,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //        getInstance().set(key, expire, value);
 //      }
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "put 存入缓存对象", e);
+//      Logger.e("put 存入缓存对象", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -120,7 +120,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //        add(key, value, (int) ((cal.getTimeInMillis() - System.currentTimeMillis()) / 1000));
 //      }
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "put 存入缓存对象", e);
+//      Logger.e("put 存入缓存对象", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -135,7 +135,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //        getInstance().delete(key);
 //      }
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "delObject", e);
+//      Logger.e("delObject", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -151,7 +151,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //      }
 //      return find(key) != null;
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "keyExists", e);
+//      Logger.e("keyExists", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -169,7 +169,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //      delObject(key);
 //      add(key, value);
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "updObject", e);
+//      Logger.e("updObject", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -189,7 +189,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //      delObject(key);
 //      add(key, value, expire);
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "updObject", e);
+//      Logger.e("updObject", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -209,7 +209,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 //      delObject(key);
 //      updObject(key, value, (int) ((cal.getTimeInMillis() - System.currentTimeMillis()) / 1000));
 //    } catch (Exception e) {
-//      Logger.e(CacheByMemcacheUtil.class, "updObject", e);
+//      Logger.e("updObject", e);
 //      throw new NullPointerException();
 //    }
 //  }
@@ -223,7 +223,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 ////    try {
 ////      return getInstance().getMultiArray(keys);
 ////    } catch (Exception e) {
-////      Logger.e(CacheUtil.class, "findArrayObjects", e);
+////      Logger.e("findArrayObjects", e);
 ////      throw new NullPointerException();
 ////    }
 ////  }
@@ -237,7 +237,7 @@ package org.tplatform.framework.util;//package com.t.framework.util;
 ////    try {
 ////      return getInstance().getMulti(keys);
 ////    } catch (Exception e) {
-////      Logger.e(CacheUtil.class, "findMapObjects", e);
+////      Logger.e("findMapObjects", e);
 ////      throw new NullPointerException();
 ////    }
 ////  }

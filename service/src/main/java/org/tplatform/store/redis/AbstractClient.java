@@ -378,7 +378,7 @@ public abstract class AbstractClient {
 	        int nsize = slavePools.size();
 	        this.readStatus = slavePools.isEmpty() ? -1 : 1;
 	        if (osize != nsize) {
-	          Logger.e(RedisClient.class, "slave instance size changed! {} to {}" + osize + nsize);
+	          Logger.e("slave instance size changed! {} to {}" + osize + nsize);
 	        }
 	      } finally {
 	        if (pool != null) {
@@ -409,7 +409,7 @@ public abstract class AbstractClient {
 	        actual = action.execute(jedis);
 	      } catch (JedisConnectionException e) {
 	        this.writeStatus = -1;
-	        Logger.e(RedisClient.class, "redis db connection reset ! please checkAlive it !");
+	        Logger.e("redis db connection reset ! please checkAlive it !");
 	      } finally {
 	        if (pool != null) {
 	          pool.returnResource(jedis);
@@ -444,10 +444,10 @@ public abstract class AbstractClient {
 	      jedis.ping();
 	      masterPool.returnResource(jedis);
 	      writeStatus = 1;
-	      Logger.i(RedisClient.class, "redis master connected !");
+	      Logger.i("redis master connected !");
 	    } catch (JedisConnectionException e) {
 	      writeStatus = -1;
-	      Logger.e(RedisClient.class, "redis master connection reset ! please check it , {} second after reconnect !" + delayRetry);
+	      Logger.e("redis master connection reset ! please check it , {} second after reconnect !" + delayRetry);
 	    }
 	  }
 
@@ -482,7 +482,7 @@ public abstract class AbstractClient {
               slave = pool.getResource();
               slavePools.put(slavePools.size() + 1, pool);
             } catch (JedisConnectionException e) {
-              Logger.e(RedisClient.class, "slave: {}" + e.getMessage());
+              Logger.e("slave: {}" + e.getMessage());
             } finally {
               if (pool != null && slave != null) {
                 pool.returnResource(slave);
@@ -494,10 +494,10 @@ public abstract class AbstractClient {
             readStatus = !slavePools.isEmpty() ? 1 : -1;
             switch (readStatus) {
               case -1:
-                Logger.e(RedisClient.class, "redis slave connection reset ! please check it , {} second after reconnect !" + delayRetry);
+                Logger.e("redis slave connection reset ! please check it , {} second after reconnect !" + delayRetry);
                 break;
               case 1:
-                Logger.i(RedisClient.class, "redis slave connected!");
+                Logger.i("redis slave connected!");
                 break;
             }
 
@@ -536,7 +536,7 @@ public abstract class AbstractClient {
             connectRedis();
             sleep(delayRetry);
           } catch (JedisConnectionException e) {
-            Logger.e(RedisClient.class, "redis db connection reset ! please check it , {} second after reconnect !" + delayRetry);
+            Logger.e("redis db connection reset ! please check it , {} second after reconnect !" + delayRetry);
             sleep(delayRetry);
           }
         }

@@ -33,7 +33,7 @@ public class SubscribeThreadFactory implements ThreadFactory {
     worker.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
       @Override
       public void uncaughtException(Thread t, Throwable e) {
-        Logger.e(SubscribeThreadFactory.class, e.getMessage());
+        Logger.e(e.getMessage());
       }
     });
     if (worker.isDaemon()) {

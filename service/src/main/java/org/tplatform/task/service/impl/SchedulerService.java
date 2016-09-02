@@ -39,7 +39,7 @@ public class SchedulerService extends BaseService<SchedulingJob> implements ISch
 
   static {
     jobGroupMap = new HashMap<>();
-    Logger.i(SchedulerService.class, SchedulerService.class.getPackage().getName() + ".classify");
+    Logger.i(SchedulerService.class.getPackage().getName() + ".classify");
     List<Class<?>> classList = ClassUtil.getClasses(SchedulerService.class.getPackage().getName() + ".classify");
     for (Class<?> clazz : classList) {
       TaskGroup taskGroup = clazz.getAnnotation(TaskGroup.class);
@@ -47,7 +47,7 @@ public class SchedulerService extends BaseService<SchedulingJob> implements ISch
         Class<?>[] interfaces = clazz.getInterfaces();
         for (Class<?> c : interfaces) {
           if (Job.class.equals(c)) {
-            Logger.i(SchedulerService.class, "This is a Job" + clazz.getName() + "    :    " + taskGroup.value());
+            Logger.i("This is a Job" + clazz.getName() + "    :    " + taskGroup.value());
             jobGroupMap.put(clazz.getName(), taskGroup.value());
             break;
           }

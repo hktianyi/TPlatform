@@ -83,7 +83,7 @@ public class SFTPUtil {
       channel = init();
       channel.put(in, absolutePath);
     } catch (JSchException e) {
-      Logger.e(SFTPUtil.class, "创建FTP连接失败", e);
+      Logger.e("创建FTP连接失败", e);
       throw new RuntimeException("创建FTP连接失败");
     } catch (SftpException e) {
       String[] paths = dst.split("/");
@@ -109,9 +109,9 @@ public class SFTPUtil {
       init().rm(root + dst);
       return true;
     } catch (JSchException e) {
-      Logger.e(SFTPUtil.class, "删除文件异常", e);
+      Logger.e("删除文件异常", e);
     } catch (SftpException e) {
-      Logger.e(SFTPUtil.class, "删除文件异常", e);
+      Logger.e("删除文件异常", e);
     }
     return false;
   }

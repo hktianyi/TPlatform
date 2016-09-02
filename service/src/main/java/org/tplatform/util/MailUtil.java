@@ -45,7 +45,7 @@ public class MailUtil {
       Transport.send(message);
     } catch (MessagingException e) {
       e.printStackTrace();
-//      Logger.e(MailUtil.class, "发送邮件失败！", e);
+//      Logger.e("发送邮件失败！", e);
     }
   }
 

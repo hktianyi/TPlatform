@@ -11,6 +11,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
 import org.tplatform.framework.log.Logger;
+import org.tplatform.framework.util.DateUtil;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import javax.mail.internet.MimeUtility;
@@ -22,6 +23,7 @@ import java.beans.PropertyDescriptor;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -271,6 +273,9 @@ public class ViewExcelXls extends AbstractXlsView {
     } catch (Exception e) {
       Logger.e("reflectObjectFieldValue", e);
     }
-    return value == null ? "" : value.toString();
+    if(value == null) return "";
+    else if(value instanceof String) return (String) value;
+    else if(value instanceof Date) return DateUtil.format((Date) value, DateUtil.FORMAT_DATETIME);
+    else return value.toString();
   }
 }

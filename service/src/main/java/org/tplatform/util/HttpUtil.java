@@ -78,7 +78,7 @@ public class HttpUtil {
    * @return
    */
   public static String get(URI uri, Header... headers) {
-    Logger.i(HttpUtil.class, "【发起GET请求】：" + uri);
+    Logger.i("【发起GET请求】：" + uri);
     HttpGet get = new HttpGet(uri);
     String result = null;
     if (headers != null && headers.length > 0) {
@@ -90,9 +90,9 @@ public class HttpUtil {
       result = analysisResp(entity.getContent());
       EntityUtils.consume(entity);
     } catch (IOException e) {
-      Logger.e(HttpUtil.class, "get", e);
+      Logger.e("get", e);
     }
-    Logger.i(HttpUtil.class, "【GET请求结果】：" + result);
+    Logger.i("【GET请求结果】：" + result);
     return result;
   }
 
@@ -104,7 +104,7 @@ public class HttpUtil {
    * @return
    */
   public static String post(URI uri, Map<String, String> args, Header... headers) {
-    Logger.i(HttpUtil.class, "【发起POST请求】：" + uri);
+    Logger.i("【发起POST请求】：" + uri);
     String result = null;
     HttpPost post = new HttpPost(uri);
     List<NameValuePair> nvps = new ArrayList();
@@ -125,13 +125,13 @@ public class HttpUtil {
       result = analysisResp(entity.getContent());
       EntityUtils.consume(entity);
     } catch (UnsupportedEncodingException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (ClientProtocolException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (IOException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     }
-    Logger.i(HttpUtil.class, "【POST请求结果】：" + result);
+    Logger.i("【POST请求结果】：" + result);
     return result;
   }
 
@@ -142,7 +142,7 @@ public class HttpUtil {
    * @return
    */
   public static String post(URI uri, Header... headers) {
-    Logger.i(HttpUtil.class, "【发起POST请求】：" + uri);
+    Logger.i("【发起POST请求】：" + uri);
     String result = null;
     HttpPost post = new HttpPost(uri);
     if (headers != null && headers.length > 0) {
@@ -156,13 +156,13 @@ public class HttpUtil {
       result = analysisResp(entity.getContent());
       EntityUtils.consume(entity);
     } catch (UnsupportedEncodingException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (ClientProtocolException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (IOException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     }
-    Logger.i(HttpUtil.class, "【POST请求结果】：" + result);
+    Logger.i("【POST请求结果】：" + result);
     return result;
   }
 
@@ -193,7 +193,7 @@ public class HttpUtil {
    * @return
    */
   public static String postStream(URI uri, String input, Header... headers) {
-    Logger.i(HttpUtil.class, "【发起POST请求】：" + uri);
+    Logger.i("【发起POST请求】：" + uri);
     HttpPost post = new HttpPost(uri);
     String result = null;
     if (headers != null && headers.length > 0) {
@@ -206,13 +206,13 @@ public class HttpUtil {
       result = analysisResp(entity.getContent());
       EntityUtils.consume(entity);
     } catch (UnsupportedEncodingException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (ClientProtocolException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (IOException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     }
-    Logger.i(HttpUtil.class, "【POST请求结果】：" + result);
+    Logger.i("【POST请求结果】：" + result);
     return result;
   }
 
@@ -224,7 +224,7 @@ public class HttpUtil {
    * @return
    */
   public static String postStream(URI uri, InputStream inputStream) {
-    Logger.i(HttpUtil.class, "【发起POST请求】：" + uri);
+    Logger.i("【发起POST请求】：" + uri);
     HttpPost post = new HttpPost(uri);
     String result = null;
     try {
@@ -234,13 +234,13 @@ public class HttpUtil {
       result = analysisResp(entity.getContent());
       EntityUtils.consume(entity);
     } catch (UnsupportedEncodingException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (ClientProtocolException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     } catch (IOException e) {
-      Logger.e(HttpUtil.class, "post", e);
+      Logger.e("post", e);
     }
-    Logger.i(HttpUtil.class, "【POST请求结果】：" + result);
+    Logger.i("【POST请求结果】：" + result);
     return result;
   }
 
@@ -273,18 +273,18 @@ public class HttpUtil {
             sbd.append(line);
           }
         } catch (Exception e) {
-          Logger.e(HttpUtil.class, "getDataFromRequest", e);
+          Logger.e("getDataFromRequest", e);
         } finally {
           if (in != null) {
             try {
               in.close();
             } catch (IOException e) {
-              Logger.e(HttpUtil.class, "getDataFromRequest", e);
+              Logger.e("getDataFromRequest", e);
             }
           }
         }
       } catch (Exception e) {
-        Logger.e(HttpUtil.class, "getDataFromRequest", e);
+        Logger.e("getDataFromRequest", e);
       }
     } else {
       //将reqeust中的所有请求参数拼装成URL风格参数
@@ -331,18 +331,18 @@ public class HttpUtil {
           }
           map.put(GlobalConstant.STREAM_DATA_NAME, result);
         } catch (Exception e) {
-          Logger.e(HttpUtil.class, "getDataFromRequest", e);
+          Logger.e("getDataFromRequest", e);
         } finally {
           if (in != null) {
             try {
               in.close();
             } catch (IOException e) {
-              Logger.e(HttpUtil.class, "getDataFromRequest", e);
+              Logger.e("getDataFromRequest", e);
             }
           }
         }
       } catch (Exception e) {
-        Logger.e(HttpUtil.class, "getDataFromRequest", e);
+        Logger.e("getDataFromRequest", e);
       }
     } else {
       //将reqeust中的所有请求参数放入map中
