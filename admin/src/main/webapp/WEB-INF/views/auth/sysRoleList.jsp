@@ -58,9 +58,11 @@
             {"sTitle": "手机", "name": "mobile", "data": "mobile", "sWidth": "8%"},
             {"sTitle": "邮箱", "name": "email", "data": "email", "sWidth": "8%"},
             {"sTitle": "状态", "name": "status", "data": "status", "sWidth": "6%"},
-            {"sTitle": "创建时间", "name": "createTime", "data": function (d) {
+            {
+              "sTitle": "创建时间", "name": "createTime", "data": function (d) {
               return moment(d.createTime).format('YYYY-M-D H:m');
-            }, "sWidth": "8%"}
+            }, "sWidth": "8%"
+            }
           ]
         });
       }

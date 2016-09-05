@@ -1,22 +1,48 @@
 <%@ page pageEncoding="UTF-8" language="java" %>
-<div class="page-bar">
-  <ul class="page-breadcrumb">
-    <li>
-      <a href="${_PATH}/main.html">首页</a>
-      <i class="fa fa-angle-right"></i>
-    </li>
-    <li>
-      <span>系统信息</span>
-    </li>
-  </ul>
-  <div class="page-toolbar">
-    <button type="button" class="btn btn-circle blue btn-outline btn-xs">&nbsp;?&nbsp;</button>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh_cn" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh_cn" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_cn">
+<!--<![endif]-->
+<head>
+  <%@include file="/WEB-INF/common/common.jsp" %>
+</head>
+<!-- END HEAD -->
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
+<%@include file="/WEB-INF/common/header.jsp" %>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+      <div class="page-bar">
+        <ul class="page-breadcrumb">
+          <li>
+            <a href="${_PATH}/main.html">首页</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <span>系统信息</span>
+          </li>
+        </ul>
+        <div class="page-toolbar">
+          <button type="button" class="btn btn-circle blue btn-outline btn-xs">&nbsp;?&nbsp;</button>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 6px;">
+        <div class="col-md-6" id="gauge" style="height:300px">
+        </div>
+      </div>
+    </div>
+    <!-- END CONTENT BODY -->
   </div>
+  <!-- END CONTENT -->
 </div>
-<div class="row" style="margin-top: 6px;">
-  <div class="col-md-6" id="gauge" style="height:300px">
-  </div>
-</div>
+<!-- END CONTAINER -->
+<%@include file="/WEB-INF/common/footer.jsp" %>
 <script type="text/javascript" src="${_PATH}/static/plugins/echarts.min.js"></script>
 <script type="text/javascript">
   $(function () {
@@ -126,3 +152,5 @@
     });
   }
 </script>
+</body>
+</html>

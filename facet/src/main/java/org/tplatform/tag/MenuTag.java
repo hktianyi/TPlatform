@@ -1,5 +1,6 @@
 package org.tplatform.tag;
 
+import lombok.Setter;
 import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.entity.SysUser;
 import org.tplatform.auth.service.ISysResourceService;
@@ -11,12 +12,27 @@ import org.tplatform.framework.util.SpringContextUtil;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
  * Created by Tianyi on 2015/7/3.
  */
 public class MenuTag extends TagSupport {
+
+  @Setter
+  private String type;
+  @Setter
+  private Long parentCode;
+
+  // 纵向菜单
+  private static final String[] menu_V = {"<ul class=\"nav navbar-nav\">{0}</ul>", "<li class=\"classic-menu-dropdown\"><a href=\"{0}\" data-hover=\"megamenu-dropdown\" data-close-others=\"true\"> {1} </a></li>",
+      "<ul class=\"dropdown-menu pull-left\">{0}</ul>", "<li><a href=\"{0}\"><i class=\"fa fa-bookmark-o\"></i> {1} </a></li>"};
+  // 横向菜单
+  private static final String[] menu_H = {"<ul class=\"nav navbar-nav\">{0}</ul>",
+      "<li class=\"classic-menu-dropdown {0}\"><a href=\"{1}\" data-hover=\"megamenu-dropdown\" data-close-others=\"true\"> {2} </a>{3}</li>",
+      "<ul class=\"dropdown-menu pull-left\">{0}</ul>",
+      "<li class=\"{0}\"><a href=\"{1}\"><i class=\"fa fa-{2}\"></i> {3} </a></li>"};
 
   @Override
   public int doStartTag() throws JspException {
@@ -28,35 +44,24 @@ public class MenuTag extends TagSupport {
       user.getRoles().stream().forEach(sysRole -> roleId.append(",").append(sysRole.getId()));
     }
     if (roleId.length() > 0) {
-      resources = SpringContextUtil.getBean(ISysResourceService.class).findMenuTree(roleId.substring(1), StatusEnum.VALID);
+      resources = SpringContextUtil.getBean(ISysResourceService.class).findMenuTree(roleId.substring(1), StatusEnum.VALID, parentCode);
       if (resources != null && resources.size() > 0) {
         String path = SpringContextUtil.getRequest().getServletPath();
+        String contextPath = SpringContextUtil.getRequest().getContextPath();
         resources.stream().forEach(resource -> {
           boolean hasChildren = resource.getChildren() != null && resource.getChildren().size() > 0;
-          final boolean[] current = {false};
-          StringBuffer subMenu = new StringBuffer();
+          String subMenuStr = "";
+          final boolean[] active = {false}; // 活跃菜单
           if (hasChildren) {
-            subMenu.append("<ul class=\"sub-menu\">");
+            StringBuffer subMenu = new StringBuffer();
             resource.getChildren().stream().forEach(child -> {
-              if (!current[0] && child.getAction().startsWith(path)) {
-                current[0] = true;
-                subMenu.append("<li class=\"nav-item active open\">")
-                    .append("<a href=\"javascript:void(0);\" data-action=\"").append(child.getAction()).append("\" class=\"nav-link\">")
-                    .append("<i class=\"fa fa-").append(child.getIcon()).append("\"></i><span class=\"title\">").append(child.getName()).append("</span></a></li>");
-
-              } else {
-                subMenu.append("<li class=\"nav-item\">")
-                    .append("<a href=\"javascript:void(0);\" data-action=\"").append(child.getAction()).append("\" class=\"nav-link\">")
-                    .append("<i class=\"fa fa-").append(child.getIcon()).append("\"></i><span class=\"title\">").append(child.getName()).append("</span></a></li>");
-
-              }
+              if(child.getAction().startsWith(path)) active[0] = true;
+              subMenu.append(MessageFormat.format(menu_H[3], active[0] ? "active" : "", contextPath + child.getAction(), child.getIcon(), child.getName()));
             });
-            subMenu.append("</ul>");
+            subMenuStr = MessageFormat.format(menu_H[2], subMenu);
           }
-          html.append("<li class=\"nav-item" + (current[0] ? " active open" : "") + "\">")
-              .append("<a href=\"javascript:void(0);\" data-action=\"").append(resource.getAction()).append("\" class=\"nav-link nav-toggle\">")
-              .append("<i class=\"fa fa-").append(resource.getIcon()).append("\"></i><span class=\"title\">").append(resource.getName()).append("</span>")
-              .append(hasChildren ? "<span class=\"arrow\"></span>" : "").append("</a>").append(subMenu).append("</li>");
+          active[0] = active[0] || resource.getAction().startsWith(path);
+          html.append(MessageFormat.format(menu_H[1], active[0] ? "active" : "", contextPath + resource.getAction(), resource.getName() + (active[0] ? "<span class=\"selected\"> </span>" : ""), subMenuStr));
         });
       }
     }

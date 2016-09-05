@@ -21,7 +21,7 @@
       <form action="#">
         <div class="input-group input-medium">
           <input type="text" class="form-control" placeholder="keyword...">
-                            <span class="input-group-btn">
+          <span class="input-group-btn">
                                 <button type="submit" class="btn red">
                                     <i class="fa fa-search"></i>
                                 </button>
@@ -32,7 +32,7 @@
     </div>
   </div>
 </div>
-<%@include file="/WEB-INF/common/footer.jsp"%>
+<%@include file="/WEB-INF/common/footer.jsp" %>
 </body>
 
 </html>

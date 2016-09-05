@@ -26,7 +26,7 @@ public interface ISysResourceService extends IBaseService<SysResource> {
    * @param status
    * @return
    */
-  List<SysResource> findMenuTree(String roleId, StatusEnum status);
+  List<SysResource> findMenuTree(String roleId, StatusEnum status, Long parentCode);
 
   /**
    * 支持拖拽

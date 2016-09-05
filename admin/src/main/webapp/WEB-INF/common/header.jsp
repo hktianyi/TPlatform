@@ -1,36 +1,50 @@
+<%@ taglib prefix="view" uri="/taglib/view.tld" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
   <!-- BEGIN HEADER INNER -->
-  <div class="page-header-inner">
+  <div class="page-header-inner ">
     <!-- BEGIN LOGO -->
     <div class="page-logo">
       <a href="${_PATH}/main.html">
-        <img src="${_PATH}/static/common/img/logo.png" alt="logo" class="logo-default"/>
-      </a>
-      <div class="menu-toggler sidebar-toggler">
-        <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
-      </div>
+        <img src="${_PATH}/static/common/img/logo.png" alt="logo" class="logo-default" /> </a>
+      <div class="menu-toggler sidebar-toggler"> </div>
     </div>
     <!-- END LOGO -->
+    <!-- BEGIN MEGA MENU -->
+    <!-- DOC: Remove "hor-menu-light" class to have a horizontal menu with theme background instead of white background -->
+    <!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) in the responsive menu below along with sidebar menu. So the horizontal menu has 2 seperate versions -->
+    <div class="hor-menu   hidden-sm hidden-xs">
+      <ul class="nav navbar-nav">
+        <!-- DOC: Remove data-hover="megamenu-dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
+        <view:menu type="H" />
+      </ul>
+    </div>
+    <!-- END MEGA MENU -->
+    <!-- BEGIN HEADER SEARCH BOX -->
+    <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
+    <form class="search-form" action="#" method="GET">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search..." name="query">
+        <span class="input-group-btn">
+                            <a href="javascript:;" class="btn submit">
+                                <i class="icon-magnifier"></i>
+                            </a>
+                        </span>
+      </div>
+    </form>
+    <!-- END HEADER SEARCH BOX -->
     <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-    </a>
+    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
     <!-- END RESPONSIVE MENU TOGGLER -->
     <!-- BEGIN TOP NAVIGATION MENU -->
     <div class="top-menu">
       <ul class="nav navbar-nav pull-right">
-        <%--<li class="dropdown">
-          <a href="http://www.keenthemes.com/preview/metronic/theme/admin_1/" target="_blank" class="dropdown-toggle">
-            <i class="icon-social-dribbble"></i>
-          </a>
-        </li>--%>
-        <!-- BEGIN USER LOGIN DROPDOWN -->
         <li class="dropdown dropdown-user">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
             <img alt="" class="img-circle" src="${_PATH}/static/pages/user/img/${user.avatarUrl}_small.jpg"/>
-                    <span class="username">
-                    ${user.nickname} </span>
+            <span class="username">
+              ${user.nickname} </span>
             <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown-menu">
@@ -38,47 +52,19 @@
               <a href="${_PATH}/sysUser/profile">
                 <i class="fa fa-user"></i> 个人中心 </a>
             </li>
-            <%--<li>
-              <a href="page_calendar.html">
-                <i class="icon-calendar"></i> My Calendar </a>
-            </li>
-            <li>
-              <a href="inbox.html">
-                <i class="icon-envelope-open"></i> My Inbox <span class="badge badge-danger">
-                            3 </span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="icon-rocket"></i> My Tasks <span class="badge badge-success">
-                            7 </span>
-              </a>
-            </li>
-            <li class="divider">
-            </li>
-            <li>
-              <a href="extra_lock.html">
-                <i class="icon-lock"></i> Lock Screen </a>
-            </li>--%>
             <li>
               <a href="${_PATH}/logout.html">
                 <i class="icon-power"></i> 退出 </a>
             </li>
           </ul>
         </li>
-        <!-- END USER LOGIN DROPDOWN -->
-        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
-        <%--<li class="dropdown dropdown-quick-sidebar-toggler">
+        <li class="dropdown dropdown-quick-sidebar-toggler">
           <a href="javascript:;" class="dropdown-toggle">
-            <i class="icon-bubbles"></i>
+            <i class="icon-logout"></i>
           </a>
-        </li>--%>
-        <!-- END QUICK SIDEBAR TOGGLER -->
+        </li>
       </ul>
     </div>
-    <!-- END TOP NAVIGATION MENU -->
   </div>
-  <!-- END HEADER INNER -->
 </div>
-<!-- END HEADER -->
 <div class="clearfix"> </div>

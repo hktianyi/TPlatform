@@ -20,12 +20,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templatemode.TemplateMode;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.tplatform.exception.PlatformMappingExceptionResolver;
-import org.tplatform.framework.util.SpringContextUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,20 +41,11 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
   // 视图解析器
   @Bean
-  public ThymeleafViewResolver thymeleafViewResolver() {
-    SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-    resolver.setApplicationContext(SpringContextUtil.getApplicationContext());
-    resolver.setPrefix("/WEB-INF/views/");
-    resolver.setTemplateMode(TemplateMode.HTML);
-    resolver.setCacheable(false);
-
-    SpringTemplateEngine engine = new SpringTemplateEngine();
-    engine.setTemplateResolver(resolver);
-
-    ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
-    thymeleafViewResolver.setTemplateEngine(engine);
-    thymeleafViewResolver.setOrder(3);
-    return thymeleafViewResolver;
+  public InternalResourceViewResolver internalResourceViewResolver() {
+    InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
+    internalResourceViewResolver.setPrefix("/WEB-INF/views/");
+    internalResourceViewResolver.setOrder(1);
+    return internalResourceViewResolver;
   }
 
   // 文件上传

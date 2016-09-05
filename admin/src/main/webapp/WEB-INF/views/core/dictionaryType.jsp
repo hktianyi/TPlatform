@@ -32,16 +32,17 @@
               </div>
               <div class="form-group">
                 <div class="input-group">
-                  <span class="input-group-btn"><button class="btn" type="button">类&nbsp;&nbsp;&nbsp;&nbsp;型</button></span>
+                  <span class="input-group-btn"><button class="btn"
+                                                        type="button">类&nbsp;&nbsp;&nbsp;&nbsp;型</button></span>
                   <select class="form-control" name="type">
                     <option value="SELECT"
-                        <c:if test="${data.type eq 'SELECT'}">aria-checked="checked"</c:if> >下拉框
+                            <c:if test="${data.type eq 'SELECT'}">aria-checked="checked"</c:if> >下拉框
                     </option>
                     <option value="CHECKBOX"
-                        <c:if test="${data.type eq 'CHECKBOX'}">aria-checked="checked"</c:if> >复选框
+                            <c:if test="${data.type eq 'CHECKBOX'}">aria-checked="checked"</c:if> >复选框
                     </option>
                     <option value="RADIO"
-                        <c:if test="${data.type eq 'RADIO'}">aria-checked="checked"</c:if> >单选框
+                            <c:if test="${data.type eq 'RADIO'}">aria-checked="checked"</c:if> >单选框
                     </option>
                   </select></div>
               </div>
@@ -65,15 +66,15 @@
       type: 'POST',
       data: $('form').serialize(),
       success: function (resp) {
-        if(resp.statusCode === 200) {
+        if (resp.statusCode === 200) {
           parent.window.location.reload();
-          parent.layer.msg('添加成功',{icon: 6, time:1000});
+          parent.layer.msg('添加成功', {icon: 6, time: 1000});
           parent.layer.close(parent.layer.getFrameIndex(window.name));
         }
-        else parent.layer.msg('添加失败',{icon: 6});
+        else parent.layer.msg('添加失败', {icon: 6});
       },
       error: function () {
-        parent.layer.msg('添加失败',{icon: 6});
+        parent.layer.msg('添加失败', {icon: 6});
       }
     });
   }

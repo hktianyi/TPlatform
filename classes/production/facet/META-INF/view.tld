@@ -13,6 +13,12 @@
         <name>menu</name>
         <tag-class>org.tplatform.tag.MenuTag</tag-class>
         <body-content>scriptless</body-content>
+        <attribute>
+            <name>type</name>
+        </attribute>
+        <attribute>
+            <name>parentCode</name>
+        </attribute>
     </tag>
     <tag>
         <name>button</name>

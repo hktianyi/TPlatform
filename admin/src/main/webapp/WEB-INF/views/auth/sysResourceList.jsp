@@ -2,7 +2,9 @@
 <link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/material/easyui.css" type="text/css"/>
 <link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/icon.css" type="text/css"/>
 <style>
-  .tree-folder, .tree-folder-open, .tree-file { background: none !important; }
+  .tree-folder, .tree-folder-open, .tree-file {
+    background: none !important;
+  }
 </style>
 <div class="page-bar">
   <ul class="page-breadcrumb">

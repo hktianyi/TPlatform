@@ -1,24 +1,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
-<div class="page-bar">
-  <ul class="page-breadcrumb">
-    <li>
-      <a href="${_PATH}/main.html">首页</a>
-      <i class="fa fa-angle-right"></i>
-    </li>
-    <li>
-      <span>文章管理</span>
-    </li>
-  </ul>
-  <div class="page-toolbar">
-    <a href="${_PATH}/doc/edit" class="btn btn-circle blue btn-outline btn-xs">&nbsp;添加&nbsp;</a>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh_cn" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh_cn" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_cn">
+<!--<![endif]-->
+<head>
+  <%@include file="../../common/common.jsp" %>
+</head>
+<!-- END HEAD -->
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
+<%@include file="../../common/header.jsp" %>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+      <div class="page-bar">
+        <ul class="page-breadcrumb">
+          <li>
+            <a href="${_PATH}/main.html">首页</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <span>文章管理</span>
+          </li>
+        </ul>
+        <div class="page-toolbar">
+          <a href="${_PATH}/doc/edit" class="btn btn-circle blue btn-outline btn-xs">&nbsp;添加&nbsp;</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped table-bordered table-hover table-header-fixed"></table>
+        </div>
+      </div>
+
+    </div>
+    <!-- END CONTENT BODY -->
   </div>
+  <!-- END CONTENT -->
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <table class="table table-striped table-bordered table-hover table-header-fixed"></table>
-  </div>
-</div>
+<!-- END CONTAINER -->
+<%@include file="../../common/footer.jsp" %>
 <script type="text/javascript">
   var dataTable;
   $(function () {
@@ -63,3 +90,5 @@
     });
   }
 </script>
+</body>
+</html>

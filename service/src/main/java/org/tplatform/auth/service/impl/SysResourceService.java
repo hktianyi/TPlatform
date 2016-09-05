@@ -38,8 +38,8 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
   }
 
   @Override
-  public List<SysResource> findMenuTree(String roleId, StatusEnum status) {
-    List<SysResource> result = sysResourceMapper.findByRole(roleId, SysResourceType.MENU, status);
+  public List<SysResource> findMenuTree(String roleId, StatusEnum status, Long parentCode) {
+    List<SysResource> result = sysResourceMapper.findByRole(roleId, SysResourceType.MENU, status, parentCode);
     result.stream().forEach(parent -> result.stream().forEach(child -> {
       if (child.getPid() == parent.getId()) {
         if (parent.getChildren() == null)

@@ -12,10 +12,10 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.tplatform.framework.util.SpringContextUtil;
+import org.tplatform.framework.util.StringUtil;
 import org.tplatform.util.PropertyUtil;
 import tk.mybatis.mapper.code.Style;
 import tk.mybatis.mapper.common.Mapper;
@@ -46,36 +46,27 @@ public class DataSourceConfig {
 //    return (DataSource) jndiObjectFactoryBean.getObject();
 //  }
 
-//  // JNDI数据源名称
-//  private static String jndiName = PropertyUtil.getProInfo("config", "jdbc.jndiName");
-//
-//  // JNDI数据源
-//  @Bean(name = "dataSource")
-//  public DataSource dataSource() {
-//    if (StringUtil.isEmpty(this.jndiName)) return null;
-//
-//    JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
-//    jndiDataSourceLookup.setResourceRef(true);
-//    return jndiDataSourceLookup.getDataSource(this.jndiName);
-//  }
-
   // JNDI数据源
-  @Bean(name = "dataSource")
   @Profile("prod")
-  public DataSource dataSource() {
+  @Bean(name = "dataSource")
+  public DataSource jndiDataSource() {
+    String jndiName = PropertyUtil.getProInfo("db", "jdbc.jndiName");
+    if (StringUtil.isEmpty(jndiName)) return null;
+
+    JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
+    jndiDataSourceLookup.setResourceRef(true);
+    return jndiDataSourceLookup.getDataSource(jndiName);
+  }
+
+  @Profile("dev")
+  @Bean(name = "dataSource")
+  public DataSource embeddedDataSource() {
     try {
       return DruidDataSourceFactory.createDataSource(PropertyUtil.getProInfoMap("db"));
     } catch (Exception e) {
       e.printStackTrace();
       return null;
     }
-  }
-
-  @Bean(name = "dataSource")
-  @Profile("dev")
-  public DataSource embeddedDataSource() {
-    return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-        .addScripts("classpath:dev/tplatform.sql").build();
   }
 
   // sqlSession模板

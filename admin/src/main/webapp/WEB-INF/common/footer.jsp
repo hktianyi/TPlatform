@@ -1,11 +1,11 @@
 <%@ page pageEncoding="UTF-8" language="java" %>
 <%@include file="/WEB-INF/common/quicksidebar.jsp" %>
 <div class="page-footer">
+  <div class="page-footer-inner"> 2016 © ${APP_NAME}. 后台管理系统. </div>
   <div class="scroll-to-top">
     <i class="icon-arrow-up"></i>
   </div>
 </div>
-<%--<div class="copyright"> 2016 © ${APP_NAME}. 后台管理系统.</div>--%>
 <!--[if lt IE 9]>
 <script src="../../static/plugins/respond.min.js"></script>
 <script src="../../static/plugins/excanvas.min.js"></script>

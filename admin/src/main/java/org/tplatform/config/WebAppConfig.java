@@ -28,7 +28,7 @@ public class WebAppConfig implements WebApplicationInitializer {
   // 启动执行
   public void onStartup(ServletContext servletContext) throws ServletException {
 
-    System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "prod");
+//    System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "prod");
     System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "dev");
 
     // 应用初始化配置参数

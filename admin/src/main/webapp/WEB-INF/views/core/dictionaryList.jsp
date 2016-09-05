@@ -1,84 +1,113 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
-<div class="page-bar">
-  <ul class="page-breadcrumb">
-    <li>
-      <a href="${_PATH}/main.html">首页</a>
-      <i class="fa fa-angle-right"></i>
-    </li>
-    <li>
-      <span>系统管理</span>
-      <i class="fa fa-angle-right"></i>
-    </li>
-    <li>
-      <span>字典管理</span>
-    </li>
-  </ul>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <div class="portlet light portlet-fit full-height-content full-height-content-scrollable bordered">
-      <div class="portlet-title">
-        <div class="caption">
-          <i class=" icon-layers font-green"></i>
-          <span class="caption-subject font-green bold uppercase">字典分类</span>
-        </div>
-        <div class="actions">
-          <a href="javascript:editDictionaryType();" class="btn btn-circle btn-default btn-sm">
-            <i class="fa fa-plus"></i> 添加 </a>
-        </div>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh_cn" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh_cn" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_cn">
+<!--<![endif]-->
+<head>
+  <%@include file="../../common/common.jsp" %>
+</head>
+<!-- END HEAD -->
+
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
+<%@include file="../../common/header.jsp" %>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+      <div class="page-bar">
+        <ul class="page-breadcrumb">
+          <li>
+            <a href="${_PATH}/main.html">首页</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <span>系统管理</span>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <span>字典管理</span>
+          </li>
+        </ul>
       </div>
-      <div class="portlet-body">
-        <div class="full-height-content-body">
-          <ul class="list-group">
-            <c:forEach items="${dictionaryTypes}" var="dictionaryType">
-              <li class="list-group-item" onclick="findDictionary('${dictionaryType.id}')"> ${dictionaryType.zhName}
-                    <span class="badge badge-danger">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="portlet light portlet-fit full-height-content full-height-content-scrollable bordered">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class=" icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">字典分类</span>
+              </div>
+              <div class="actions">
+                <a href="javascript:editDictionaryType();" class="btn btn-circle btn-default btn-sm">
+                  <i class="fa fa-plus"></i> 添加 </a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="full-height-content-body">
+                <ul class="list-group">
+                  <c:forEach items="${dictionaryTypes}" var="dictionaryType">
+                    <li class="list-group-item"
+                        onclick="findDictionary('${dictionaryType.id}')"> ${dictionaryType.zhName}
+                      <span class="badge badge-danger">
                       <a href="javascript:delDictionaryType('${dictionaryType.id}');">
                         <i class="icon-trash"></i></a>
                     </span>
-                    <span class="badge badge-warning">
+                      <span class="badge badge-warning">
                       <a href="javascript:editDictionaryType('${dictionaryType.id}');">
                         <i class="icon-wrench"></i></a>
                     </span>
-              </li>
-            </c:forEach>
-          </ul>
+                    </li>
+                  </c:forEach>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="portlet light portlet-fit full-height-content full-height-content-scrollable bordered">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class=" icon-layers font-green"></i>
+                <span class="caption-subject font-green bold uppercase">字典内容</span>
+              </div>
+              <div class="actions">
+                <a href="javascript:editDictionary();" class="btn btn-circle btn-default btn-sm">
+                  <i class="fa fa-plus"></i> 添加 </a>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="full-height-content-body">
+                <table class="table table-striped table-hover table-bordered" id="dictionary">
+                  <thead>
+                  <tr>
+                    <th> 中文名</th>
+                    <th> 值</th>
+                    <th> 排序号</th>
+                    <th> 操作</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <!-- END CONTENT BODY -->
   </div>
-  <div class="col-md-8">
-    <div class="portlet light portlet-fit full-height-content full-height-content-scrollable bordered">
-      <div class="portlet-title">
-        <div class="caption">
-          <i class=" icon-layers font-green"></i>
-          <span class="caption-subject font-green bold uppercase">字典内容</span>
-        </div>
-        <div class="actions">
-          <a href="javascript:editDictionary();" class="btn btn-circle btn-default btn-sm">
-            <i class="fa fa-plus"></i> 添加 </a>
-        </div>
-      </div>
-      <div class="portlet-body">
-        <div class="full-height-content-body">
-          <table class="table table-striped table-hover table-bordered" id="dictionary">
-            <thead>
-            <tr>
-              <th> 中文名</th>
-              <th> 值</th>
-              <th> 排序号</th>
-              <th> 操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- END CONTENT -->
 </div>
+<!-- END CONTAINER -->
+<%@include file="/WEB-INF/common/footer.jsp" %>
 <script src="${_PATH}/static/plugins/jquery-nestable/jquery.nestable.js" type="text/javascript"></script>
 <script type="text/javascript">
   var dicTypeId = '';
@@ -172,3 +201,5 @@
     });
   }
 </script>
+</body>
+</html>

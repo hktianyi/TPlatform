@@ -7,9 +7,7 @@
       <%--<li class="sidebar-toggler-wrapper">
         <div class="sidebar-toggler"> </div>
       </li>--%>
-      <view:menu>
-        fdsfa
-      </view:menu>
+      <view:menu type="V" parentCode="0" />
     </ul>
   </div>
 </div>

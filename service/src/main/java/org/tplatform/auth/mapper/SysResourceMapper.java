@@ -25,7 +25,7 @@ public interface SysResourceMapper extends Mapper<SysResource> {
    */
   @Select("select t1.id, t1.pid, t1.name, t1.action, t1.icon from sys_auth_resource t1, sys_auth_role_resource t2" +
       " where t1.id = t2.resource_id and t2.role_id in (#{roleId}) and t1.type = #{type} and t1.status = #{status} order by t1.pid, t1.sort")
-  List<SysResource> findByRole(@Param("roleId") String roleId, @Param("type") SysResourceType type, @Param("status") StatusEnum status);
+  List<SysResource> findByRole(@Param("roleId") String roleId, @Param("type") SysResourceType type, @Param("status") StatusEnum status, @Param("parentCode") Long parentCode);
 
 
   /**

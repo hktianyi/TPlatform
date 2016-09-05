@@ -13,7 +13,7 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
   <a href="index.html">
-    <img src="${_PATH}/static/common/img/logo.png" alt="" /> </a>
+    <img src="${_PATH}/static/common/img/logo.png" alt=""/> </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
@@ -38,14 +38,16 @@
     <div class="form-group">
       <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
       <label class="control-label visible-ie8 visible-ie9">用户名</label>
-      <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" /> </div>
+      <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名"
+             name="username"/></div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">密码</label>
-      <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="password" /> </div>
+      <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off"
+             placeholder="密码" name="password"/></div>
     <div class="form-actions">
       <button type="submit" class="btn green uppercase">登录</button>
       <label class="rememberme check">
-        <input type="checkbox" name="remember" value="1" />记住我 </label>
+        <input type="checkbox" name="remember" value="1"/>记住我 </label>
       <a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a>
     </div>
     <%--<div class="login-options">
@@ -77,7 +79,8 @@
     <h3 class="font-green">Forget Password ?</h3>
     <p> Enter your e-mail address below to reset your password. </p>
     <div class="form-group">
-      <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email" /> </div>
+      <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email"/>
+    </div>
     <div class="form-actions">
       <button type="button" id="back-btn" class="btn btn-default">Back</button>
       <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
@@ -90,17 +93,17 @@
     <p class="hint"> Enter your personal details below: </p>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Full Name</label>
-      <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="fullname" /> </div>
+      <input class="form-control placeholder-no-fix" type="text" placeholder="Full Name" name="fullname"/></div>
     <div class="form-group">
       <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
       <label class="control-label visible-ie8 visible-ie9">Email</label>
-      <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" /> </div>
+      <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email"/></div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Address</label>
-      <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address" /> </div>
+      <input class="form-control placeholder-no-fix" type="text" placeholder="Address" name="address"/></div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">City/Town</label>
-      <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city" /> </div>
+      <input class="form-control placeholder-no-fix" type="text" placeholder="City/Town" name="city"/></div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Country</label>
       <select name="country" class="form-control">
@@ -111,20 +114,23 @@
     <p class="hint"> Enter your account details below: </p>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Username</label>
-      <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" /> </div>
+      <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username"
+             name="username"/></div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Password</label>
-      <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password" /> </div>
+      <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password"
+             placeholder="Password" name="password"/></div>
     <div class="form-group">
       <label class="control-label visible-ie8 visible-ie9">Re-type Your Password</label>
-      <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword" /> </div>
+      <input class="form-control placeholder-no-fix" type="password" autocomplete="off"
+             placeholder="Re-type Your Password" name="rpassword"/></div>
     <div class="form-group margin-top-20 margin-bottom-20">
       <label class="check">
-        <input type="checkbox" name="tnc" /> I agree to the
+        <input type="checkbox" name="tnc"/> I agree to the
         <a href="javascript:;"> Terms of Service </a> &
         <a href="javascript:;"> Privacy Policy </a>
       </label>
-      <div id="register_tnc_error"> </div>
+      <div id="register_tnc_error"></div>
     </div>
     <div class="form-actions">
       <button type="button" id="register-back-btn" class="btn btn-default">Back</button>
@@ -133,7 +139,7 @@
   </form>
   <!-- END REGISTRATION FORM -->
 </div>
-<%@include file="../common/footer.jsp"%>
+<%@include file="../common/footer.jsp" %>
 <script src="${_PATH}/static/pages/login/login.js" type="text/javascript"></script>
 </body>
 </html>
