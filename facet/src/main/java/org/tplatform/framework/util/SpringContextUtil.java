@@ -85,7 +85,7 @@ public class SpringContextUtil implements ApplicationContextAware {
    * @return
    */
   public static String getOperator() {
-    Object object = getSession().getAttribute(GlobalConstant.SESSION_USER_KEY);
+    Object object = getSession().getAttribute(GlobalConstant.KEY_SESSION_USER);
     if (object != null) {
       try {
         Field field = object.getClass().getDeclaredField("id");

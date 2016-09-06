@@ -2,9 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%
-    request.setAttribute("FILE_DOMAIN", "http://f.changdiyun.cn");
-%>
 <meta charset="utf-8" />
 <%--<title>${APP_NAME}</title>--%>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +29,7 @@
 <!-- BEGIN THEME LAYOUT STYLES -->
 <link href="${_PATH}/static/common/css/layout.min.css" rel="stylesheet" type="text/css" />
 <link href="${_PATH}/static/common/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-<link href="${_PATH}/static/common/css/custom.css" rel="stylesheet" type="text/css" />
+<link href="${_PATH}/static/common/css/custom.css?${_VERSION}" rel="stylesheet" type="text/css" />
 <!-- END THEME LAYOUT STYLES -->
 <%--<link rel="shortcut icon" href="${_PATH}/favicon.ico" type="image/x-icon" />--%>
 <script src="${_PATH}/static/plugins/jquery/jquery-2.2.2.min.js" type="text/javascript"></script>

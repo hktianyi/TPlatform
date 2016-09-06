@@ -8,9 +8,11 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.util.IntrospectorCleanupListener;
 import org.tplatform.constant.GlobalConstant;
+import org.tplatform.core.fsm.ProfileEnum;
 import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.framework.util.DateUtil;
 import org.tplatform.listener.SessionListener;
+import org.tplatform.util.PropertyUtil;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -28,11 +30,13 @@ public class WebAppConfig implements WebApplicationInitializer {
   // 启动执行
   public void onStartup(ServletContext servletContext) throws ServletException {
 
-//    System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, "prod");
-    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "dev");
+    // spring环境配置文件,默认开发环境
+    System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, PropertyUtil.getProInfo("config", AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME));
+    System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, ProfileEnum.DEV.name());
 
     // 应用初始化配置参数
-    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, "TPlatform");
+    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN, PropertyUtil.getProInfo("config", GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
+    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo("config", GlobalConstant.SYSTEM_APPLICATION_NAME));
     servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
     servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
 

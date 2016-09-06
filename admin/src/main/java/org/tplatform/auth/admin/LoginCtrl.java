@@ -37,7 +37,7 @@ public class LoginCtrl {
    */
   @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
   public String login() {
-    if (session.getAttribute(GlobalConstant.SESSION_USER_KEY) != null) {
+    if (session.getAttribute(GlobalConstant.KEY_SESSION_USER) != null) {
       return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";
     }
     return "/login.jsp";
@@ -56,11 +56,11 @@ public class LoginCtrl {
     SysUser sysUser = sysUserService.findByUsername(username);
     if (sysUser != null && sysUser.getPassword().equals(password)) {
       sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId(), StatusEnum.VALID));
-      session.setAttribute(GlobalConstant.SESSION_USER_KEY, sysUser);
+      session.setAttribute(GlobalConstant.KEY_SESSION_USER, sysUser);
       // 登录跳转
-      String loginTo = String.valueOf(session.getAttribute(GlobalConstant.SESSION_LOSE_TO_PAGE_KEY));
+      String loginTo = String.valueOf(session.getAttribute(GlobalConstant.KEY_SESSION_LOGIN_TO_PAGE));
       if (StringUtil.isNotEmpty(loginTo)) {
-        session.removeAttribute(GlobalConstant.SESSION_LOSE_TO_PAGE_KEY);
+        session.removeAttribute(GlobalConstant.KEY_SESSION_LOGIN_TO_PAGE);
         return InternalResourceViewResolver.REDIRECT_URL_PREFIX + loginTo;
       } else {
         return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";
@@ -90,7 +90,7 @@ public class LoginCtrl {
    */
   @RequestMapping(value = "/logout.html", method = RequestMethod.GET)
   public String logout() {
-    session.removeAttribute(GlobalConstant.SESSION_USER_KEY);
+    session.removeAttribute(GlobalConstant.KEY_SESSION_USER);
     return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/login";
   }
 

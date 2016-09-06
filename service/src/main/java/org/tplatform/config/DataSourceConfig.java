@@ -47,10 +47,10 @@ public class DataSourceConfig {
 //  }
 
   // JNDI数据源
-  @Profile("prod")
+  @Profile("PROD")
   @Bean(name = "dataSource")
   public DataSource jndiDataSource() {
-    String jndiName = PropertyUtil.getProInfo("db", "jdbc.jndiName");
+    String jndiName = PropertyUtil.getProInfo("db", "jndiName");
     if (StringUtil.isEmpty(jndiName)) return null;
 
     JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
@@ -58,7 +58,7 @@ public class DataSourceConfig {
     return jndiDataSourceLookup.getDataSource(jndiName);
   }
 
-  @Profile("dev")
+  @Profile("DEV")
   @Bean(name = "dataSource")
   public DataSource embeddedDataSource() {
     try {

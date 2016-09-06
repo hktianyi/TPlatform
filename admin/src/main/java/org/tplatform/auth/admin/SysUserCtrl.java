@@ -42,7 +42,7 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
   @RequestMapping("/checkOldPwd")
   @ResponseBody
   public boolean checkOldPwd(@RequestParam String oldPwd) {
-    SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.SESSION_USER_KEY);
+    SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.KEY_SESSION_USER);
     return oldPwd.equals(sysUser.getPassword());
   }
 
@@ -54,12 +54,12 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
   @RequestMapping("/updateAccount")
   @ResponseBody
   public RespBody updateAccount(@RequestParam(required = false) String nickname, @RequestParam(required = false) String mobile, @RequestParam(required = false) String email) {
-    SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.SESSION_USER_KEY);
+    SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.KEY_SESSION_USER);
     if (StringUtil.isNotEmpty(nickname)) sysUser.setNickname(nickname);
     if (StringUtil.isNotEmpty(mobile)) sysUser.setMobile(mobile);
     if (StringUtil.isNotEmpty(email)) sysUser.setEmail(email);
     if (sysUserService.updateAccount(sysUser)) {
-      session.setAttribute(GlobalConstant.SESSION_USER_KEY, sysUser);
+      session.setAttribute(GlobalConstant.KEY_SESSION_USER, sysUser);
       return RespBody.ok();
     } else {
       return RespBody.error("修改失败");
@@ -75,10 +75,10 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
   @ResponseBody
   public RespBody updatePwd(@RequestParam String oldPwd, @RequestParam String newPwd) {
     if (checkOldPwd(oldPwd)) {
-      SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.SESSION_USER_KEY);
+      SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.KEY_SESSION_USER);
       sysUser.setPassword(newPwd);
       if (sysUserService.updateAccount(sysUser)) {
-        session.removeAttribute(GlobalConstant.SESSION_USER_KEY);
+        session.removeAttribute(GlobalConstant.KEY_SESSION_USER);
         return RespBody.ok();
       } else {
         return RespBody.error("修改失败");

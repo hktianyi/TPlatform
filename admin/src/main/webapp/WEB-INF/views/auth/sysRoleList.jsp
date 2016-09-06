@@ -1,39 +1,56 @@
 <%@ page pageEncoding="UTF-8" language="java" %>
-<link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/material/easyui.css" type="text/css"/>
-<link rel="stylesheet" href="${_PATH}/static/plugins/jquery-easyui/themes/icon.css" type="text/css"/>
-<style>
-  .tree-folder, .tree-folder-open, .tree-file {
-    background: none !important;
-  }
-</style>
-<div class="page-bar">
-  <ul class="page-breadcrumb">
-    <li>
-      <a href="${_PATH}/main.html">首页</a>
-      <i class="fa fa-angle-right"></i>
-    </li>
-    <li>
-      <a href="#">权限管理</a>
-      <i class="fa fa-angle-right"></i>
-    </li>
-    <li>
-      <span>角色管理</span>
-    </li>
-  </ul>
-  <div class="page-toolbar">
-    <button type="button" class="btn blue btn-outline"><i class="fa fa-plus"></i> 添加</button>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh_cn" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh_cn" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_cn">
+<!--<![endif]-->
+<head>
+  <%@include file="/WEB-INF/common/common.jsp" %>
+</head>
+<!-- END HEAD -->
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
+<%@include file="/WEB-INF/common/header.jsp" %>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+      <div class="page-bar">
+        <ul class="page-breadcrumb">
+          <li>
+            <a href="${_PATH}/main.html">首页</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <a href="#">权限管理</a>
+            <i class="fa fa-angle-right"></i>
+          </li>
+          <li>
+            <span>角色管理</span>
+          </li>
+        </ul>
+        <div class="page-toolbar">
+          <button type="button" class="btn blue btn-outline"><i class="fa fa-plus"></i> 添加</button>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 6px;">
+        <div style="margin:6px 0;"></div>
+        <div class="col-md-3">
+          <ul class="easyui-tree"></ul>
+        </div>
+        <div class="col-md-9">
+          <table id="dataTable" class="table table-striped table-bordered table-hover table-header-fixed"></table>
+        </div>
+      </div>
+    </div>
+    <!-- END CONTENT BODY -->
   </div>
+  <!-- END CONTENT -->
 </div>
-<div class="row" style="margin-top: 6px;">
-  <div style="margin:6px 0;"></div>
-  <div class="col-md-3">
-    <ul class="easyui-tree"></ul>
-  </div>
-  <div class="col-md-9">
-    <table id="dataTable" class="table table-striped table-bordered table-hover table-header-fixed"></table>
-  </div>
-</div>
-<script type="text/javascript" src="${_PATH}/static/plugins/jquery-easyui/jquery.easyui.min.js"></script>
+<!-- END CONTAINER -->
+<%@include file="/WEB-INF/common/footer.jsp" %>
 <script type="text/javascript">
   $(function () {
     $('.easyui-tree').tree({
@@ -69,3 +86,5 @@
     });
   });
 </script>
+</body>
+</html>

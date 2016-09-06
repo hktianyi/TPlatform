@@ -39,7 +39,7 @@ public class MenuTag extends TagSupport {
     List<SysResource> resources;
     StringBuilder roleId = new StringBuilder();
     StringBuilder html = new StringBuilder();
-    SysUser user = (SysUser) SpringContextUtil.getSession().getAttribute(GlobalConstant.SESSION_USER_KEY);
+    SysUser user = (SysUser) SpringContextUtil.getSession().getAttribute(GlobalConstant.KEY_SESSION_USER);
     if (user != null && user.getRoles() != null) {
       user.getRoles().stream().forEach(sysRole -> roleId.append(",").append(sysRole.getId()));
     }

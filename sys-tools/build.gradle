@@ -1,0 +1,14 @@
+group 'org.tplatform'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+ext.versions = [
+]
+
+dependencies {
+    compile project(':facet')
+    compile(
+            "net.contentobjects.jnotify:jnotify:0.94"
+    )
+}

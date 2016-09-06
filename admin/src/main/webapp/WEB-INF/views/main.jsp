@@ -6,12 +6,11 @@
 <html lang="zh_cn">
 <!--<![endif]-->
 <head>
-  <%@include file="../common/common.jsp" %>
+  <%@include file="/WEB-INF/common/common.jsp" %>
 </head>
 <!-- END HEAD -->
-
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
-<%@include file="../common/header.jsp" %>
+<%@include file="/WEB-INF/common/header.jsp" %>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
   <!-- BEGIN CONTENT -->
@@ -73,6 +72,6 @@
   <!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
-<%@include file="../common/footer.jsp" %>
+<%@include file="/WEB-INF/common/footer.jsp" %>
 </body>
 </html>

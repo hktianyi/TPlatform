@@ -1,6 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="zh_cn" class="ie8 no-js"> <![endif]-->
@@ -10,7 +7,6 @@
 <!--<![endif]-->
 <head>
   <%@include file="../../common/common.jsp" %>
-  <link href="${_PATH}/static/plugins/jplayer/css/jplayer.blue.monday.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <!-- END HEAD -->
 

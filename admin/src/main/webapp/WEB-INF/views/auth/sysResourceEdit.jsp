@@ -1,64 +1,88 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
-<div class="row">
-  <div class="col-md-12">
-    <div class="portlet box purple">
-      <div class="portlet-title">
-        <div class="caption"><i class="fa fa-gift"></i> 菜单信息</div>
-      </div>
-      <div class="portlet-body">
-        <form role="form" id="editForm">
-          <div class="form-body">
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-btn"><button class="btn" type="button">图标</button></span>
-                <input type="text" class="form-control" name="icon" value="${data.icon}">
-              </div>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="zh_cn" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="zh_cn" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zh_cn">
+<!--<![endif]-->
+<head>
+  <%@include file="/WEB-INF/common/common.jsp" %>
+</head>
+<!-- END HEAD -->
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
+<%@include file="/WEB-INF/common/header.jsp" %>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <!-- BEGIN CONTENT -->
+  <div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portlet box purple">
+            <div class="portlet-title">
+              <div class="caption"><i class="fa fa-gift"></i> 菜单信息</div>
             </div>
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-btn"><button class="btn" type="button">名称</button></span>
-                <input type="text" class="form-control" name="name" value="${data.name}">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-btn"><button class="btn" type="button">路径</button></span>
-                <input type="text" class="form-control" name="action" value="${data.action}">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-btn"><button class="btn" type="button">排序号</button></span>
-                <input type="text" class="form-control" name="sort" value="${data.sort}">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-btn"><button class="btn" type="button">状态</button></span>
-                <select class="form-control" name="status">
-                  <option value="VALID"
-                          <c:if test="${data.status eq 'VALID'}">selected</c:if> >有效
-                  </option>
-                  <option value="INVALID"
-                          <c:if test="${data.status eq 'INVALID'}">selected</c:if> >无效
-                  </option>
-                </select>
-              </div>
+            <div class="portlet-body">
+              <form role="form" id="editForm">
+                <div class="form-body">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn"><button class="btn" type="button">图标</button></span>
+                      <input type="text" class="form-control" name="icon" value="${data.icon}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn"><button class="btn" type="button">名称</button></span>
+                      <input type="text" class="form-control" name="name" value="${data.name}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn"><button class="btn" type="button">路径</button></span>
+                      <input type="text" class="form-control" name="action" value="${data.action}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn"><button class="btn" type="button">排序号</button></span>
+                      <input type="text" class="form-control" name="sort" value="${data.sort}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn"><button class="btn" type="button">状态</button></span>
+                      <select class="form-control" name="status">
+                        <option value="VALID"
+                                <c:if test="${data.status eq 'VALID'}">selected</c:if> >有效
+                        </option>
+                        <option value="INVALID"
+                                <c:if test="${data.status eq 'INVALID'}">selected</c:if> >无效
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="id" name="id" value="${data.id}">
+                <input type="hidden" id="pid" name="pid" value="${data.pid}">
+                <input type="hidden" name="type" value="MENU">
+                <div class="form-actions right1">
+                  <button type="button" class="btn green" onclick="save()">保存</button>
+                  <button type="button" class="btn default">取消</button>
+                </div>
+              </form>
             </div>
           </div>
-          <input type="hidden" id="id" name="id" value="${data.id}">
-          <input type="hidden" id="pid" name="pid" value="${data.pid}">
-          <input type="hidden" name="type" value="MENU">
-          <div class="form-actions right1">
-            <button type="button" class="btn green" onclick="save()">保存</button>
-            <button type="button" class="btn default">取消</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
+    <!-- END CONTENT BODY -->
   </div>
+  <!-- END CONTENT -->
 </div>
+<!-- END CONTAINER -->
+<%@include file="/WEB-INF/common/footer.jsp" %>
 <script type="text/javascript">
   $(function () {
     if (!$('#id').val()) {
@@ -84,3 +108,5 @@
     });
   }
 </script>
+</body>
+</html>
