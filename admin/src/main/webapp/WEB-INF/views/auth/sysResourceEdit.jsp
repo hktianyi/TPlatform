@@ -7,75 +7,111 @@
 <!--<![endif]-->
 <head>
   <%@include file="/WEB-INF/common/common.jsp" %>
+  <link href="${_PATH}/static/plugins/jstree/themes/default/style.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <!-- END HEAD -->
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
-<%@include file="/WEB-INF/common/header.jsp" %>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
     <div class="page-content">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="portlet box purple">
-            <div class="portlet-title">
-              <div class="caption"><i class="fa fa-gift"></i> 菜单信息</div>
+      <form role="form" id="editForm" class="margin-bottom-40">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group form-md-line-input">
+                  <div class="input-icon">
+                    <input type="text" class="form-control" id="name" name="name" value="${data.name}" placeholder="名称">
+                    <i class="fa fa-edit"></i>
+                    <span class="help-block"></span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="portlet-body">
-              <form role="form" id="editForm">
-                <div class="form-body">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-btn"><button class="btn" type="button">图标</button></span>
-                      <input type="text" class="form-control" name="icon" value="${data.icon}">
-                    </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group form-md-line-input">
+                  <div class="input-icon">
+                    <input type="text" class="form-control" id="action" name="action" value="${data.action}"
+                           placeholder="URL">
+                    <i class="fa fa-internet-explorer"></i>
+                    <span class="help-block"></span>
                   </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-btn"><button class="btn" type="button">名称</button></span>
-                      <input type="text" class="form-control" name="name" value="${data.name}">
-                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group form-md-line-input">
+                  <div class="input-icon">
+                    <input type="text" class="form-control" id="sort" name="sort" value="${data.sort}"
+                           placeholder="排序号">
+                    <i class="fa fa-sort-numeric-asc"></i>
+                    <span class="help-block"></span>
                   </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-btn"><button class="btn" type="button">路径</button></span>
-                      <input type="text" class="form-control" name="action" value="${data.action}">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-btn"><button class="btn" type="button">排序号</button></span>
-                      <input type="text" class="form-control" name="sort" value="${data.sort}">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <span class="input-group-btn"><button class="btn" type="button">状态</button></span>
-                      <select class="form-control" name="status">
-                        <option value="VALID"
-                                <c:if test="${data.status eq 'VALID'}">selected</c:if> >有效
-                        </option>
-                        <option value="INVALID"
-                                <c:if test="${data.status eq 'INVALID'}">selected</c:if> >无效
-                        </option>
-                      </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group form-md-line-input">
+                  <label class="col-sm-2 control-label">角色: </label>
+                  <div class="col-sm-10">
+                    <div class="md-checkbox-inline">
+                      <c:forEach items="${roles}" var="role">
+                        <div class="md-checkbox">
+                          <input type="checkbox" id="role${role.id}" name="role[]" class="md-check" value="${role.id}"
+                          <c:forEach items="${data.roles}" var="r">
+                                 <c:if test="${r.id eq role.id}">checked</c:if>
+                          </c:forEach>
+                          >
+                          <label for="role${role.id}">
+                            <span></span>
+                            <span class="check"></span>
+                            <span class="box"></span> ${role.name} </label>
+                        </div>
+                      </c:forEach>
                     </div>
                   </div>
                 </div>
-                <input type="hidden" id="id" name="id" value="${data.id}">
-                <input type="hidden" id="pid" name="pid" value="${data.pid}">
-                <input type="hidden" name="type" value="MENU">
-                <div class="form-actions right1">
-                  <button type="button" class="btn green" onclick="save()">保存</button>
-                  <button type="button" class="btn default">取消</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group form-md-line-input">
+                  <label class="col-sm-4 control-label">图标: </label>
+                  <div class="col-sm-8">
+                    <input type="hidden" id="icon" name="icon" value="${empty data.icon ? 'tag' : data.icon}">
+                    <label for="icon"><i class="fa fa-${empty data.icon ? 'tag' : data.icon}"></i></label>
+                  </div>
                 </div>
-              </form>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group form-md-line-input">
+                  <label class="col-sm-4 control-label">状态: </label>
+                  <div class="col-sm-8">
+                    <input type="checkbox" id="status" value="VALID" name="status"
+                           class="make-switch switch-small" ${data.status eq 'VALID' ? 'checked' : ''}
+                           data-on-text="<i class='fa fa-check'></i>" data-on-color="info"
+                           data-off-text="<i class='fa fa-times'></i>" data-off-color="danger"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group form-md-line-input">
+              <label class="control-label">上级菜单</label>
+              <div id="resourceTree"></div>
             </div>
           </div>
         </div>
-      </div>
+        <input type="hidden" name="id" value="${data.id}"/>
+        <input type="hidden" id="pid" name="pid" value="${data.pid}"/>
+      </form>
     </div>
     <!-- END CONTENT BODY -->
   </div>
@@ -83,15 +119,46 @@
 </div>
 <!-- END CONTAINER -->
 <%@include file="/WEB-INF/common/footer.jsp" %>
+<script src="${_PATH}/static/plugins/jstree/jstree.min.js" type="text/javascript"></script>
 <script type="text/javascript">
   $(function () {
-    if (!$('#id').val()) {
-      $('#pid').val(window.sessionStorage.getItem("pid") || 0);
-      window.sessionStorage.removeItem("pid");
-    }
+    $('#resourceTree').on('select_node.jstree', function (e, data) {
+      $('#pid').val(data.node.id);
+    }).jstree({
+      'core': {
+        'data': {
+          url: _MODULE_NAME + '/loadTree/jstree?selectedIds=${data.pid}',
+          dataType: 'json',
+          data: function (node) {
+            return {'pid': node.id === '#' ? '0' : node.id};
+          }
+        }
+      }
+    });
+
+    $('label[for="icon"]').on('click', function () {
+      parent.layer.full(parent.layer.open({
+        type: 2,
+        content: _MODULE_NAME + '/icons',
+        area: ['800px', '500px'],
+        maxmin: true,
+        success: function (layero, index) {
+          window.parent[layero.find('iframe')[0]['name']].layerIndex = parent.layer.getFrameIndex(window.name);
+        },
+        end: function() {
+          var icon = sessionStorage.getItem('icon_name');
+          alert(icon);
+          if(icon) {
+            $('#icon').val(icon);
+            $('label[for="icon"] i').attr('class', 'fa fa-'+icon);
+          }
+        }
+      }));
+    });
   });
+
   function save() {
-    $.ajax(_PATH + '/sysResource/save', {
+    $.ajax(_MODULE_NAME + '/saveWithRole', {
       type: 'POST',
       data: $('#editForm').serialize(),
       success: function (resp) {

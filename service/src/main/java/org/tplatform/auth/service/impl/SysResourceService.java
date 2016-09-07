@@ -6,11 +6,16 @@ import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.fsm.SysResourceType;
 import org.tplatform.auth.mapper.SysResourceMapper;
 import org.tplatform.auth.service.ISysResourceService;
+import org.tplatform.core.entity.JsTree;
 import org.tplatform.core.fsm.StatusEnum;
+import org.tplatform.framework.util.StringUtil;
 import org.tplatform.impl.BaseService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +55,49 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
     return result.stream().filter(sysResource -> sysResource.getPid() == 0).collect(Collectors.toList());
   }
 
+  @Override
+  public List findForTree(Long pid, StatusEnum status, String selectedIds, Class<?> clazz) {
+    SysResource sysResource = new SysResource();
+    sysResource.setPid(pid);
+    List<SysResource> sysResourceList = super.find(sysResource);
+    if(JsTree.class.equals(clazz)) {
+      // 解析选中的标签
+      Set<Long> selectedId = (StringUtil.isEmpty(selectedIds) || "0".equals(selectedIds)) ? null : Arrays.stream(selectedIds.split(",")).map(Long::valueOf).collect(Collectors.toSet());
+
+      // 循环sysResourceList, 生成List<JsTree>
+      List list = sysResourceList.stream().map(temp -> {
+        JsTree jsTree = new JsTree();
+        jsTree.setId(temp.getId());
+        jsTree.setText(temp.getName());
+        jsTree.setIcon("fa fa-" + temp.getIcon());
+        jsTree.setState("loaded", temp.getLeaf() < 1);
+
+        if(selectedId!=null) {
+          // 判断当前level是否有选中的节点
+          for (Long id : selectedId) {
+            if(Objects.equals(temp.getId(), id)) {
+              selectedId.remove(id);
+              jsTree.setState("selected", "true");
+            }
+          }
+        }
+        return jsTree;
+      }).collect(Collectors.toList());
+
+//          // 未移除,需要循环层级
+//          // TODO 只处理了二级关联
+//          if(moved[0]) {
+//            SysResource child = super.find(id);
+//            sysResourceList.parallelStream().filter(temp -> Objects.equals(child.getPid(), temp.getId())).forEach(temp -> {
+//              sysResource.setPid(temp.getId());
+//              temp.setChildren(super.find(sysResource));
+//            });
+//          }
+      return list;
+    }
+    return sysResourceList;
+  }
+
 
   /**
    * 支持拖拽
@@ -59,5 +107,10 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
    */
   public boolean updatePid(Long id, Long pid) {
     return sysResourceMapper.updatePid(id, pid) > 0;
+  }
+
+  @Override
+  public boolean saveWithRole(SysResource sysResource, Long[] roles) {
+    return sysResourceMapper.saveWithRole(sysResource, roles) > 0;
   }
 }

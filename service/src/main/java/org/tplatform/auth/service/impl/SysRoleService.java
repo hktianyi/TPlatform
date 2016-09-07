@@ -21,8 +21,23 @@ public class SysRoleService extends BaseService<SysRole> implements ISysRoleServ
   @Autowired
   private SysRoleMapper sysRoleMapper;
 
+  /**
+   * 根据用户查找角色
+   * @param userId
+   * @param status
+   * @return
+   */
   public Set<SysRole> findByUserId(Long userId, StatusEnum status) {
     return sysRoleMapper.findByUserId(userId, status);
+  }
+
+  /**
+   * 根据菜单资源查找角色
+   * @param resourceId
+   * @return
+   */
+  public Set<SysRole> findByResourceId(Long resourceId) {
+    return sysRoleMapper.findByResourceId(resourceId);
   }
 
   /**

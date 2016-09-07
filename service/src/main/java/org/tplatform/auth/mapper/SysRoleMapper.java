@@ -26,6 +26,16 @@ public interface SysRoleMapper extends Mapper<SysRole> {
   Set<SysRole> findByUserId(@Param("userId") Long userId, @Param("status") StatusEnum status);
 
   /**
+   * 根据菜单资源查询角色
+   *
+   * @param resourceId
+   * @return
+   */
+  @Select("select t1.id, t1.name from sys_auth_role t1, sys_auth_role_resource t2" +
+      " where t1.id = t2.role_id and t2.resource_id = ${resourceId}")
+  Set<SysRole> findByResourceId(@Param("resourceId") Long resourceId);
+
+  /**
    * 更新父节点，拖拽支持
    * @param id
    * @param pid

@@ -42,9 +42,9 @@
       <ul class="nav navbar-nav pull-right">
         <li class="dropdown dropdown-user">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-            <img alt="" class="img-circle" src="${_PATH}/static/pages/user/img/${user.avatarUrl}_small.jpg"/>
+            <img alt="" class="img-circle" src="${_PATH}/static/pages/user/img/${_USER.avatarUrl}_small.jpg"/>
             <span class="username">
-              ${user.nickname} </span>
+              ${_USER.nickname} </span>
             <i class="fa fa-angle-down"></i>
           </a>
           <ul class="dropdown-menu">

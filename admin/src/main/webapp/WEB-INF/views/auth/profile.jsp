@@ -44,10 +44,10 @@
             <div class="portlet light profile-sidebar-portlet ">
               <!-- SIDEBAR USERPIC -->
               <div class="profile-userpic">
-                <img src="${_PATH}/static/pages/user/img/${user.avatarUrl}.jpg" class="img-responsive" alt=""></div>
+                <img src="${_PATH}/static/pages/user/img/${_USER.avatarUrl}.jpg" class="img-responsive" alt=""></div>
               <div class="profile-usertitle">
-                <div class="profile-usertitle-name"> ${user.nickname} </div>
-                <div class="profile-usertitle-job"> ${user.username} </div>
+                <div class="profile-usertitle-name"> ${_USER.nickname} </div>
+                <div class="profile-usertitle-job"> ${_USER.username} </div>
               </div>
               <%--<div class="profile-userbuttons">
                 <button type="button" class="btn btn-circle green btn-sm">Follow</button>
@@ -128,35 +128,35 @@
                         <form role="form">
                           <div class="form-group">
                             <label class="control-label">用户名</label>
-                            <input type="text" class="form-control" name="username" value="${user.username}"
+                            <input type="text" class="form-control" name="username" value="${_USER.username}"
                                    disabled="disabled"/></div>
                           <div class="form-group">
                             <label class="control-label">昵称</label>
                             <input type="text" placeholder="请填写昵称" class="form-control" name="nickname"
-                                   value="${user.nickname}"/></div>
+                                   value="${_USER.nickname}"/></div>
                           <div class="form-group">
                             <label class="control-label">手机</label>
                             <input type="text" placeholder="请填写手机号" class="form-control" name="mobile"
-                                   value="${user.mobile}"/></div>
+                                   value="${_USER.mobile}"/></div>
                           <div class="form-group">
                             <label class="control-label">邮箱</label>
                             <input type="text" placeholder="请填写电子邮箱" class="form-control" name="email"
-                                   value="${user.email}"/>
+                                   value="${_USER.email}"/>
                           </div>
                           <div class="form-group">
                             <label class="control-label">状态</label>
                             <select class="form-control" name="status">
                               <option value="VALID"
-                                      <c:if test="${user.status eq 'VALID'}">SELECTED</c:if> >激活
+                                      <c:if test="${_USER.status eq 'VALID'}">SELECTED</c:if> >激活
                               </option>
                               <option value="INVALID"
-                                      <c:if test="${user.status eq 'INVALID'}">SELECTED</c:if> >冻结
+                                      <c:if test="${_USER.status eq 'INVALID'}">SELECTED</c:if> >冻结
                               </option>
                             </select>
                           </div>
                           <div class="form-group">
                             <label class="control-label">加入时间</label>
-                            <input type="text" class="form-control" name="createTime" value="${user.createTime}"
+                            <input type="text" class="form-control" name="createTime" value="${_USER.createTime}"
                                    disabled="disabled"/>
                           </div>
                           <div class="margiv-top-10">

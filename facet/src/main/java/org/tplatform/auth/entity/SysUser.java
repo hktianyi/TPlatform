@@ -16,11 +16,10 @@ import java.util.Set;
 public class SysUser extends BaseEntity {
 
   private String username;// 登录名，唯一，不可修改
+  private String nickname;// 昵称
   private String password;// 登录密码
   private String mobile;  // 手机号
   private String email;   // 邮箱
-  private String salt;    // 加密盐值
-  private String nickname;// 昵称
   private String avatarUrl;  // 头像
 
   @Transient

@@ -8,7 +8,6 @@
 <head>
   <%@include file="../../common/common.jsp" %>
   <link href="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.css" rel="stylesheet" type="text/css" />
-  <link href="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css" />
 </head>
 <!-- END HEAD -->
 
@@ -44,19 +43,11 @@
       <thead>
       <th>名称</th>
       <th>状态</th>
+      <th>类型</th>
       <th>排序号</th>
       <th>操作</th>
       </thead>
     </table>
-    <%--<div id="rightKey" class="easyui-menu hide" style="width:120px;">
-      <div onclick="curdTree('append')" data-options="iconCls:'icon-add'">添加同级</div>
-      <div onclick="curdTree('append', 'sub')" data-options="iconCls:'icon-add'">添加下级</div>
-      <div onclick="curdTree('update')" data-options="iconCls:'icon-edit'">修改</div>
-      <div onclick="curdTree('remove')" data-options="iconCls:'icon-remove'">删除</div>
-      <div class="menu-sep"></div>
-      <div onclick="curdTree('expand')">展开</div>
-      <div onclick="curdTree('collapse')">折叠</div>
-    </div>--%>
   </div>
 </div>
     </div>
@@ -73,8 +64,7 @@
     treeGrid = $('#treeGrid').treetable({
       expandable: true,
       onNodeCollapse: function() {
-        var node = this;
-        treeGrid.treetable("unloadBranch", node);
+        treeGrid.treetable("unloadBranch", this);
       },
       onNodeExpand: function() {
         loader(this);
@@ -86,23 +76,27 @@
     function loader(node, table) {
       $.ajax({
         async: false, // Must be false, otherwise loadBranch happens after showChildren?
-        url: _MODULE_NAME + "/loadTree?id=" + (node?node.id:'')
+        url: _MODULE_NAME + "/loadTree/treetable?pid=" + (node?node.id:0)
       }).done(function(resp) {
-        var rows = $.map(resp.data, function (data) {
+        var rows = $.map(resp, function (data) {
           return $('<tr/>', {
             'data-tt-id': data.id,
             'data-tt-parent-id': data.pid,
-            'data-tt-branch': true,
-            html: '<td><i class="fa fa-'+data.icon+'"/> '+data.name+'</td>' +
-            '<td>'+data.status+'</td>' +
+            'data-tt-branch': data.leaf > 0,
+            html: '<td><span><i class="fa fa-'+data.icon+'"/> '+data.name+'</span></td>' +
+            '<td><i '+(data.status === 'VALID' ? 'class="fa fa-smile-o" style="color:green"' : 'class="fa fa-frown-o" style="color:red"')+'/></td>' +
+            '<td>'+(data.type === 'MENU' ? '菜单' : '按钮')+'</td>' +
             '<td>'+data.sort+'</td>' +
-            '<td>'+data.id+'</td>'
+            '<td><div class="btn-group btn-group-xs btn-group-solid">' +
+            '<button onclick="edit(\'' + data.id + '\');" type="button" class="btn blue" title="修改"><i class="fa fa-edit"></i> 修改</button>' +
+            '<button onclick="del(\'' + data.id + '\');" type="button" class="btn red" title="删除"><i class="fa fa-trash"></i> 删除</button>' +
+            '</div></td>'
           })[0];
         });
         (table||treeGrid).treetable("loadBranch", node, rows);
       });
     }
-    // Highlight selected row
+    // 高亮选中行
     $(document).on("mousedown", "#tree tbody tr", function() {
       $("tr.selected").removeClass("selected");
       $(this).addClass("selected");

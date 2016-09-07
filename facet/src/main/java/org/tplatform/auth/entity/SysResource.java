@@ -7,6 +7,7 @@ import org.tplatform.core.entity.BaseEntity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 资源信息（包括菜单、按钮）
@@ -24,5 +25,11 @@ public class SysResource extends BaseEntity {
   private Integer sort;// 排序
 
   @Transient
+  private Integer leaf;// 叶子节点
+
+  @Transient
   private List<SysResource> children;
+
+  @Transient
+  private Set<SysRole> roles;
 }

@@ -52,12 +52,15 @@
       shade: 0.6,
       maxmin: true,
       moveType: 1,
-      btn: ['确认', '取消'],
       area: ['800px', '500px'],
-      content: (url || (_MODULE_NAME + '/edit')) + '?layer=1&id=' + (id || ''),
+      content: (url || (_MODULE_NAME + '/edit')) + '?id=' + (id || ''),
       success: function (layero, index) {
-        console.log(layero, index);
-      }
+      },
+      btn: ['确认', '取消'],
+      yes: function(index, layero) {
+        window[layero.find('iframe')[0]['name']].save();
+      },
+      cancel: function(layero, index) {layer.close(index);}
     });
   }
   // 编辑

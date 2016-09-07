@@ -65,8 +65,8 @@
         {
           "sTitle": "操作", "name": "createTime", "data": function (d) {
           return '<div class="btn-group btn-group-xs btn-group-solid">' +
-              '<button onclick="edit(\'' + d.id + '\');" type="button" class="btn blue" title="修改"><i class="fa fa-edit"></i></button>' +
-              '<button onclick="del(\'' + d.id + '\');" type="button" class="btn red" title="删除"><i class="fa fa-trash"></i></button>' +
+              '<button onclick="edit(\'' + d.id + '\');" type="button" class="btn blue" title="修改"><i class="fa fa-edit"></i> 修改</button>' +
+              '<button onclick="del(\'' + d.id + '\');" type="button" class="btn red" title="删除"><i class="fa fa-trash"></i> 删除</button>' +
               '</div>';
         }, "sWidth": "8%"
         }

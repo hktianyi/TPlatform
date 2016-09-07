@@ -11,7 +11,20 @@ import java.util.Set;
  */
 public interface ISysRoleService extends IBaseService<SysRole> {
 
+  /**
+   * 根据用户查找角色
+   * @param userId
+   * @param status
+   * @return
+   */
   Set<SysRole> findByUserId(Long userId, StatusEnum status);
+
+  /**
+   * 根据菜单资源查找角色
+   * @param resourceId
+   * @return
+   */
+  Set<SysRole> findByResourceId(Long resourceId);
 
   /**
    * 支持拖拽
@@ -19,5 +32,5 @@ public interface ISysRoleService extends IBaseService<SysRole> {
    * @param pid
    * @return
    */
-  public boolean updatePid(Long id, Long pid);
+  boolean updatePid(Long id, Long pid);
 }
