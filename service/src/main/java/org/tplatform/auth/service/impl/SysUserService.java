@@ -27,4 +27,13 @@ public class SysUserService extends BaseService<SysUser> implements ISysUserServ
   public boolean updateAccount(SysUser sysUser) {
     return sysUserMapper.updateByPrimaryKeySelective(sysUser) > 0;
   }
+
+  @Override
+  public boolean saveWithRole(SysUser sysUser, Long[] roles) {
+    super.saveOrUpdate(sysUser);
+    if (sysUser.getId() == null) {
+      sysUser = super.findOne(sysUser);
+    }
+    return sysUserMapper.saveWithRole(sysUser, roles) > 0;
+  }
 }

@@ -11,4 +11,6 @@ public interface ISysUserService extends IBaseService<SysUser> {
   SysUser findByUsername(String username);
 
   boolean updateAccount(SysUser sysUser);
+
+  boolean saveWithRole(SysUser sysUser, Long[] roles);
 }

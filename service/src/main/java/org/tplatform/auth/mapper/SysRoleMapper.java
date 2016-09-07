@@ -2,6 +2,7 @@ package org.tplatform.auth.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.tplatform.auth.entity.SysRole;
 import org.tplatform.core.fsm.StatusEnum;
@@ -21,8 +22,7 @@ public interface SysRoleMapper extends Mapper<SysRole> {
    * @param status
    * @return
    */
-  @Select("select t1.id, t1.name from sys_auth_role t1, sys_auth_user_role t2" +
-      " where t1.id = t2.role_id and t2.user_id = ${userId} and t1.status = #{status}")
+  @SelectProvider(type = SQLProvider.class, method = "findByUserId")
   Set<SysRole> findByUserId(@Param("userId") Long userId, @Param("status") StatusEnum status);
 
   /**
@@ -43,4 +43,13 @@ public interface SysRoleMapper extends Mapper<SysRole> {
    */
   @Update("UPDATE sys_auth_role SET pid = #{pid} WHERE id = #{id}")
   int updatePid(@Param("id") Long id, @Param("pid") Long pid);
+
+  class SQLProvider {
+    public String findByUserId(Long userId, StatusEnum status) {
+      String sql = "select t1.id, t1.name from sys_auth_role t1, sys_auth_user_role t2" +
+          " where t1.id = t2.role_id and t2.user_id = #{userId}";
+      if(status != null) sql += " and t1.status = #{status}";
+      return sql;
+    }
+  }
 }

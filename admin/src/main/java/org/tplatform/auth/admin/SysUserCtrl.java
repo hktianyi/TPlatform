@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tplatform.auth.entity.SysUser;
+import org.tplatform.auth.service.ISysRoleService;
 import org.tplatform.auth.service.ISysUserService;
 import org.tplatform.common.BaseCtrl;
 import org.tplatform.constant.GlobalConstant;
 import org.tplatform.core.entity.RespBody;
+import org.tplatform.core.fsm.StatusEnum;
 import org.tplatform.framework.util.StringUtil;
 
 /**
@@ -22,6 +25,18 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
 
   @Autowired
   private ISysUserService sysUserService;
+  @Autowired
+  private ISysRoleService sysRoleService;
+
+  @Override
+  protected void editHook(Long id, ModelMap modelMap) {
+    modelMap.put("roles", sysRoleService.findAll());
+    if (id != null) {
+      SysUser sysUser = sysUserService.find(id);
+      sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId(), null));
+      modelMap.put("data", sysUser);
+    }
+  }
 
   /**
    * 账户信息配置
@@ -86,5 +101,17 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
     } else {
       return RespBody.error("当前密码错误");
     }
+  }
+
+  /**
+   * 保存, status如果为空,则设置为无效(INVALID)
+   * @param sysUser
+   * @return
+   */
+  @RequestMapping(value = "/saveWithRole", method = RequestMethod.POST)
+  @ResponseBody
+  public RespBody saveWithRole(SysUser sysUser, @RequestParam("role[]") Long[] roles) {
+    if(sysUser.getStatus() == null) sysUser.setStatus(StatusEnum.INVALID);
+    return RespBody.ok(sysUserService.saveWithRole(sysUser, roles));
   }
 }
