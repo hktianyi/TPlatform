@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" debug="false">
-    <property name="APP_Name" value="falsework"/>
+    <property name="APP_Name" value="tplatform"/>
     <property name="dir" value="/logs/${APP_Name}/"/>
 
     <springProfile name="dev">

@@ -6,104 +6,150 @@
 <html lang="zh_cn">
 <!--<![endif]-->
 <head>
-  <%@include file="/WEB-INF/common/common.jsp" %>
+  <%@include file="../../common/common.jsp" %>
+  <link href="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.css" rel="stylesheet" type="text/css" />
+  <link href="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css" />
 </head>
 <!-- END HEAD -->
+
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
-<%@include file="/WEB-INF/common/header.jsp" %>
+<%@include file="../../common/header.jsp" %>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
   <!-- BEGIN CONTENT -->
   <div class="page-content-wrapper">
     <!-- BEGIN CONTENT BODY -->
     <div class="page-content">
-      <div class="page-bar">
-        <ul class="page-breadcrumb">
-          <li>
-            <a href="${_PATH}/main.html">首页</a>
-            <i class="fa fa-angle-right"></i>
-          </li>
-          <li>
-            <a href="#">权限管理</a>
-            <i class="fa fa-angle-right"></i>
-          </li>
-          <li>
-            <span>菜单管理</span>
-          </li>
-        </ul>
-        <div class="page-toolbar">
-          <button type="button" class="btn blue btn-outline"><i class="fa fa-plus"></i> 添加</button>
-        </div>
-      </div>
-      <div class="row" style="margin-top: 6px;">
-        <div class="col-md-12">
-          <table id="treeGrid" class="easyui-treegrid"></table>
-          <div id="rightKey" class="easyui-menu hide" style="width:120px;">
-            <div onclick="curdTree('append')" data-options="iconCls:'icon-add'">添加同级</div>
-            <div onclick="curdTree('append', 'sub')" data-options="iconCls:'icon-add'">添加下级</div>
-            <div onclick="curdTree('update')" data-options="iconCls:'icon-edit'">修改</div>
-            <div onclick="curdTree('remove')" data-options="iconCls:'icon-remove'">删除</div>
-            <div class="menu-sep"></div>
-            <div onclick="curdTree('expand')">展开</div>
-            <div onclick="curdTree('collapse')">折叠</div>
-          </div>
-        </div>
-      </div>
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <a href="${_PATH}/main.html">首页</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a href="#">权限管理</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <span>菜单管理</span>
+    </li>
+  </ul>
+  <div class="page-toolbar">
+    <button type="button" class="btn blue btn-outline"><i class="fa fa-plus"></i> 添加</button>
+  </div>
+</div>
+<div class="row" style="margin-top: 6px;">
+  <div class="col-md-12">
+    <table id="treeGrid" class="table table-striped table-bordered table-hover table-header-fixed">
+      <thead>
+      <th>名称</th>
+      <th>状态</th>
+      <th>排序号</th>
+      <th>操作</th>
+      </thead>
+    </table>
+    <%--<div id="rightKey" class="easyui-menu hide" style="width:120px;">
+      <div onclick="curdTree('append')" data-options="iconCls:'icon-add'">添加同级</div>
+      <div onclick="curdTree('append', 'sub')" data-options="iconCls:'icon-add'">添加下级</div>
+      <div onclick="curdTree('update')" data-options="iconCls:'icon-edit'">修改</div>
+      <div onclick="curdTree('remove')" data-options="iconCls:'icon-remove'">删除</div>
+      <div class="menu-sep"></div>
+      <div onclick="curdTree('expand')">展开</div>
+      <div onclick="curdTree('collapse')">折叠</div>
+    </div>--%>
+  </div>
+</div>
     </div>
     <!-- END CONTENT BODY -->
   </div>
   <!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
-<%@include file="/WEB-INF/common/footer.jsp" %>
-
+<%@include file="../../common/footer.jsp" %>
+<script src="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.js" type="text/javascript"></script>
 <script type="text/javascript">
   var treeGrid;
   $(function () {
-    treeGrid = $('#treeGrid').treegrid({
-      loader: function (param, success, error) {
-        $.getJSON(_PATH + '/${MODULE_NAME}/loadTree', param, function (resp) {
-          resp.data.forEach(function (item) {
-            item.createTime = moment(item.createTime).format('YYYY-M-D H:m');
-            item.status = 'VALID' === item.status ? '有效' : '无效';
-            item.iconCls = 'fa fa-' + item.icon;
-            if (!item.action) item.state = 'closed';
-          });
-          success(resp.data);
+    treeGrid = $('#treeGrid').treetable({
+      expandable: true,
+      onNodeCollapse: function() {
+        var node = this;
+        treeGrid.treetable("unloadBranch", node);
+      },
+      onNodeExpand: function() {
+        loader(this);
+      },
+      onInitialized: function () {
+        loader(null, $('#treeGrid'));
+      }
+    });
+    function loader(node, table) {
+      $.ajax({
+        async: false, // Must be false, otherwise loadBranch happens after showChildren?
+        url: _MODULE_NAME + "/loadTree?id=" + (node?node.id:'')
+      }).done(function(resp) {
+        var rows = $.map(resp.data, function (data) {
+          return $('<tr/>', {
+            'data-tt-id': data.id,
+            'data-tt-parent-id': data.pid,
+            'data-tt-branch': true,
+            html: '<td><i class="fa fa-'+data.icon+'"/> '+data.name+'</td>' +
+            '<td>'+data.status+'</td>' +
+            '<td>'+data.sort+'</td>' +
+            '<td>'+data.id+'</td>'
+          })[0];
+        });
+        (table||treeGrid).treetable("loadBranch", node, rows);
+      });
+    }
+    // Highlight selected row
+    $(document).on("mousedown", "#tree tbody tr", function() {
+      $("tr.selected").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    // Drag & Drop Example Code
+    $(document).on("mouseenter", "#tree .file, #tree .directory", function() {
+      var el = $(this);
+      if(!el.data("dndInit")) {
+        el.data("dndInit", true);
+        el.draggable({
+          helper: "clone",
+          opacity: .75,
+          refreshPositions: true, // Performance?
+          revert: "invalid",
+          revertDuration: 300,
+          scroll: true
+        });
+      }
+    });
+    $("#tree .directory").parents("tr").each(function() {
+      droppableSetup.apply(this);
+    });
+  });
+  function droppableSetup() {
+    $(this).droppable({
+      accept: ".file, .directory",
+      drop: function(e, ui) {
+        var droppedEl, node;
+        droppedEl = ui.draggable.parents("tr");
+        node = $("#tree").treetable("node", droppedEl.data("ttId"));
+        $("#tree").treetable("move", node.id, $(this).data("ttId"));
+        // Update server-side tree
+        $.ajax({
+          data: { node: { parent_id: node.parentId } },
+          type: "PUT",
+          url: "/nodes/" + node.id
         });
       },
-      idField: 'id',
-      treeField: 'name',
-      lines: true,
-      columns: [[
-        {field: 'id', title: '编码', width: '10%'},
-        {field: 'name', title: '名称', width: '20%'},
-        {field: 'action', title: '路径', width: '30%'},
-        {field: 'status', title: '状态', width: '10%'},
-        {field: 'sort', title: '排序号', width: '10%'},
-        {field: 'createTime', title: '创建时间', width: '10%'}
-      ]],
-      onLoadSuccess: function (row) {
-        treeGrid.treegrid('enableDnd');
-        $('#rightKey').removeClass('hide');
-      },
-      onBeforeDrop: function (targetRow, sourceRow) {
-        var pid = targetRow && targetRow.id;
-        treeGrid.treegrid('expand', pid);
-        $.post(_PATH + '/${MODULE_NAME}/updatePid', {pid: pid, id: sourceRow.id});
-      },
-      onContextMenu: function (e, row) {
-        if (row) {
-          e.preventDefault();
-          $(this).treegrid('select', row.id);
-          $('#rightKey').menu('show', {
-            left: e.pageX,
-            top: e.pageY
-          });
+      hoverClass: "accept",
+      over: function(e, ui) {
+        var droppedEl = ui.draggable.parents("tr");
+        if(this != droppedEl[0] && !$(this).is(".expanded")) {
+          $("#tree").treetable("expandNode", $(this).data("ttId"));
         }
       }
     });
-  });
+  }
   function curdTree(oper, level) {
     var layerIndex;
     var node = treeGrid.treegrid('getSelected');
