@@ -1,8 +1,6 @@
 package org.tplatform.auth.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.fsm.SysResourceType;
@@ -45,7 +43,7 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
   }
 
   @Override
-  @Cacheable(value = "_SYS", key = "'_MENU_TREE_' + #roleId + #status + #parentCode")
+//  @Cacheable(value = "_SYS", key = "'_MENU_TREE_' + #roleId + #status + #parentCode")
   public List<SysResource> findMenuTree(String roleId, StatusEnum status, Long parentCode) {
     List<SysResource> result = sysResourceMapper.findByRole(roleId, SysResourceType.MENU, status, parentCode);
     result.stream().forEach(parent -> result.stream().forEach(child -> {
@@ -113,12 +111,9 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
   }
 
   @Override
-  @CacheEvict(value = "_SYS", key = "'_MENU_TREE_' + #roleId + #status + #parentCode")
+//  @CacheEvict(value = "_SYS", key = "'_MENU_TREE_*'")
   public boolean saveWithRole(SysResource sysResource, Long[] roles) {
     super.saveOrUpdate(sysResource);
-    if (sysResource.getId() == null) {
-      sysResource = super.findOne(sysResource);
-    }
     return sysResourceMapper.saveWithRole(sysResource, roles) > 0;
   }
 }

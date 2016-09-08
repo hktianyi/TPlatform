@@ -4,14 +4,12 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 ext.versions = [
-        mybatis       : '3.4.0',
+        mybatis       : '3.4.1',
         mybatis_spring: '1.3.0',
-        mapper        : '3.3.8',
+        mapper        : '3.3.9',
 
-        druid         : '1.0.20',
-        mysql         : '5.1.37',
-        h2            : '1.4.192',
-        hsqldb        : '2.3.4'
+        druid         : '1.0.25',
+        mysql         : '5.1.37'
 ]
 
 dependencies {
@@ -23,10 +21,11 @@ dependencies {
 
             "com.alibaba:druid:${versions.druid}",
             "mysql:mysql-connector-java:${versions.mysql}",
-            "com.h2database:h2:${versions.h2}",
-            "org.hsqldb:hsqldb:${versions.hsqldb}",
+//            "com.h2database:h2:1.4.192",
+//            "org.hsqldb:hsqldb:2.3.4",
 
             "org.apache.httpcomponents:httpclient:4.3.6",
-            "redis.clients:jedis:2.6.2"
+            "redis.clients:jedis:2.6.2",
+            "org.ehcache:ehcache:3.1.1"
     )
 }

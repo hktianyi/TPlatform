@@ -18,6 +18,11 @@
         <property name="LEVEL_OTHER" value="WARN"/>
         <property name="LEVEL_SQL" value="WARN"/>
         <property name="LEVEL_SQL_RESULT" value="WARN"/>
+
+        <!-- 程序异常日志 -->
+        <logger name="org.tplatform" level="${LEVEL_ROOT}" addtivity="true">
+            <appender-ref ref="SysAppender"/>
+        </logger>
     </springProfile>
 
     <appender name="StdoutAppender" class="ch.qos.logback.core.ConsoleAppender">
@@ -37,11 +42,6 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>
-
-    <!-- 程序异常日志 -->
-    <logger name="org.tplatform" level="${LEVEL_ROOT}" addtivity="true">
-        <appender-ref ref="SysAppender"/>
-    </logger>
 
     <!-- 下面配置一些第三方包的日志过滤级别，避免刷屏 -->
     <logger name="org.apache.zookeeper" level="${LEVEL_OTHER}"/>

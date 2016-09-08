@@ -8,6 +8,7 @@ import org.tplatform.auth.entity.SysRole;
 import org.tplatform.core.fsm.StatusEnum;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -45,10 +46,10 @@ public interface SysRoleMapper extends Mapper<SysRole> {
   int updatePid(@Param("id") Long id, @Param("pid") Long pid);
 
   class SQLProvider {
-    public String findByUserId(Long userId, StatusEnum status) {
+    public String findByUserId(Map param) {
       String sql = "select t1.id, t1.name from sys_auth_role t1, sys_auth_user_role t2" +
           " where t1.id = t2.role_id and t2.user_id = #{userId}";
-      if(status != null) sql += " and t1.status = #{status}";
+      if(param.get("status") != null) sql += " and t1.status = #{status}";
       return sql;
     }
   }

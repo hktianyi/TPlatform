@@ -3,6 +3,7 @@ bin
 out
 build
 target
+classes
 *.class
 
 # IDE & TOOL properties #

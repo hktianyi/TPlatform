@@ -7,19 +7,22 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.tplatform.util.PropertyUtil;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Created by Tianyi on 2016/1/12.
  */
-//@Configuration
-//@EnableCaching
+@Configuration
+@EnableCaching
+@EnableRedisHttpSession
+@Profile({"PROD", "TEST"})
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
   private static final StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
@@ -43,18 +46,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
   }
 
   @Bean
-  public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory cf) {
+  public CacheManager cacheManager() {
     RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(cf);
+    redisTemplate.setConnectionFactory(redisConnectionFactory());
     redisTemplate.setKeySerializer(stringRedisSerializer);
     redisTemplate.setHashKeySerializer(stringRedisSerializer);
-    return redisTemplate;
-  }
 
-  @Bean
-  public CacheManager cacheManager(RedisTemplate redisTemplate) {
     RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-
     // Number of seconds before expiration. Defaults to unlimited (0)
     cacheManager.setDefaultExpiration(3000); // Sets the default expire time (in seconds)
     return cacheManager;

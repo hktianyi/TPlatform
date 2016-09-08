@@ -14,20 +14,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.tplatform.exception.PlatformMappingExceptionResolver;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * spring配置文件
@@ -59,16 +55,16 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
   }
 
   // 统一异常处理
-  @Bean
-  public PlatformMappingExceptionResolver platformMappingExceptionResolver() {
-    PlatformMappingExceptionResolver platformMappingExceptionResolver = new PlatformMappingExceptionResolver();
-//    platformMappingExceptionResolver.setDefaultErrorView("/404.jsp");
-//    platformMappingExceptionResolver.setExceptionAttribute("e");
-    Properties properties = new Properties();
-    properties.put("java.lang.RuntimeException", "/404.jsp");
-    platformMappingExceptionResolver.setExceptionMappings(properties);
-    return platformMappingExceptionResolver;
-  }
+//  @Bean
+//  public PlatformMappingExceptionResolver platformMappingExceptionResolver() {
+//    PlatformMappingExceptionResolver platformMappingExceptionResolver = new PlatformMappingExceptionResolver();
+////    platformMappingExceptionResolver.setDefaultErrorView("/404.jsp");
+////    platformMappingExceptionResolver.setExceptionAttribute("e");
+//    Properties properties = new Properties();
+//    properties.put("java.lang.RuntimeException", "/404.jsp");
+//    platformMappingExceptionResolver.setExceptionMappings(properties);
+//    return platformMappingExceptionResolver;
+//  }
 
   // 静态资源映射器
   @Override
@@ -92,10 +88,10 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
   }
 
   // 异常处理
-  @Override
-  public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-    ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver = new ExceptionHandlerExceptionResolver();
-  }
+//  @Override
+//  public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+//    ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver = new ExceptionHandlerExceptionResolver();
+//  }
 
   @InitBinder
   public void initBinder(WebDataBinder binder) {

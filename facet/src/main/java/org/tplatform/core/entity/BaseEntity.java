@@ -4,6 +4,7 @@ import lombok.Data;
 import org.tplatform.core.fsm.StatusEnum;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public abstract class BaseEntity implements Serializable {
   // Id
   @Id
   @Column(length = 20)
+  @GeneratedValue(generator = "JDBC")
   protected Long id;
   // 创建时间
   @Column(columnDefinition = "datetime")

@@ -110,6 +110,7 @@
           </div>
         </div>
         <input type="hidden" name="id" value="${data.id}"/>
+        <input type="hidden" name="type" value="${empty data.type ? 'MENU' : data.type}"/>
         <input type="hidden" id="pid" name="pid" value="${data.pid}"/>
       </form>
     </div>

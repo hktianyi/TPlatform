@@ -9,6 +9,7 @@ import org.tplatform.framework.util.SpringContextUtil;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tianyi on 16/1/13.
@@ -46,10 +47,11 @@ public interface DynamicFormMapper extends Mapper<DynamicForm> {
     /**
      * 批量插入
      *
-     * @param list
+     * @param param
      * @return
      */
-    public String insertRecords(List<DFElementRecord> list) {
+    public String insertRecords(Map param) {
+      List<DFElementRecord> list = (List<DFElementRecord>) param.get("list");
       String operator = SpringContextUtil.getOperator();
       StringBuilder sql = new StringBuilder();
       sql.append("DELETE FROM sys_df_record WHERE formId = #{list[0].formId} and recordId = #{list[0].recordId};\n");
