@@ -55,7 +55,7 @@ dependencies {
             "ch.qos.logback:logback-access:${versions.logback}",
             "ch.qos.logback:logback-classic:${versions.logback}",
 
-            "org.freemarker:freemarker:2.3.22",
+//            "org.freemarker:freemarker:2.3.22",
             "org.quartz-scheduler:quartz:2.2.1",
 
             "org.apache.poi:poi:3.14",

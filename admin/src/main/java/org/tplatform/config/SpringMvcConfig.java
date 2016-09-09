@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -88,10 +89,14 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
   }
 
   // 异常处理
-//  @Override
-//  public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+  @Override
+  public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+    if(exceptionResolvers!=null && exceptionResolvers.size()>0)
+      System.out.println("=====================11111111" + exceptionResolvers.get(0));
+    else
+      System.out.println("=====================22222222");
 //    ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver = new ExceptionHandlerExceptionResolver();
-//  }
+  }
 
   @InitBinder
   public void initBinder(WebDataBinder binder) {

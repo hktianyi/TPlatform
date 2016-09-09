@@ -1,11 +1,10 @@
-package org.tplatform.auth.service.impl;
+package org.tplatform.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.fsm.SysResourceType;
 import org.tplatform.auth.mapper.SysResourceMapper;
-import org.tplatform.auth.service.ISysResourceService;
 import org.tplatform.core.entity.JsTree;
 import org.tplatform.core.fsm.StatusEnum;
 import org.tplatform.framework.util.StringUtil;

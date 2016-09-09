@@ -2,6 +2,7 @@ package org.tplatform.core.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,7 @@ import java.util.Map;
 @Data
 public class JsTree {
 
-  private Long id;
+  private Serializable id;
   private String text;
   private String icon;
   private List<Object> children;

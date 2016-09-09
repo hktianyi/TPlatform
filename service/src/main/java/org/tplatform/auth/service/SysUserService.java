@@ -1,10 +1,9 @@
-package org.tplatform.auth.service.impl;
+package org.tplatform.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tplatform.auth.entity.SysUser;
 import org.tplatform.auth.mapper.SysUserMapper;
-import org.tplatform.auth.service.ISysUserService;
 import org.tplatform.impl.BaseService;
 
 /**

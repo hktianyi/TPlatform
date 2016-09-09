@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 映射实体基础类
  * Created by Tianyi on 2014/12/3.
  */
 @Data
@@ -18,7 +19,6 @@ public abstract class BaseEntity implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  // Id
   @Id
   @Column(length = 20)
   @GeneratedValue(generator = "JDBC")
@@ -29,7 +29,6 @@ public abstract class BaseEntity implements Serializable {
   // 操作员
   protected String operator;
   // 状态
-  @Column(length = 8)
   protected StatusEnum status;
   // 机构层级（数据权限）
   @Transient
