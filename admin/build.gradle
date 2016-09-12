@@ -26,3 +26,16 @@ dependencies {
     )
 
 }
+
+task release(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File',
+                'Implementation-Version': version,
+                'Main-Class': ''
+    }
+//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    from('src/main/webapp')
+//    into('http')
+    from('build/classes/main')
+    with jar
+}
