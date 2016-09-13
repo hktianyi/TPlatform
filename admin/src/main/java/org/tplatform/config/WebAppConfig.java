@@ -1,6 +1,7 @@
 package org.tplatform.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
+import lombok.Setter;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -25,7 +26,10 @@ import java.util.EnumSet;
  * 替换web.xml
  * Created by Tianyi on 2016/3/1.
  */
-public class WebAppConfig implements WebApplicationInitializer {
+public abstract class WebAppConfig implements WebApplicationInitializer {
+
+  @Setter
+  private Class springMvcConfigClass = SpringMvcConfig.class;
 
   // 启动执行
   public void onStartup(ServletContext servletContext) throws ServletException {
@@ -42,7 +46,7 @@ public class WebAppConfig implements WebApplicationInitializer {
 
     // SpringMVC 入口
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
-    mvcContext.register(SpringMvcConfig.class);
+    mvcContext.register(springMvcConfigClass);
     ServletRegistration.Dynamic springMvc = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC, new DispatcherServlet(mvcContext));
     springMvc.setLoadOnStartup(1);
     

@@ -14,6 +14,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.tplatform.framework.log.Logger;
 import org.tplatform.framework.util.SpringContextUtil;
 import org.tplatform.framework.util.StringUtil;
 import org.tplatform.util.PropertyUtil;
@@ -34,7 +35,13 @@ import java.util.Properties;
 @Configuration
 @DependsOn("springContextUtil")
 @EnableTransactionManagement(proxyTargetClass = true)
+//@PropertySource("classpath:db.properties")
 public class DataSourceConfig {
+
+//  @Value("${jndiName}")
+  private String jndiName = PropertyUtil.getProInfo("db", "jndiName");
+//  @Value("${basePackage}")
+  private String basePackage = "org.tplatform.**.mapper," + PropertyUtil.getProInfo("db", "basePackage");
 
 //  // JNDI数据源(未使用)
 //  @Bean(name = "dataSource")
@@ -46,11 +53,14 @@ public class DataSourceConfig {
 //    return (DataSource) jndiObjectFactoryBean.getObject();
 //  }
 
-  // JNDI数据源
+  /**
+   * 生产环境,使用JNDI数据源
+   * @return
+   */
   @Profile("PROD")
   @Bean(name = "dataSource")
   public DataSource jndiDataSource() {
-    String jndiName = PropertyUtil.getProInfo("db", "jndiName");
+    Logger.i(" --- 生产环境 JNDI数据源: " + jndiName);
     if (StringUtil.isEmpty(jndiName)) return null;
 
     JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
@@ -58,6 +68,10 @@ public class DataSourceConfig {
     return jndiDataSourceLookup.getDataSource(jndiName);
   }
 
+  /**
+   * 开发环境, 使用DruidDataSourceFactory创建数据源
+   * @return
+   */
   @Profile("DEV")
   @Bean(name = "dataSource")
   public DataSource embeddedDataSource() {
@@ -120,8 +134,9 @@ public class DataSourceConfig {
   @Bean
   @DependsOn("sqlSessionFactory")
   public MapperScannerConfigurer mapperScannerConfigurer() {
+    Logger.i("【Mybatis设置basePackage】: " + basePackage);
     MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-    mapperScannerConfigurer.setBasePackage("org.**.mapper");
+    mapperScannerConfigurer.setBasePackage(basePackage);
     mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
 
     MapperHelper mapperHelper = new MapperHelper();
