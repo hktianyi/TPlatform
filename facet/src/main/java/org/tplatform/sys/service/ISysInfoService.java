@@ -10,7 +10,6 @@ public interface ISysInfoService extends IBaseService<SysInfo> {
   /**
    * 获得当前的监控对象.
    * @return 返回构造好的监控对象
-   * @throws Exception
    */
   SysInfo getSysInfo();
 }

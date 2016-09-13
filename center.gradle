@@ -1,0 +1,96 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing' //使用signing plugin做数字签名
+
+//定义GroupID和Version，ArtefactID会自动使用Project名
+group = 'org.tplatform'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def siteUrl = 'https://github.com/hktianyi/TPlatform'      // 项目的主页
+def gitUrl = 'https://github.com/hktianyi/TPlatform.git'   // Git仓库的url
+def sonatypeUsername = 'tianyi'
+def sonatypePassword = ''
+
+repositories {
+    mavenCentral();
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //为Pom文件做数字签名
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            //指定项目部署到的中央库地址，UserName和Password就是Part 1中注册的账号。
+            repository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+            //构造项目的Pom文件，参见Part 2中Pom文件的规范，不要遗漏必填项
+            pom.project {
+                name project.name
+                packaging 'jar'
+                description 'TPlatform'
+                url 'https://github.com/hktianyi/TPlatform'
+
+                scm {
+                    url 'scm:git@github.com:hktianyi/TPlatform.git'
+                    connection 'scm:git@github.com:hktianyi/TPlatform.git'
+                    developerConnection 'git@github.com:hktianyi/TPlatform.git'
+                }
+
+                licenses {
+                    license {
+                        name 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
+                        url 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'tianyi'
+                        name 'Tianyi'
+                        email 'hk_tianyi@163.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+//添加UTF-8编码否则注释可能JAVADOC文档可能生成不了
+javadoc {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/8/docs/api/"
+        title "swipeJavaDoc"
+    }
+}
+
+// 为项目生成**.jar/**-javadoc.jar/**-sources.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar
+    archives javadocJar
+    archives sourcesJar
+}
+
+// 为所有的jar包做数字签名
+signing {
+    sign configurations.archives
+}

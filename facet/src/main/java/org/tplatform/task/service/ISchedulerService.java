@@ -53,7 +53,6 @@ public interface ISchedulerService extends IBaseService<SchedulingJob> {
   /**
    * 新建或者更新一个定时任务
    *
-   * @throws java.sql.SQLException
    * @throws SchedulerException
    * @throws ClassNotFoundException
    */

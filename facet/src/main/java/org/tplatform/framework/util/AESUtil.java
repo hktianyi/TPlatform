@@ -15,9 +15,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
- * AES Coder<br/>
- * secret key length:	128bit, default:	128 bit<br/>
- * mode:	ECB/CBC/PCBC/CTR/CTS/CFB/CFB8 to CFB128/OFB/OBF8 to OFB128<br/>
+ * AES Coder
+ * secret key length:	128bit, default:	128 bit
+ * mode:	ECB/CBC/PCBC/CTR/CTS/CFB/CFB8 to CFB128/OFB/OBF8 to OFB128
  * padding:	Nopadding/PKCS5Padding/ISO10126Padding/
  * Created by Tianyi on 2014/11/24.
  */
@@ -31,9 +31,6 @@ public class AESUtil {
 
   /**
    * 初始化密钥
-   *
-   * @return byte[] 密钥
-   * @throws Exception
    */
   public static void createSecretKey(String password, String path) {
     //返回生成指定算法的秘密密钥的 KeyGenerator 对象

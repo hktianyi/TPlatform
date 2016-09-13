@@ -24,7 +24,7 @@ public class GraphCodeUtil {
    * 使用系统默认字符源生成验证码
    *
    * @param verifySize 验证码长度
-   * @return
+   * @return 验证码
    */
   public static String generateVerifyCode(int verifySize) {
     return generateVerifyCode(verifySize, VERIFY_CODES);
@@ -35,7 +35,7 @@ public class GraphCodeUtil {
    *
    * @param verifySize 验证码长度
    * @param sources    验证码字符源
-   * @return
+   * @return 验证码
    */
   public static String generateVerifyCode(int verifySize, String sources) {
     if (sources == null || sources.length() == 0) {
@@ -53,11 +53,11 @@ public class GraphCodeUtil {
   /**
    * 生成随机验证码文件,并返回验证码值
    *
-   * @param w
-   * @param h
-   * @param outputFile
-   * @param verifySize
-   * @return
+   * @param w 宽度
+   * @param h 高度
+   * @param outputFile 输出文件
+   * @param verifySize 验证码长度
+   * @return 验证码
    * @throws IOException
    */
   public static String outputVerifyImage(int w, int h, File outputFile, int verifySize) throws IOException {
@@ -69,11 +69,11 @@ public class GraphCodeUtil {
   /**
    * 输出随机验证码图片流,并返回验证码值
    *
-   * @param w
-   * @param h
-   * @param os
-   * @param verifySize
-   * @return
+   * @param w 宽度
+   * @param h 高度
+   * @param os 输出流
+   * @param verifySize 验证码长度
+   * @return 验证码
    * @throws IOException
    */
   public static String outputVerifyImage(int w, int h, OutputStream os, int verifySize) throws IOException {
@@ -85,10 +85,10 @@ public class GraphCodeUtil {
   /**
    * 生成指定验证码图像文件
    *
-   * @param w
-   * @param h
-   * @param outputFile
-   * @param code
+   * @param w 宽度
+   * @param h 高度
+   * @param outputFile 输出文件
+   * @param code 验证码
    * @throws IOException
    */
   public static void outputImage(int w, int h, File outputFile, String code) throws IOException {
@@ -112,10 +112,10 @@ public class GraphCodeUtil {
   /**
    * 输出指定验证码图片流
    *
-   * @param w
-   * @param h
-   * @param os
-   * @param code
+   * @param w 宽度
+   * @param h 高度
+   * @param os 输出流
+   * @param code 验证码
    * @throws IOException
    */
   public static void outputImage(int w, int h, OutputStream os, String code) throws IOException {

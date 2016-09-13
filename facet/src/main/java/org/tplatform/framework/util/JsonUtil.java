@@ -21,8 +21,8 @@ public class JsonUtil {
   /**
    * json转Map
    *
-   * @param json
-   * @return
+   * @param json json字符串
+   * @return map
    */
   public static Map<String, Object> json2Map(String json) {
     return fromJson(json, Map.class);
@@ -30,9 +30,8 @@ public class JsonUtil {
 
   /**
    * json转list
-   *
-   * @param json
-   * @return
+   * @param json json字符串
+   * @return list
    */
   public static List json2List(String json) {
     return fromJson(json, List.class);
@@ -40,6 +39,9 @@ public class JsonUtil {
 
   /**
    * 把实体Bean、Map对象、数组、列表集合转换成Json格式的字符串
+   * @param json json字符串
+   * @param clazz 目标对象
+   * @return clazz对象
    */
   public static <T> T fromJson(String json, Class<T> clazz) {
     try {
@@ -51,6 +53,8 @@ public class JsonUtil {
 
   /**
    * 把实体Bean、Map对象、数组、列表集合转换成Json格式的字符串
+   * @param obj 对象
+   * @return json字符串
    */
   public static String obj2Json(Object obj) {
     try {

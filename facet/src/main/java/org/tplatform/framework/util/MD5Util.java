@@ -22,7 +22,7 @@ public class MD5Util {
    * MD5普通加密
    *
    * @param rawPass 明文
-   * @return
+   * @return 密文
    */
   public final static String encode(String rawPass) {
     return encode(rawPass, null);
@@ -32,7 +32,8 @@ public class MD5Util {
    * MD5普通加密
    *
    * @param rawPass 明文
-   * @return
+   * @param toLowerCase  密文是否小写
+   * @return 密文
    */
   public final static String encode(String rawPass, boolean toLowerCase) {
     return encode(rawPass, null, toLowerCase);
@@ -43,7 +44,7 @@ public class MD5Util {
    *
    * @param rawPass 明文
    * @param key     盐值
-   * @return
+   * @return 密文
    */
   public final static String encode(String rawPass, String key) {
     String saltedPass = (StringUtil.isEmpty(key)) ? rawPass : rawPass + key;
@@ -60,7 +61,8 @@ public class MD5Util {
    *
    * @param rawPass 明文
    * @param key     盐值
-   * @return
+   * @param toLowerCase  密文是否小写
+   * @return 密文
    */
   public final static String encode(String rawPass, String key, boolean toLowerCase) {
     String saltedPass = (StringUtil.isEmpty(key)) ? rawPass : rawPass + key;
@@ -76,8 +78,8 @@ public class MD5Util {
    * 加密文件
    *
    * @param inputFile
-   * @return
-   * @throws IOException
+   * @return 密文
+   * @throws IOException IO异常
    */
   public static String encodeFile(String inputFile) throws IOException {
     int bufferSize = 256 * 1024;// 缓冲区大小（这个可以抽出一个参数）

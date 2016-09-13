@@ -7,10 +7,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 统一的 HTTP 响应格式。<br/>
- * code 为 "ok" 表示业务调用成功，否则是失败的错误码，如果有多个则以逗号分隔。<br/>
+ * 统一的 HTTP 响应格式。
+ * code 为 "ok" 表示业务调用成功，否则是失败的错误码，如果有多个则以逗号分隔。
  * data 是业务数据，如果失败了则是 null。
- * <p/>
  * Created by Tianyi on 2014/11/20.
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@statusCode")

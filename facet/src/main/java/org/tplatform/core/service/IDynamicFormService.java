@@ -37,13 +37,13 @@ public interface IDynamicFormService extends IBaseService<DynamicForm> {
    * 查询表单数据
    * @param formId 表单ID
    * @param recordId 记录ID
-   * @return List<DFElementRecord>
+   * @return List&lt;DFElementRecord&gt;
    */
   List<DFElementRecord> findRecordList(String formId, String recordId);
 
   /**
    * 查询表单数据
-   * @param dfElementRecordList
+   * @param dfElementRecordList 动态元素
    * @return
    */
   Integer saveRecords(List<DFElementRecord> dfElementRecordList);
