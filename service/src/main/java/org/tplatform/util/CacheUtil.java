@@ -22,9 +22,8 @@ public class CacheUtil {
 
   /**
    * @param key：缓存的key
-   * @description: 获取缓存信息
-   * @return：被缓存对象
-   * @Exception：空指针，memcache连接异常
+   * 获取缓存信息
+   * @return 被缓存对象
    */
   public static Object find(String key) {
     return StringUtil.isNotEmpty(key) && cache.exists(key) ? cache.get(key) : null;
@@ -33,7 +32,7 @@ public class CacheUtil {
   /**
    * @param key
    * @param value
-   * @description:存入缓存对象，永不失效
+   * 存入缓存对象，永不失效
    */
   public static void add(String key, Object value) {
     cache.set(key, value);
@@ -43,7 +42,7 @@ public class CacheUtil {
    * @param key
    * @param value
    * @param living ：缓存时间
-   * @description: 存入缓存对象，自定义实效日期
+   * 存入缓存对象，自定义实效日期
    */
   public static void add(String key, Object value, long living) {
     cache.set(key, value, living);
@@ -52,7 +51,7 @@ public class CacheUtil {
   /**
    * @param key
    * @param value
-   * @description: 存入缓存对象，当天有效
+   * 存入缓存对象，当天有效
    */
   public static void addToday(String key, Object value) {
     Calendar cal = Calendar.getInstance();
@@ -64,24 +63,24 @@ public class CacheUtil {
 
   /**
    * @param key
-   * @description: 删除缓存
+   * 删除缓存
    */
   public static void delObject(String key) {
     cache.del(key);
   }
 
   /**
+   * 判断该key是否在缓存中存在
    * @param key
-   * @description: 判断该key是否在缓存中存在
    */
   public static boolean keyExists(String key) {
     return cache.exists(key);
   }
 
   /**
+   * 更新缓存中已存在对象
    * @param key
    * @param value
-   * @description: 更新缓存中已存在对象
    */
   public static void updObject(String key, Object value) {
     if (cache.exists(key)) {
@@ -91,10 +90,10 @@ public class CacheUtil {
   }
 
   /**
+   * 更新缓存中已存在对象, 带有失效时间
    * @param key:        传入对象key
    * @param value：传入对象值
    * @param living      ：失效时间
-   * @description: 更新缓存中已存在对象, 带有失效时间
    */
   public static void updObject(String key, Object value, long living) {
     if (cache.exists(key)) {
@@ -104,9 +103,9 @@ public class CacheUtil {
   }
 
   /**
+   * 更新缓存中已存在对象, 当天有效
    * @param key    :传入对象key
    * @param value: 传入对象值
-   * @description: 更新缓存中已存在对象, 当天有效
    */
   public static void updObjectToday(String key, Object value) {
     if (cache.exists(key)) {

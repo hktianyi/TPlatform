@@ -10,11 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @version 1.0
- * @Description: 敏感词过滤
- * @Project：test
- * @Author : chenming
- * @Date ： 2014年4月20日 下午4:17:15
+ * 敏感词过滤
  */
 public class SensitivewordUtil {
   public static final int minMatchTYpe = 1;      //最小匹配规则
@@ -74,10 +70,7 @@ public class SensitivewordUtil {
    *
    * @param txt       文字
    * @param matchType 匹配规则&nbsp;1：最小匹配规则，2：最大匹配规则
-   * @return
-   * @author chenming
-   * @date 2014年4月20日 下午5:10:52
-   * @version 1.0
+   * @return Set
    */
   public static Set<String> getSensitiveWord(String txt, int matchType) {
     Set<String> sensitiveWordList = new HashSet<String>();
@@ -99,9 +92,6 @@ public class SensitivewordUtil {
    * @param txt
    * @param matchType
    * @param replaceChar 替换字符，默认*
-   * @author chenming
-   * @date 2014年4月20日 下午5:12:07
-   * @version 1.0
    */
   public static String replaceSensitiveWord(String txt, int matchType, String replaceChar) {
     String resultTxt = txt;
@@ -127,10 +117,6 @@ public class SensitivewordUtil {
    *
    * @param replaceChar
    * @param length
-   * @return
-   * @author chenming
-   * @date 2014年4月20日 下午5:21:19
-   * @version 1.0
    */
   private static String getReplaceChars(String replaceChar, int length) {
     String resultReplace = replaceChar;
@@ -147,10 +133,7 @@ public class SensitivewordUtil {
    * @param txt
    * @param beginIndex
    * @param matchType
-   * @author chenming
-   * @date 2014年4月20日 下午4:31:03
    * @return，如果存在，则返回敏感词字符的长度，不存在返回0
-   * @version 1.0
    */
   @SuppressWarnings({"rawtypes"})
   public static int CheckSensitiveWord(String txt, int beginIndex, int matchType) {
@@ -202,9 +185,6 @@ public class SensitivewordUtil {
    * @param txt       文字
    * @param matchType 匹配规则&nbsp;1：最小匹配规则，2：最大匹配规则
    * @return 若包含返回true，否则返回false
-   * @author chenming
-   * @date 2014年4月20日 下午4:28:30
-   * @version 1.0
    */
   public boolean isContaintSensitiveWord(String txt, int matchType) {
     boolean flag = false;

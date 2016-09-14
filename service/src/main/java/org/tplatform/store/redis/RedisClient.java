@@ -223,7 +223,7 @@ public class RedisClient extends AbstractClient {
 
   /**
    * 从key对应list中删除count个和value相同的元素。
-   * count>0时，按从头到尾的顺序删除
+   * count&gt;0时，按从头到尾的顺序删除
    */
   public Long lrem(String key, int count, String value) {
     Object actual = master(jedis -> jedis.lrem(key, count, value));
@@ -481,7 +481,7 @@ public class RedisClient extends AbstractClient {
   /***************** ABOUT  KEY  ******************/
 
   /**
-   * 删除给定的一个或多个 key<br/>
+   * 删除给定的一个或多个 key
    * 不存在的 key 会被忽略
    *
    * @param key 缓存名称
@@ -505,7 +505,6 @@ public class RedisClient extends AbstractClient {
    *
    * @param key
    * @param liveTime TTL（second）
-   * @description:
    */
   public Long expire(String key, int liveTime) {
     Object actual = master(jedis -> jedis.expire(key, liveTime));
@@ -515,7 +514,7 @@ public class RedisClient extends AbstractClient {
   /**
    * key 存活到一个unix时间戳时间
    *
-   * @description: 1970年1月1日（UTC/GMT的午夜）开始所经过的秒数 一个小时表示为UNIX时间戳格式为：3600秒
+   * 1970年1月1日（UTC/GMT的午夜）开始所经过的秒数 一个小时表示为UNIX时间戳格式为：3600秒
    * TTL（unix timestamp）
    */
   public Long expireAt(String key, long liveTime) {
@@ -542,7 +541,7 @@ public class RedisClient extends AbstractClient {
 
 
   /**
-   * 查找所有符合给定模式 pattern 的 key<br/>
+   * 查找所有符合给定模式 pattern 的 key
    * <p>
    * <pre>
    * KEYS * 匹配数据库中所有 key 。

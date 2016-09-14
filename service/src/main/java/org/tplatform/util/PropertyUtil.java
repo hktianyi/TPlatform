@@ -35,7 +35,7 @@ public class PropertyUtil {
   /**
    * @param confKey : 数据库配置KEY
    * @return
-   * @description : 获取指定属性文件中对应的属性值
+   * 获取指定属性文件中对应的属性值
    */
   public static String getProInfo(String confKey) {
     if (StringUtil.isNotEmpty(confKey)) {

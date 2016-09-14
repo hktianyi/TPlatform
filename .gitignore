@@ -5,6 +5,7 @@ build
 target
 classes
 *.class
+gradle.properties
 
 # IDE & TOOL properties #
 .classpath

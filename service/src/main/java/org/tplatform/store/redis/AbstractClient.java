@@ -392,7 +392,7 @@ public abstract class AbstractClient {
 	  }
 
 	  /**
-	   * 更新或插入数据，只从Master写入数据<br/>
+	   * 更新或插入数据，只从Master写入数据
 	   * 若要使用方式Jedis的select方法临时切换数据库，请使用该方法
 	   *
 	   * @param action 操作
@@ -580,7 +580,7 @@ public abstract class AbstractClient {
 	   */
 	  public interface AliveEventListener {
 	    /**
-	     * Redis Cluster 存活状态发生变化事件<br/>
+	     * Redis Cluster 存活状态发生变化事件
 	     * 每十秒触发一次
 	     *
 	     * @param masterAlive Redis Master Server是否存活

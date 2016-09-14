@@ -27,8 +27,6 @@ public class SysInfoService extends BaseService<SysInfo> implements ISysInfoServ
    * 获得当前的监控对象.
    *
    * @return 返回构造好的监控对象
-   * @throws Exception
-   * @author GuoHuang
    */
   @Override
   public SysInfo getSysInfo() {
