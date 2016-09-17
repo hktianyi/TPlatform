@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.tplatform.constant.GlobalConstant;
 import org.tplatform.core.entity.SysConf;
 import org.tplatform.core.fsm.StatusEnum;
 import org.tplatform.core.mapper.SysConfMapper;
@@ -30,7 +31,7 @@ public class SysConfService extends BaseService<SysConf> implements ISysConfServ
    * @return
    */
   @Override
-  @Cacheable(value = "_SYS", key = "'_Conf' + #confKey")
+  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Conf' + #confKey")
   public String findVal(String confKey) {
     String val = null;
     if (StringUtil.isNotEmpty(confKey)) {
@@ -40,7 +41,7 @@ public class SysConfService extends BaseService<SysConf> implements ISysConfServ
   }
 
   @Override
-  @CacheEvict(value = "_SYS", key = "'_Conf' + #confKey")
+  @CacheEvict(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Conf' + #confKey")
   public boolean saveVal(String confKey, String value) {
     Assert.hasText(confKey);
     Assert.hasText(value);

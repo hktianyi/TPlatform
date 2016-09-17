@@ -13,6 +13,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.tplatform.framework.log.Logger;
 import org.tplatform.util.PropertyUtil;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -47,6 +48,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
   @Bean
   public CacheManager cacheManager() {
+    Logger.i("初始化【Redis】缓存...");
     RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     redisTemplate.setKeySerializer(stringRedisSerializer);

@@ -42,7 +42,7 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
   }
 
   @Override
-//  @Cacheable(value = "_SYS", key = "'_MENU_TREE_' + #roleId + #status + #parentCode")
+//  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_MENU_TREE_' + #roleId + #status + #parentCode")
   public List<SysResource> findMenuTree(String roleId, StatusEnum status, Long parentCode) {
     List<SysResource> result = sysResourceMapper.findByRole(roleId, SysResourceType.MENU, status, parentCode);
     result.stream().forEach(parent -> result.stream().forEach(child -> {
@@ -110,7 +110,7 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
   }
 
   @Override
-//  @CacheEvict(value = "_SYS", key = "'_MENU_TREE_*'")
+//  @CacheEvict(value = GlobalConstant.KEY_CACHE_SYS, key = "'_MENU_TREE_*'")
   public boolean saveWithRole(SysResource sysResource, Long[] roles) {
     super.saveOrUpdate(sysResource);
     return sysResourceMapper.saveWithRole(sysResource, roles) > 0;

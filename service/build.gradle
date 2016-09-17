@@ -21,6 +21,6 @@ dependencies {
 
             "org.apache.httpcomponents:httpclient:4.3.6",
             "redis.clients:jedis:2.6.2",
-            "org.ehcache:ehcache:3.1.1"
+            "net.sf.ehcache:ehcache:2.10.2.2.21"
     )
 }

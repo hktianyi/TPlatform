@@ -1,11 +1,12 @@
 package org.tplatform.core.service.impl;
 
-import org.tplatform.impl.BaseService;
-import org.tplatform.core.mapper.DictionaryMapper;
-import org.tplatform.core.entity.Dictionary;
-import org.tplatform.core.service.IDictionaryService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.tplatform.constant.GlobalConstant;
+import org.tplatform.core.entity.Dictionary;
+import org.tplatform.core.mapper.DictionaryMapper;
+import org.tplatform.core.service.IDictionaryService;
+import org.tplatform.impl.BaseService;
 
 import java.util.List;
 
@@ -15,12 +16,12 @@ import java.util.List;
 @Service
 public class DictionaryService extends BaseService<Dictionary> implements IDictionaryService {
   @Override
-  @Cacheable(value = "_SYS", key = "'_Dictionary_findByDicTypeEnName_' + #dicTypeEnName")
+  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Dictionary_findByDicTypeEnName_' + #dicTypeEnName")
   public List<Dictionary> findByDicTypeEnName(String dicTypeEnName) {
     return ((DictionaryMapper) super.mapper).findByDicTypeEnName(dicTypeEnName);
   }
   @Override
-  @Cacheable(value = "_SYS", key = "'_Dictionary_findByDicTypeMenuType_' + #menuType")
+  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Dictionary_findByDicTypeMenuType_' + #menuType")
   public List<Dictionary> findByDicTypeMenuType(String menuType) {
     return ((DictionaryMapper) super.mapper).findByDicTypeMenuType(menuType);
   }

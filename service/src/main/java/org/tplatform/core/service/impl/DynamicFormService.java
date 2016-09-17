@@ -3,6 +3,7 @@ package org.tplatform.core.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.tplatform.constant.GlobalConstant;
 import org.tplatform.core.entity.DFElementRecord;
 import org.tplatform.core.entity.DynamicForm;
 import org.tplatform.core.mapper.DynamicFormMapper;
@@ -21,7 +22,7 @@ public class DynamicFormService extends BaseService<DynamicForm> implements IDyn
   private DynamicFormMapper dynamicFormMapper;
 
   @Override
-  @Cacheable(value = "_SYS", key = "'_DF_FORMID_' + #formId")
+  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_DF_FORMID_' + #formId")
   public DynamicForm findByFormId(String formId) {
     DynamicForm dynamicForm = dynamicFormMapper.findByFormId(formId);
     if (dynamicForm != null) dynamicForm.setElements(dynamicFormMapper.findElementsByFormId(formId));
@@ -29,7 +30,7 @@ public class DynamicFormService extends BaseService<DynamicForm> implements IDyn
   }
 
   @Override
-  @Cacheable(value = "_SYS", key = "'_DF_FORMID_' + #formId")
+  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_DF_FORMID_' + #formId")
   public List<DFElementRecord> findElementsByFormId(String formId) {
     return dynamicFormMapper.findElementsByFormId(formId);
   }
