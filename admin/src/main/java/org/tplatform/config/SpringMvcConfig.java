@@ -30,9 +30,8 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "org.tplatform",
-    basePackageClasses = {Controller.class, ControllerAdvice.class})
-public class SpringMvcConfig extends WebMvcConfigurerAdapter {
+@ComponentScan(basePackages = "org.tplatform", basePackageClasses = {Controller.class, ControllerAdvice.class})
+public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
   // 视图解析器
   @Bean
@@ -52,18 +51,6 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
     commonsMultipartResolver.setMaxInMemorySize(40960);
     return commonsMultipartResolver;
   }
-
-  // 统一异常处理
-//  @Bean
-//  public PlatformMappingExceptionResolver platformMappingExceptionResolver() {
-//    PlatformMappingExceptionResolver platformMappingExceptionResolver = new PlatformMappingExceptionResolver();
-////    platformMappingExceptionResolver.setDefaultErrorView("/404.jsp");
-////    platformMappingExceptionResolver.setExceptionAttribute("e");
-//    Properties properties = new Properties();
-//    properties.put("java.lang.RuntimeException", "/404.jsp");
-//    platformMappingExceptionResolver.setExceptionMappings(properties);
-//    return platformMappingExceptionResolver;
-//  }
 
   // 静态资源映射器
   @Override
@@ -85,12 +72,6 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
   public void addInterceptors(InterceptorRegistry registry) {
     super.addInterceptors(registry);
   }
-
-  // 异常处理
-//  @Override
-//  public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-//    ExceptionHandlerExceptionResolver exceptionHandlerExceptionResolver = new ExceptionHandlerExceptionResolver();
-//  }
 
   @InitBinder
   public void initBinder(WebDataBinder binder) {

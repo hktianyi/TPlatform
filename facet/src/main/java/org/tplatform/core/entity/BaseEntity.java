@@ -24,7 +24,7 @@ public abstract class BaseEntity implements Serializable {
   @GeneratedValue(generator = "JDBC")
   protected Long id;
   // 创建时间
-  @Column(columnDefinition = "datetime")
+  @Column(columnDefinition = "datetime", updatable = false)
   protected Date createTime;
   // 操作员
   protected String operator;
