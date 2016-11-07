@@ -147,7 +147,7 @@ public class SchedulerService extends BaseService<SchedulingJob> implements ISch
         Trigger trigger = TriggerBuilder.newTrigger().withIdentity(TriggerKey.triggerKey(schedulingJob.getJobName(), schedulingJob.getJobGroup())).withSchedule(CronScheduleBuilder.cronSchedule(schedulingJob.getCronExpression())).usingJobData(jobDataMap).build();
         scheduler.scheduleJob(jobDetail, trigger);
 
-        schedulingJob.setStatus(StatusEnum.VALID);
+        schedulingJob.setStatus(StatusEnum.VALID.getCode());
         schedulerMapper.insert(schedulingJob);
       }
       if (scheduler.isShutdown())

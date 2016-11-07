@@ -1,7 +1,6 @@
 package org.tplatform.core.entity;
 
 import lombok.Data;
-import org.tplatform.core.fsm.StatusEnum;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,7 @@ public abstract class BaseEntity implements Serializable {
   // 操作员
   protected String operator;
   // 状态
-  protected StatusEnum status;
+  protected String status;
   // 机构层级（数据权限）
   @Transient
   protected String hierarchy;

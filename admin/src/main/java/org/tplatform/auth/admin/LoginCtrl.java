@@ -35,7 +35,7 @@ public class LoginCtrl {
    *
    * @return
    */
-  @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+  @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login() {
     if (session.getAttribute(GlobalConstant.KEY_SESSION_USER) != null) {
       return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";

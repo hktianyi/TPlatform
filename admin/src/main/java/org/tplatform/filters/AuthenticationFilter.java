@@ -37,7 +37,7 @@ public class AuthenticationFilter implements Filter {
 
     //1，白名单判断
 
-    if (!(urlRegex.matcher(uri).matches() || "/".equals(uri))) {
+    if (!urlRegex.matcher(uri).matches()) {
 
       //2，登录判断
       Object so = req.getSession().getAttribute(GlobalConstant.KEY_SESSION_USER);

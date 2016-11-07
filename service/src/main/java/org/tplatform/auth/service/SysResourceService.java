@@ -37,7 +37,7 @@ public class SysResourceService extends BaseService<SysResource> implements ISys
     SysResource sysResource = new SysResource();
     sysResource.setPid(pid);
     sysResource.setType(SysResourceType.MENU);
-    sysResource.setStatus(statusEnum);
+    sysResource.setStatus(statusEnum.VALID.getCode());
     return sysResourceMapper.select(sysResource);
   }
 

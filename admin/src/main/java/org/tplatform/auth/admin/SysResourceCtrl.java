@@ -75,7 +75,7 @@ public class SysResourceCtrl extends BaseCtrl<SysResource> {
   @RequestMapping(value = "/saveWithRole", method = RequestMethod.POST)
   @ResponseBody
   public RespBody saveWithRole(SysResource sysResource, @RequestParam("role[]") Long[] roles) {
-    if(sysResource.getStatus() == null) sysResource.setStatus(StatusEnum.INVALID);
+    if(sysResource.getStatus() == null) sysResource.setStatus(StatusEnum.INVALID.getCode());
     return RespBody.ok(sysResourceService.saveWithRole(sysResource, roles));
   }
 

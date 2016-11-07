@@ -12,6 +12,7 @@ import org.tplatform.constant.GlobalConstant;
 import org.tplatform.core.fsm.ProfileEnum;
 import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.framework.util.DateUtil;
+import org.tplatform.framework.util.StringUtil;
 import org.tplatform.listener.SessionListener;
 import org.tplatform.util.PropertyUtil;
 
@@ -23,13 +24,17 @@ import javax.servlet.ServletRegistration;
 import java.util.EnumSet;
 
 /**
- * 替换web.xml
+ * Web主配置文件，替代web.xml
  * Created by Tianyi on 2016/3/1.
  */
 public abstract class WebAppConfig implements WebApplicationInitializer {
 
   @Setter
   private Class springMvcConfigClass = SpringMvcConfig.class;
+  @Setter
+  private static String urlRegex = null; // "^/(login|static)+.*$";
+  @Setter
+  private static boolean druidStatView = true;
 
   // 启动执行
   public void onStartup(ServletContext servletContext) throws ServletException {
@@ -66,13 +71,17 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
     encodingFilter.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC);
 
     // 权限过滤
-    FilterRegistration.Dynamic authenticationFilter = servletContext.addFilter("authenticationFilter", new AuthenticationFilter());
-    authenticationFilter.setInitParameter("urlRegex", "^/(login|static)+.*$");
-    authenticationFilter.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC);
+    if (StringUtil.isNotEmpty(urlRegex)) {
+      FilterRegistration.Dynamic authenticationFilter = servletContext.addFilter("authenticationFilter", new AuthenticationFilter());
+      authenticationFilter.setInitParameter("urlRegex", urlRegex);
+      authenticationFilter.addMappingForServletNames(EnumSet.of(DispatcherType.REQUEST), true, GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC);
+    }
 
     // druid数据源监控
-    ServletRegistration.Dynamic druid = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_DRUIDSTATVIEW, new StatViewServlet());
-    druid.addMapping("/sysInfo/druid/*");
-    springMvc.setLoadOnStartup(2);
+    if (druidStatView) {
+      ServletRegistration.Dynamic druid = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_DRUIDSTATVIEW, new StatViewServlet());
+      druid.addMapping("/sysInfo/druid/*");
+      springMvc.setLoadOnStartup(2);
+    }
   }
 }
