@@ -78,7 +78,12 @@ public class AuthenticationFilter implements Filter {
      * 回特定的标识(添加到响应对象中), 可以在定义AJAX请求完成回调方法时得到这个标识, 进而提示
      * 用户并完成JS跳转.
      */
-    req.getSession().setAttribute(GlobalConstant.KEY_SESSION_LOGIN_TO_PAGE, req.getServletPath() + "?" + req.getQueryString());
+    String loginToPath = req.getServletPath();
+    if (StringUtil.isNotEmpty(loginToPath) && !"/".equals(loginToPath)) {
+      String queryString = req.getQueryString();
+      if (StringUtil.isNotEmpty(queryString)) loginToPath += "?" + queryString;
+      req.getSession().setAttribute(GlobalConstant.KEY_SESSION_LOGIN_TO_PAGE, loginToPath);
+    }
     String requestType = req.getHeader("X-Requested-With");
     if (!StringUtil.isEmpty(requestType) && requestType.equalsIgnoreCase("XMLHttpRequest")) {
       res.setHeader("sessionstatus", "timeout");

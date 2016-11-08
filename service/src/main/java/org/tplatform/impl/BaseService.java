@@ -69,7 +69,7 @@ public abstract class BaseService<E extends BaseEntity> implements IBaseService<
       pageInfo.setPageNum(pageInfo.getStartRow() / pageInfo.getPageSize() + 1);
     }
     PageHelper.startPage(pageInfo.getPageNum(), pageInfo.getPageSize());
-    pageInfo.setOrderBy("createTime desc, id desc");
+    PageHelper.orderBy("createTime desc, id desc");
     return new PageInfo<>(mapper.select(e));
   }
 
