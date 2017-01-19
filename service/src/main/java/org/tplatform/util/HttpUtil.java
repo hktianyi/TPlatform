@@ -1,7 +1,6 @@
 package org.tplatform.util;
 
-import org.tplatform.constant.GlobalConstant;
-import org.tplatform.framework.log.Logger;
+import org.tplatform.common.GlobalConstant;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

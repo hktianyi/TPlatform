@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" language="java" %>
-<%@taglib prefix="view" uri="/taglib/view.tld" %>
+<%@taglib prefix="view" uri="/taglib/tplatform.tld" %>
 <div class="page-sidebar-wrapper">
   <div class="page-sidebar navbar-collapse collapse">
     <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"

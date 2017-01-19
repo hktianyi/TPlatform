@@ -1,10 +1,14 @@
 package org.tplatform.util;
 
-import org.tplatform.framework.util.SpringContextUtil;
-import org.tplatform.core.service.impl.SysConfService;
-import org.tplatform.framework.util.StringUtil;
+import org.tplatform.domain.ConfigService;
 
-import javax.mail.*;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -52,17 +56,17 @@ public class MailUtil {
   private static Session getSession(String sender) {
     if (!sessionMap.containsKey(sender)) {
 
-      SysConfService sysConfService = SpringContextUtil.getBean(SysConfService.class);
-      String host = sysConfService.findVal("Email_Host");
+      ConfigService configService = SpringContextUtil.getBean(ConfigService.class);
+      String host = configService.getByKey("Email_Host");
       if (StringUtil.isEmpty(host))
         throw new RuntimeException("邮箱服务器配置异常");
-      String prot = sysConfService.findVal("Email_Port");
+      String prot = configService.getByKey("Email_Port");
       if (StringUtil.isEmpty(prot))
         prot = "80";
-      String username = sysConfService.findVal("Email_Username");
+      String username = configService.getByKey("Email_Username");
       if (StringUtil.isEmpty(username))
         throw new RuntimeException("用户名配置异常");
-      String password = sysConfService.findVal("Email_Password");
+      String password = configService.getByKey("Email_Password");
 //      String password = new String(Hex.decodeHex(sysConfService.findVal("Email_Password").toCharArray()));
       if (StringUtil.isEmpty(password))
         throw new RuntimeException("密码配置异常");

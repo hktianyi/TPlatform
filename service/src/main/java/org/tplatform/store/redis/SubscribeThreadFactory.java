@@ -1,6 +1,6 @@
 package org.tplatform.store.redis;
 
-import org.tplatform.framework.log.Logger;
+import org.tplatform.util.Logger;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;

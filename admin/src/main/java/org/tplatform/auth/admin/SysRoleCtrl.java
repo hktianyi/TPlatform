@@ -1,14 +1,14 @@
 package org.tplatform.auth.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tplatform.auth.entity.SysRole;
-import org.tplatform.auth.service.ISysRoleService;
+import org.tplatform.auth.service.SysRoleService;
 import org.tplatform.common.BaseCtrl;
-import org.tplatform.core.entity.RespBody;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class SysRoleCtrl extends BaseCtrl<SysRole> {
 
   @Autowired
-  private ISysRoleService sysRoleService;
+  private SysRoleService sysRoleService;
 
   /**
    * Ajax加载数据
@@ -33,19 +33,19 @@ public class SysRoleCtrl extends BaseCtrl<SysRole> {
   public List<SysRole> loadTree(@RequestParam(value = "id", required = false, defaultValue = "0") Long pid) {
     SysRole sysRole = new SysRole();
     sysRole.setPid(pid);
-    return sysRoleService.find(sysRole);
+    return sysRoleService.findAll(Example.of(sysRole));
   }
 
-  /**
-   * 拖拽节点
-   *
-   * @param id
-   * @param pid
-   * @return
-   */
-  @RequestMapping("/updatePid")
-  @ResponseBody
-  public RespBody updatePid(@RequestParam Long id, @RequestParam(required = false, defaultValue = "0") Long pid) {
-    return RespBody.ok(sysRoleService.updatePid(id, pid));
-  }
+//  /**
+//   * 拖拽节点
+//   *
+//   * @param id
+//   * @param pid
+//   * @return
+//   */
+//  @RequestMapping("/updatePid")
+//  @ResponseBody
+//  public RespBody updatePid(@RequestParam Long id, @RequestParam(required = false, defaultValue = "0") Long pid) {
+//    return RespBody.ok(sysRoleService.updatePid(id, pid));
+//  }
 }

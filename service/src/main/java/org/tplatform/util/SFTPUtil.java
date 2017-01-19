@@ -8,8 +8,7 @@ import com.jcraft.jsch.SftpException;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.util.Assert;
-import org.tplatform.framework.log.Logger;
-import org.tplatform.framework.util.StringUtil;
+import org.tplatform.domain.ConfigService;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -31,7 +30,7 @@ public class SFTPUtil {
 
   static {
     //ftpHost|ftpPort|ftpUserName|ftpPassword
-    String[] ftpInfo = new String(Base64.decodeBase64(PropertyUtil.getProInfo("ftpInfo"))).split("\\|");
+    String[] ftpInfo = new String(Base64.decodeBase64(SpringContextUtil.getBean(ConfigService.class).getByKey("ftpInfo"))).split("\\|");
     ftpHost = ftpInfo[0];
     ftpPort = Integer.parseInt(ftpInfo[1]);
     ftpUserName = ftpInfo[2];

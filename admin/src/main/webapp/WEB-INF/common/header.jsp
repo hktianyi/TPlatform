@@ -1,4 +1,4 @@
-<%@ taglib prefix="view" uri="/taglib/view.tld" %>
+<%@ taglib prefix="view" uri="/taglib/tplatform.tld" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
@@ -7,8 +7,8 @@
     <!-- BEGIN LOGO -->
     <div class="page-logo">
       <a href="${_PATH}/main.html">
-        <img src="${_PATH}/static/common/img/logo.png" alt="logo" class="logo-default" /> </a>
-      <div class="menu-toggler sidebar-toggler"> </div>
+        <img src="${_PATH}/static/common/img/logo.png" alt="场地云" class="logo-default" style="width: 120px;height: auto;margin: auto;margin-top: 3px;" /> </a>
+      <%--<div class="menu-toggler sidebar-toggler"> </div>--%>
     </div>
     <!-- END LOGO -->
     <!-- BEGIN MEGA MENU -->
@@ -23,7 +23,7 @@
     <!-- END MEGA MENU -->
     <!-- BEGIN HEADER SEARCH BOX -->
     <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-    <form class="search-form" action="#" method="GET">
+    <%--<form class="search-form" action="#" method="GET">
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search..." name="query">
         <span class="input-group-btn">
@@ -32,7 +32,7 @@
                             </a>
                         </span>
       </div>
-    </form>
+    </form>--%>
     <!-- END HEADER SEARCH BOX -->
     <!-- BEGIN RESPONSIVE MENU TOGGLER -->
     <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>

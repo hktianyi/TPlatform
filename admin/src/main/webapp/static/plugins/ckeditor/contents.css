@@ -18,6 +18,10 @@ body
 	margin: 20px;
 }
 
+*{
+	line-height:1.5;
+}
+
 .cke_editable
 {
 	font-size: 13px;

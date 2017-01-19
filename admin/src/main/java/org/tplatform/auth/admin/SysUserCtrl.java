@@ -4,17 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tplatform.auth.entity.SysUser;
-import org.tplatform.auth.service.ISysRoleService;
-import org.tplatform.auth.service.ISysUserService;
+import org.tplatform.auth.service.SysRoleService;
+import org.tplatform.auth.service.SysUserService;
 import org.tplatform.common.BaseCtrl;
-import org.tplatform.constant.GlobalConstant;
-import org.tplatform.core.entity.RespBody;
-import org.tplatform.core.fsm.StatusEnum;
-import org.tplatform.framework.util.StringUtil;
+import org.tplatform.common.GlobalConstant;
+import org.tplatform.common.RespBody;
+import org.tplatform.util.StringUtil;
 
 /**
  * Created by Tianyi on 2015/12/5.
@@ -24,16 +22,16 @@ import org.tplatform.framework.util.StringUtil;
 public class SysUserCtrl extends BaseCtrl<SysUser> {
 
   @Autowired
-  private ISysUserService sysUserService;
+  private SysUserService sysUserService;
   @Autowired
-  private ISysRoleService sysRoleService;
+  private SysRoleService sysRoleService;
 
   @Override
   protected void editHook(Long id, ModelMap modelMap) {
     modelMap.put("roles", sysRoleService.findAll());
     if (id != null) {
-      SysUser sysUser = sysUserService.find(id);
-      sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId(), null));
+      SysUser sysUser = sysUserService.findOne(id);
+      sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId()));
       modelMap.put("data", sysUser);
     }
   }
@@ -73,12 +71,10 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
     if (StringUtil.isNotEmpty(nickname)) sysUser.setNickname(nickname);
     if (StringUtil.isNotEmpty(mobile)) sysUser.setMobile(mobile);
     if (StringUtil.isNotEmpty(email)) sysUser.setEmail(email);
-    if (sysUserService.updateAccount(sysUser)) {
-      session.setAttribute(GlobalConstant.KEY_SESSION_USER, sysUser);
-      return RespBody.ok();
-    } else {
-      return RespBody.error("修改失败");
-    }
+
+    sysUserService.save(sysUser);
+    session.setAttribute(GlobalConstant.KEY_SESSION_USER, sysUser);
+    return RespBody.ok();
   }
 
   /**
@@ -92,26 +88,26 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
     if (checkOldPwd(oldPwd)) {
       SysUser sysUser = (SysUser) session.getAttribute(GlobalConstant.KEY_SESSION_USER);
       sysUser.setPassword(newPwd);
-      if (sysUserService.updateAccount(sysUser)) {
-        session.removeAttribute(GlobalConstant.KEY_SESSION_USER);
-        return RespBody.ok();
-      } else {
-        return RespBody.error("修改失败");
-      }
+
+      sysUserService.save(sysUser);
+      session.removeAttribute(GlobalConstant.KEY_SESSION_USER);
+      return RespBody.ok();
     } else {
-      return RespBody.error("当前密码错误");
+      //TODO 错误处理
+//      return RespBody.error("当前密码错误");
+      return null;
     }
   }
 
-  /**
-   * 保存, status如果为空,则设置为无效(INVALID)
-   * @param sysUser
-   * @return
-   */
-  @RequestMapping(value = "/saveWithRole", method = RequestMethod.POST)
-  @ResponseBody
-  public RespBody saveWithRole(SysUser sysUser, @RequestParam("role[]") Long[] roles) {
-    if(sysUser.getStatus() == null) sysUser.setStatus(StatusEnum.INVALID.getCode());
-    return RespBody.ok(sysUserService.saveWithRole(sysUser, roles));
-  }
+//  /**
+//   * 保存, status如果为空,则设置为无效(INVALID)
+//   * @param sysUser
+//   * @return
+//   */
+//  @RequestMapping(value = "/saveWithRole", method = RequestMethod.POST)
+//  @ResponseBody
+//  public RespBody saveWithRole(SysUser sysUser, @RequestParam("role[]") Long[] roles) {
+//    if(sysUser.getStatus() == null) sysUser.setStatus(StatusEnum.INVALID.getCode());
+//    return RespBody.ok(sysUserService.saveWithRole(sysUser, roles));
+//  }
 }

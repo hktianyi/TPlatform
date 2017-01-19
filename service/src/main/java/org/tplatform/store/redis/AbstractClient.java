@@ -1,7 +1,7 @@
 package org.tplatform.store.redis;
 
-import org.tplatform.constant.GlobalConstant;
-import org.tplatform.framework.log.Logger;
+import org.tplatform.common.GlobalConstant;
+import org.tplatform.util.Logger;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

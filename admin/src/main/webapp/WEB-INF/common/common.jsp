@@ -21,6 +21,8 @@
 <link href="${_PATH}/static/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
 <link href="${_PATH}/static/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
 <link href="${_PATH}/static/plugins/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css" />
+<link href="${_PATH}/static/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<%--<link href="${_PATH}/static/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />--%>
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME GLOBAL STYLES -->
 <link href="${_PATH}/static/common/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />

@@ -13,7 +13,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.tplatform.framework.log.Logger;
+import org.tplatform.util.Logger;
 import org.tplatform.util.PropertyUtil;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -53,6 +53,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     redisTemplate.setKeySerializer(stringRedisSerializer);
     redisTemplate.setHashKeySerializer(stringRedisSerializer);
+
+    redisTemplate.afterPropertiesSet();
 
     RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
     // Number of seconds before expiration. Defaults to unlimited (0)

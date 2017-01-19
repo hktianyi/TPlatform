@@ -5,7 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.tplatform.framework.util.StringUtil;
+import org.tplatform.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

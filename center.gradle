@@ -54,7 +54,7 @@ uploadArchives {
                 developers {
                     developer {
                         id sonatypeUsername
-                        name 'tianyi'
+                        name 'Tianyi'
                         email 'hk_tianyi@163.com'
                     }
                 }

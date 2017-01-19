@@ -20,4 +20,6 @@ CKEDITOR.editorConfig = function (config) {
   //从word中粘贴内容时是否移除格式 plugins/pastefromword/plugin.js
   config.pasteFromWordRemoveStyle = false;
   config.pasteFromWordRemoveFontStyles = false;
+
+  config.extraPlugins += (config.extraPlugins ? ',lineheight' : 'lineheight');
 };

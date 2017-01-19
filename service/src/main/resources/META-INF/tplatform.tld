@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <tlib-version>1.0</tlib-version>
+    <short-name>tplatform</short-name>
+    <uri>/taglib/tplatform.tld</uri>
+
+    <tag>
+        <name>conf</name>
+        <tag-class>org.tplatform.tag.ConfigTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>key</name>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>showType</name>
+            <required>false</required>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>UUID</name>
+        <tag-class>org.tplatform.tag.TokenTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>type</name>
+        </attribute>
+        <attribute>
+            <name>key</name>
+        </attribute>
+    </tag>
+    <tag>
+        <name>GRAPH_CODE</name>
+        <tag-class>org.tplatform.tag.TokenTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>type</name>
+        </attribute>
+        <attribute>
+            <name>key</name>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>area</name>
+        <tag-class>org.tplatform.tag.AreaTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>html</name>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>menu</name>
+        <tag-class>org.tplatform.tag.MenuTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>type</name>
+        </attribute>
+        <attribute>
+            <name>parentCode</name>
+        </attribute>
+    </tag>
+    <tag>
+        <name>button</name>
+        <tag-class>org.tplatform.tag.ButtonTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>parentCode</name>
+        </attribute>
+    </tag>
+
+    <function>
+        <name>getNameById</name>
+        <function-class>org.tplatform.tag.AreaTag</function-class>
+        <function-signature>java.lang.String getNameById(java.lang.Long)</function-signature>
+    </function>
+
+</taglib>

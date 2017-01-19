@@ -266,4 +266,6 @@ var Login = function () {
 }();
 jQuery(document).ready(function () {
   Login.init();
+  particlesJS.load('particles', _PATH + '/static/particles.json');
+  $('input[name="username"]:first').focus();
 });

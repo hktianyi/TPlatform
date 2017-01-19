@@ -1,6 +1,4 @@
 rootProject.name = 'TPlatform'
-include 'facet' // 面向接口
 include 'service' // 系统服务
-include 'sys-tools' // 系统检测工具
-include 'weixin' // 微信服务
 include 'admin'
+

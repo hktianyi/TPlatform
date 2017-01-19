@@ -1,34 +1,5 @@
+apply plugin: 'java'
 apply plugin: 'war'
-
-def env = System.getProperty("env") ? System.getProperty("env") : "dev"
-
-sourceSets {
-    main {
-        resources {
-            srcDirs = ["src/main/resources/","src/main/resources/$env"]
-        }
-    }
-}
-
 dependencies {
     compile project(':service')
-
-    compile(
-            "taglibs:standard:1.1.2",
-            "javax.servlet:jstl:1.2",
-            "javax.servlet:javax.servlet-api:3.0.1"
-    )
-
-}
-
-task release(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File',
-                'Main-Class': ''
-    }
-//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    from('src/main/webapp')
-//    into('http')
-    from('build/classes/main')
-    with jar
 }

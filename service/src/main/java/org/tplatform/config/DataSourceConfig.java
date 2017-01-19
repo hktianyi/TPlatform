@@ -1,32 +1,28 @@
 package org.tplatform.config;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
+import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.tplatform.framework.log.Logger;
-import org.tplatform.framework.util.SpringContextUtil;
-import org.tplatform.framework.util.StringUtil;
+import org.tplatform.util.Logger;
 import org.tplatform.util.PropertyUtil;
-import tk.mybatis.mapper.code.Style;
-import tk.mybatis.mapper.common.Mapper;
-import tk.mybatis.mapper.entity.Config;
-import tk.mybatis.mapper.mapperhelper.MapperHelper;
-import tk.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.tplatform.util.SpringContextUtil;
+import org.tplatform.util.StringUtil;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.util.Properties;
+import java.util.Hashtable;
 
 /**
  * 数据源、事物配置
@@ -36,22 +32,25 @@ import java.util.Properties;
 @DependsOn("springContextUtil")
 @EnableTransactionManagement(proxyTargetClass = true)
 //@PropertySource("classpath:db.properties")
+@ImportResource("classpath:spring-data-jpa.xml")
 public class DataSourceConfig {
 
 //  @Value("${jndiName}")
   private String jndiName = PropertyUtil.getProInfo("db", "jndiName");
 //  @Value("${basePackage}")
-  private String basePackage = "org.tplatform.**.mapper," + PropertyUtil.getProInfo("db", "basePackage");
+  private String[] basePackages = (PropertyUtil.getProInfo("config", "basePackage")).split(",");
 
-//  // JNDI数据源(未使用)
-//  @Bean(name = "dataSource")
-//  public DataSource dataSource() throws NamingException {
-//    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
-//    jndiObjectFactoryBean.setJndiName("java:comp/env/cdy");
-//    jndiObjectFactoryBean.setResourceRef(true);
-//    jndiObjectFactoryBean.afterPropertiesSet();
-//    return (DataSource) jndiObjectFactoryBean.getObject();
-//  }
+  // JNDI数据源(未使用)
+  @Profile("TEST")
+  @Bean(name = "dataSource")
+  public DataSource dataSource() throws NamingException {
+    Logger.i(" --- 测试环境 JNDI数据源: " + jndiName);
+    JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
+    jndiObjectFactoryBean.setJndiName(jndiName);
+    jndiObjectFactoryBean.setResourceRef(true);
+    jndiObjectFactoryBean.afterPropertiesSet();
+    return (DataSource) jndiObjectFactoryBean.getObject();
+  }
 
   /**
    * 生产环境,使用JNDI数据源
@@ -83,77 +82,33 @@ public class DataSourceConfig {
     }
   }
 
-  // sqlSession模板
-  @Bean(name = "sqlSessionTemplate")
-  public SqlSessionTemplate sqlSessionTemplate() throws Exception {
-    SqlSessionFactory sqlSessionFactory = sqlSessionFactory();
-    return sqlSessionFactory == null ? null : new SqlSessionTemplate(sqlSessionFactory());
+  @Bean(name = "entityManagerFactory")
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+    entityManagerFactory.setDataSource(SpringContextUtil.getBean(DataSource.class));
+    entityManagerFactory.setPackagesToScan(basePackages);
+    entityManagerFactory.setJpaDialect(new HibernateJpaDialect());
+    entityManagerFactory.setPersistenceProvider(new HibernatePersistenceProvider());
+
+    // 设置jpaVendorAdapter
+    HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+    jpaVendorAdapter.setGenerateDdl(false);
+    jpaVendorAdapter.setShowSql(true);
+    jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQL5InnoDBDialect");
+    jpaVendorAdapter.setDatabase(Database.MYSQL);
+    entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
+
+    // 设置配置参数
+    Hashtable<String, String> prop = PropertyUtil.getProInfoMap("db");
+    entityManagerFactory.setJpaPropertyMap(prop);
+    return entityManagerFactory;
   }
 
-  // sqlSession工厂
-  @Bean(name = "sqlSessionFactory")
-  public SqlSessionFactory sqlSessionFactory() throws Exception {
-    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-    sqlSessionFactoryBean.setDataSource(SpringContextUtil.getBean(DataSource.class));
-    sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mybatis/*.xml"));
-
-    Properties properties = new Properties();
-    properties.put("dialect", "mysql");
-//    该参数默认为false
-//    设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用
-//    和startPage中的pageNum效果一样-->
-//    properties.put("offsetAsPageNum", true);
-//    该参数默认为false
-//    设置为true时，使用RowBounds分页会进行count查询
-    properties.put("rowBoundsWithCount", true);
-//    设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果
-//    （相当于没有执行分页查询，但是返回结果仍然是Page类型）-->
-    properties.put("pageSizeZero", true);
-//    3.3.0版本可用 - 分页参数合理化，默认false禁用
-//    启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
-//    禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
-    properties.put("reasonable", true);
-//    3.5.0版本可用 - 为了支持startPage(Object params)方法
-//    增加了一个`params`参数来配置参数映射，用于从Map或ServletRequest中取值
-//    可以配置pageNum,pageSize,count,pageSizeZero,reasonable,orderBy,不配置映射的用默认值
-//    不理解该含义的前提下，不要随便复制该配置
-//    properties.put("params", "pageNum=start;pageSize=length;");
-//    支持通过Mapper接口参数来传递分页参数
-    properties.put("supportMethodsArguments", false);
-//    always总是返回PageInfo类型,check检查返回类型是否为PageInfo,none返回Page
-    properties.put("returnPageInfo", "always");
-
-    PageHelper pageHelper = new PageHelper();
-    pageHelper.setProperties(properties);
-
-    sqlSessionFactoryBean.setPlugins(new Interceptor[]{pageHelper});
-    return sqlSessionFactoryBean.getObject();
-  }
-
-  // 通用mapper
-  @Bean
-  @DependsOn("sqlSessionFactory")
-  public MapperScannerConfigurer mapperScannerConfigurer() {
-    Logger.i("【Mybatis设置basePackage】: " + basePackage);
-    MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-    mapperScannerConfigurer.setBasePackage(basePackage);
-    mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-
-    MapperHelper mapperHelper = new MapperHelper();
-    Config config = new Config();
-    config.setStyle(Style.normal);
-    mapperHelper.setConfig(config);
-    mapperHelper.registerMapper(Mapper.class);
-    mapperScannerConfigurer.setMapperHelper(mapperHelper);
-
-    return mapperScannerConfigurer;
-  }
-
-  // 事物管理器
   @Bean(name = "transactionManager")
-  public DataSourceTransactionManager transactionManager() throws NamingException {
-    DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
-    dataSourceTransactionManager.setDataSource(SpringContextUtil.getBean(DataSource.class));
-    return dataSourceTransactionManager;
+  public JpaTransactionManager transactionManager() {
+    JpaTransactionManager transactionManager = new JpaTransactionManager();
+    transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+    return transactionManager;
   }
+
 }

@@ -1,7 +1,7 @@
 package org.tplatform.store.datasource;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.tplatform.framework.log.Logger;
+import org.tplatform.util.Logger;
 
 import java.util.Map;
 

@@ -1,35 +1,16 @@
 package org.tplatform.auth.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.tplatform.auth.entity.SysUser;
-import org.tplatform.auth.mapper.SysUserMapper;
-import org.tplatform.impl.BaseService;
+import org.tplatform.common.BaseRepo;
 
 /**
- * 系统用户业务类
- *
- * Created by Tianyi on 2016/5/28.
+ * Created by Tianyi on 2016/3/18.
  */
-@Service
-public class SysUserService extends BaseService<SysUser> implements ISysUserService {
+public interface SysUserService extends BaseRepo<SysUser> {
 
-  @Autowired
-  private SysUserMapper sysUserMapper;
+  SysUser findByUsername(String username);
 
-  public SysUser findByUsername(String username) {
-    SysUser sysUser = new SysUser();
-    sysUser.setUsername(username);
-    return sysUserMapper.selectOne(sysUser);
-  }
-
-  public boolean updateAccount(SysUser sysUser) {
-    return sysUserMapper.updateByPrimaryKeySelective(sysUser) > 0;
-  }
-
-  @Override
-  public boolean saveWithRole(SysUser sysUser, Long[] roles) {
-    super.saveOrUpdate(sysUser);
-    return sysUserMapper.saveWithRole(sysUser, roles) > 0;
-  }
+//  boolean updateAccount(SysUser sysUser);
+//
+//  boolean saveWithRole(SysUser sysUser, Long[] roles);
 }

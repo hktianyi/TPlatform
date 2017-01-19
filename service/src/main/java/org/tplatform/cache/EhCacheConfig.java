@@ -1,4 +1,4 @@
-//package org.tplatform.cache;
+package org.tplatform.cache;//package org.tplatform.cache;
 //
 //import net.sf.ehcache.Cache;
 //import net.sf.ehcache.CacheManager;
@@ -8,7 +8,7 @@
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.Profile;
-//import org.tplatform.constant.GlobalConstant;
+//import org.tplatform.common.GlobalConstant;
 //import org.tplatform.framework.log.Logger;
 //import org.tplatform.framework.util.PropertyUtil;
 //import org.tplatform.framework.util.StringUtil;

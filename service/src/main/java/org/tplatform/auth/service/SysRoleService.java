@@ -1,52 +1,37 @@
 package org.tplatform.auth.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.jpa.repository.Query;
 import org.tplatform.auth.entity.SysRole;
-import org.tplatform.auth.mapper.SysRoleMapper;
-import org.tplatform.auth.service.ISysRoleService;
-import org.tplatform.core.fsm.StatusEnum;
-import org.tplatform.impl.BaseService;
+import org.tplatform.common.BaseRepo;
 
 import java.util.Set;
 
 /**
- * 角色业务类
- * <p>
- * Created by Tianyi on 2016/5/28.
+ * Created by Tianyi on 2016/3/18.
  */
-@Service
-public class SysRoleService extends BaseService<SysRole> implements ISysRoleService {
-
-  @Autowired
-  private SysRoleMapper sysRoleMapper;
+public interface SysRoleService extends BaseRepo<SysRole> {
 
   /**
    * 根据用户查找角色
    * @param userId
-   * @param status
    * @return
    */
-  public Set<SysRole> findByUserId(Long userId, StatusEnum status) {
-    return sysRoleMapper.findByUserId(userId, status);
-  }
+  @Query(value = "select t1.id, t1.name from sys_auth_role t1, sys_auth_user_role t2 where t1.id = t2.role_id and t2.user_id = :userId", nativeQuery = true)
+  Set<SysRole> findByUserId(Long userId);
 
   /**
    * 根据菜单资源查找角色
    * @param resourceId
    * @return
    */
-  public Set<SysRole> findByResourceId(Long resourceId) {
-    return sysRoleMapper.findByResourceId(resourceId);
-  }
+  @Query(value = "select t1.id, t1.name from sys_auth_role t1, sys_auth_role_resource t2 where t1.id = t2.role_id and t2.resource_id = :resourceId", nativeQuery = true)
+  Set<SysRole> findByResourceId(Long resourceId);
 
-  /**
-   * 支持拖拽
-   * @param id
-   * @param pid
-   * @return
-   */
-  public boolean updatePid(Long id, Long pid) {
-    return sysRoleMapper.updatePid(id, pid) > 0;
-  }
+//  /**
+//   * 支持拖拽
+//   * @param id
+//   * @param pid
+//   * @return
+//   */
+//  boolean updatePid(Long id, Long pid);
 }

@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.tplatform.auth.entity.SysUser;
-import org.tplatform.auth.service.ISysRoleService;
-import org.tplatform.auth.service.ISysUserService;
-import org.tplatform.constant.GlobalConstant;
-import org.tplatform.core.fsm.StatusEnum;
-import org.tplatform.framework.util.StringUtil;
+import org.tplatform.auth.service.SysUserService;
+import org.tplatform.common.GlobalConstant;
+import org.tplatform.util.StringUtil;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,9 +24,7 @@ public class LoginCtrl {
   protected HttpSession session;
 
   @Autowired
-  private ISysUserService sysUserService;
-  @Autowired
-  private ISysRoleService sysRoleService;
+  private SysUserService sysUserService;
 
   /**
    * 登录页
@@ -55,7 +51,7 @@ public class LoginCtrl {
   public String login(String username, String password, ModelMap modelMap) {
     SysUser sysUser = sysUserService.findByUsername(username);
     if (sysUser != null && sysUser.getPassword().equals(password)) {
-      sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId(), StatusEnum.VALID));
+      sysUser.getRoles().size();
       session.setAttribute(GlobalConstant.KEY_SESSION_USER, sysUser);
       // 登录跳转
       String loginTo = String.valueOf(session.getAttribute(GlobalConstant.KEY_SESSION_LOGIN_TO_PAGE));

@@ -10,8 +10,8 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.servlet.view.document.AbstractXlsView;
-import org.tplatform.framework.log.Logger;
-import org.tplatform.framework.util.DateUtil;
+import org.tplatform.util.Logger;
+import org.tplatform.util.DateUtil;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import javax.mail.internet.MimeUtility;

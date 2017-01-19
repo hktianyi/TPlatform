@@ -1,4 +1,4 @@
-//package org.tplatform.config;
+package org.tplatform.config;//package org.tplatform.config;
 //
 //import org.springframework.context.annotation.Profile;
 //import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
