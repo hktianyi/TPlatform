@@ -54,7 +54,7 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
   @Bean
   public SessionThemeResolver sessionThemeResolver() {
     SessionThemeResolver sessionThemeResolver = new SessionThemeResolver();
-    sessionThemeResolver.setDefaultThemeName("v2");
+    sessionThemeResolver.setDefaultThemeName("metronic");
     return sessionThemeResolver;
   }
 

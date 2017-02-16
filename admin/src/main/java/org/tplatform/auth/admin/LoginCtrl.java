@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.theme.AbstractThemeResolver;
+import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.tplatform.auth.entity.SysUser;
 import org.tplatform.auth.service.SysUserService;
@@ -21,7 +23,10 @@ import javax.servlet.http.HttpSession;
 public class LoginCtrl {
 
   @Autowired
-  protected HttpSession session;
+  private HttpSession session;
+
+  @Autowired
+  private AbstractThemeResolver themeResolver;
 
   @Autowired
   private SysUserService sysUserService;
@@ -36,7 +41,7 @@ public class LoginCtrl {
     if (session.getAttribute(GlobalConstant.KEY_SESSION_USER) != null) {
       return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";
     }
-    return "/login.jsp";
+    return getThemeName() + "/login.jsp";
   }
 
   /**
@@ -74,9 +79,10 @@ public class LoginCtrl {
    */
   @RequestMapping(value = "/main.html", method = RequestMethod.GET)
   public String main(ModelMap modelMap) {
-    modelMap.put("title", "TPlatform");
-    modelMap.put("body", "/sys/dashboard.jsp");
-    return "/main.jsp";
+//    modelMap.put("title", "TPlatform");
+//    modelMap.put("body", "/sys/dashboard.jsp");
+//    return getThemeName() + "/main.jsp";
+    return GlobalConstant.REDIRECT + "/doc/list";
   }
 
   /**
@@ -90,4 +96,8 @@ public class LoginCtrl {
     return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/login";
   }
 
+  protected String getThemeName() {
+    String themeName = (String) session.getAttribute(SessionThemeResolver.THEME_SESSION_ATTRIBUTE_NAME);
+    return StringUtil.isEmpty(themeName) ? themeResolver.getDefaultThemeName() : themeName;
+  }
 }

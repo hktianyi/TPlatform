@@ -1,3 +1,7 @@
+plugins {
+    id "org.springframework.boot" version "1.4.3.RELEASE" apply true
+}
+
 group 'org.tplatform'
 version '1.0.0-SNAPSHOT'
 

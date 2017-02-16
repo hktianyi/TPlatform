@@ -59,6 +59,7 @@ dependencies {
             "ch.qos.logback:logback-classic:${versions.logback}",
 
             "org.quartz-scheduler:quartz:2.2.1",
+            "com.google.guava:guava:21.0",
 
             "org.apache.poi:poi:3.14",
             "org.apache.poi:poi-excelant:3.14",

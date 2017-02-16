@@ -5,7 +5,8 @@ def gitUrl='https://github.com/hktianyi/TPlatform'
 def scmGitUrl='scm:git:git@github.com:hktianyi/TPlatform.git'
 
 repositories {
-    mavenCentral();
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
 }
 
 uploadArchives {

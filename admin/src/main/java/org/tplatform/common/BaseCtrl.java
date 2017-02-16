@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.theme.AbstractThemeResolver;
+import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.tplatform.util.DateUtil;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.StringUtil;
@@ -40,6 +42,8 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   protected HttpServletRequest request;
   @Autowired
   protected HttpSession session;
+  @Autowired
+  protected AbstractThemeResolver themeResolver;
   @Autowired
   protected BaseRepo<E> baseService;
 
@@ -69,7 +73,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   public String init(ModelMap modelMap) {
     request.setAttribute(GlobalConstant.APP_MODULE_NAME, moduleName);
     this.list(modelMap);
-    return this.dir + "/" + this.moduleName + ".jsp";
+    return getDir() + "/" + this.moduleName + ".jsp";
   }
 
 
@@ -112,7 +116,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   public String list(ModelMap modelMap) {
     request.setAttribute(GlobalConstant.APP_MODULE_NAME, moduleName);
     this.listHook(modelMap);
-    return this.dir + "/" + this.moduleName + "List.jsp";
+    return getDir() + "/" + this.moduleName + "List.jsp";
   }
 
   protected void listHook(ModelMap modelMap) {
@@ -128,7 +132,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   public String edit(@RequestParam(value = "id", required = false) Long id, ModelMap modelMap) {
     request.setAttribute(GlobalConstant.APP_MODULE_NAME, moduleName);
     this.editHook(id, modelMap);
-    return this.dir + "/" + this.moduleName + "Edit.jsp";
+    return getDir() + "/" + this.moduleName + "Edit.jsp";
   }
 
   protected void editHook(Long id, ModelMap modelMap) {
@@ -161,5 +165,22 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   public RespBody delete(@PathVariable(value = "id") Long id) {
     baseService.delete(id);
     return RespBody.ok("删除成功！");
+  }
+
+  protected String getDir() {
+    return getDir(true);
+  }
+
+  protected String getDir(boolean useTheme) {
+    return useTheme ? "/" + getThemeName() + "/" + dir : dir;
+  }
+
+  protected String getThemeName() {
+    String themeName = (String) session.getAttribute(SessionThemeResolver.THEME_SESSION_ATTRIBUTE_NAME);
+    return StringUtil.isEmpty(themeName) ? themeResolver.getDefaultThemeName() : themeName;
+  }
+
+  public String error() {
+    return "";
   }
 }

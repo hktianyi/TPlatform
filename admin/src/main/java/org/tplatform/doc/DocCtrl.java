@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.tplatform.common.BaseCtrl;
-import org.tplatform.common.RespBody;
 import org.tplatform.common.GlobalConstant;
+import org.tplatform.common.RespBody;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.SFTPUtil;
 import org.tplatform.util.StringUtil;
@@ -36,8 +36,10 @@ public class DocCtrl extends BaseCtrl<Doc> {
       return predicate;
     }, new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "createTime"))));
   }
+
   /**
    * CKEDITOR 图片上传功能
+   *
    * @param upload
    * @param CKEditorFuncNum
    * @return
@@ -48,8 +50,11 @@ public class DocCtrl extends BaseCtrl<Doc> {
     String result = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction('%s','%s','%s');</script>";
     try {
       String[] originalFilename = upload.getOriginalFilename().split("\\.");
-      String path = "/doc/" + UUID.randomUUID().toString() + "." + originalFilename[originalFilename.length-1];
+      String path = "/doc/" + UUID.randomUUID().toString() + "." + originalFilename[originalFilename.length - 1];
       SFTPUtil.upload(upload.getInputStream(), path);
+      if (StringUtil.isEmpty(CKEditorFuncNum)) {
+        return "{\"path\":\"" + path + "\"}";
+      }
       result = String.format(result, CKEditorFuncNum, PropertyUtil.getProInfo("config", GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN) + path, "");
     } catch (SftpException e) {
       e.printStackTrace();
