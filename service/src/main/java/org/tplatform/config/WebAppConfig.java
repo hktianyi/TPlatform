@@ -15,7 +15,9 @@ import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.listener.SessionListener;
 import org.tplatform.util.DateUtil;
 import org.tplatform.util.PropertyUtil;
+import org.tplatform.util.SpringContextUtil;
 import org.tplatform.util.StringUtil;
+import org.tplatform.util.ThreadPoolUtil;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -42,12 +44,6 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
 
     // spring环境配置文件,默认开发环境
     System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, "DEV");
-
-    // 应用初始化配置参数
-    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN, PropertyUtil.getProInfo("config", GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
-    servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo("config", GlobalConstant.SYSTEM_APPLICATION_NAME));
-    servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
-    servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
 
     // SpringMVC 入口
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
@@ -88,6 +84,21 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
       druid.addMapping("/sysInfo/druid/*");
       springMvc.setLoadOnStartup(2);
     }
+
+    ThreadPoolUtil.execute(() -> {
+      while (SpringContextUtil.getApplicationContext() == null) {
+        try {
+          Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+      // 应用初始化配置参数
+      servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
+      servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
+      servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
+      servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
+    });
   }
 
 }

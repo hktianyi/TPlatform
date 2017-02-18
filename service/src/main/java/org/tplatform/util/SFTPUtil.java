@@ -16,7 +16,7 @@ import java.util.Properties;
 /**
  * SFTP上传文件
  */
-@DependsOn("propertyUtil")
+@DependsOn("springContextUtil")
 public class SFTPUtil {
 
   private static Session session;

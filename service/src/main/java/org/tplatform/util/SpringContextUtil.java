@@ -22,7 +22,6 @@ public class SpringContextUtil implements ApplicationContextAware {
   private static ApplicationContext ctx = null;
 
   public static ApplicationContext getApplicationContext() throws BeansException {
-    checkApplicationContext();
     return ctx;
   }
 

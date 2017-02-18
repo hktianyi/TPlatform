@@ -3,3 +3,10 @@ apply plugin: 'war'
 dependencies {
     compile project(':service')
 }
+
+//task explodedWar(type: Sync) {
+//    into "$buildDir/libs/exploded"
+//    with war
+//}
+//
+//war.dependsOn explodedWar

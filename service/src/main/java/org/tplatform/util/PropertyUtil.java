@@ -1,6 +1,7 @@
 package org.tplatform.util;
 
 import org.springframework.context.annotation.DependsOn;
+import org.tplatform.domain.ConfigService;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -10,7 +11,7 @@ import java.util.ResourceBundle;
 /**
  * 属性文件解析、参数获取工具类
  */
-@DependsOn("sysConfService")
+@DependsOn("springContextUtil")
 public class PropertyUtil {
 
 //  private static final String environment = ResourceBundle.getBundle("filter").getString("environment");
@@ -35,11 +36,11 @@ public class PropertyUtil {
    * 获取指定属性文件中对应的属性值
    */
   public static String getProInfo(String confKey) {
-//    if (StringUtil.isNotEmpty(confKey)) {
-//      return SpringContextUtil.getBean(ConfService.class).findVal(confKey);
-//    } else {
+    if (StringUtil.isNotEmpty(confKey)) {
+      return SpringContextUtil.getBean(ConfigService.class).getByKey(confKey);
+    } else {
       return null;
-//    }
+    }
   }
 
   /**

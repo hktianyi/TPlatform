@@ -7,6 +7,6 @@ import org.tplatform.config.WebAppConfig;
  */
 public class AppConfig extends WebAppConfig {
   {
-    super.setUrlRegex("^/(login|static)+.*$");
+    super.setUrlRegex("^/(login|static|api)+.*$");
   }
 }
