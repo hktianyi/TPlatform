@@ -14,6 +14,7 @@ import org.tplatform.common.GlobalConstant;
 import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.listener.SessionListener;
 import org.tplatform.util.DateUtil;
+import org.tplatform.util.Logger;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.SpringContextUtil;
 import org.tplatform.util.StringUtil;
@@ -94,6 +95,8 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
         }
       }
       // 应用初始化配置参数
+      Logger.i("========>>>>>应用名称: " + PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
+      Logger.i("========>>>>>文件服务器地址: " + PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
       servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
       servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
       servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());

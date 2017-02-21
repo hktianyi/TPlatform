@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'war'
 dependencies {
-    compile project(':service')
+    compile project(':tplatform-service')
 }
 
 //task explodedWar(type: Sync) {

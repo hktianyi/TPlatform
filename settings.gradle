@@ -1,4 +1,4 @@
 rootProject.name = 'TPlatform'
-include 'service' // 系统服务
-include 'admin'
+include 'tplatform-service' // 系统服务
+include 'tplatform-admin'
 

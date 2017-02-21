@@ -8,6 +8,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -27,29 +28,22 @@ import redis.clients.jedis.JedisPoolConfig;
 @EnableCaching
 @EnableRedisHttpSession
 @Profile({"PROD", "TEST"})
+@DependsOn("springContextUtil")
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
-  private static String redisHost;
-  private static int redisPort;
-  private static String redisPassword;
   private static final StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-
-  static {
-    System.out.println("====================>>>>>>>>>>>>>>>");
-    String[] ftpInfo = new String(Base64.decodeBase64(SpringContextUtil.getBean(ConfigService.class).getByKey("redisInfo"))).split("\\|");
-    redisHost = ftpInfo[0];
-    redisPort = Integer.parseInt(ftpInfo[1]);
-    redisPassword = ftpInfo[2];
-  }
 
   @Bean
   public JedisConnectionFactory redisConnectionFactory() {
 
+    String[] redisInfo = new String(Base64.decodeBase64(SpringContextUtil.getBean(ConfigService.class).getByKey("redisInfo"))).split("\\|");
+
     JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
     // Defaults
-    jedisConnectionFactory.setHostName(redisHost);
-    jedisConnectionFactory.setPort(redisPort);
-    jedisConnectionFactory.setPassword(redisPassword);
+    jedisConnectionFactory.setHostName(redisInfo[0]);
+    jedisConnectionFactory.setPort(Integer.parseInt(redisInfo[1]));
+    jedisConnectionFactory.setPassword(new String(Base64.decodeBase64(redisInfo[2])));
+    jedisConnectionFactory.setDatabase(Integer.valueOf(redisInfo[3]));
 
     JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
     jedisPoolConfig.setMaxIdle(Integer.valueOf(PropertyUtil.getProInfo("redis.maxIdle")));
