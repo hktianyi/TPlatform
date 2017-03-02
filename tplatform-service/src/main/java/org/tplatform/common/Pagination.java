@@ -1,4 +1,4 @@
-package org.tplatform.core.entity;
+package org.tplatform.common;
 
 import lombok.Data;
 

@@ -14,19 +14,19 @@ public interface ConfigService extends BaseRepo<Config> {
   /**
    * 根据key查询配置
    *
-   * @param confKey
-   * @return
+   * @param confKey 配置KEY
+   * @return String
    */
   @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Config_Val_' + #confKey")
   @Query(value = "SELECT val FROM sys_conf WHERE confKey = ?1", nativeQuery = true)
   String getByKey(String confKey);
 
   /**
-   * 根据key查询配置
+   * 更新配置项
    *
-   * @param val
-   * @param confKey
-   * @return
+   * @param val 取值
+   * @param confKey 配置KEY
+   * @return String
    */
   @CachePut(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Config_Val_' + #confKey")
   @Query(value = "UPDATE sys_conf set val = ?1 WHERE confKey = ?2", nativeQuery = true)

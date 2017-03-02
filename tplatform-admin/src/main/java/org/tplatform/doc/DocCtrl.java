@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.tplatform.common.BaseCtrl;
 import org.tplatform.common.GlobalConstant;
 import org.tplatform.common.RespBody;
+import org.tplatform.plugin.doc.Doc;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.SFTPUtil;
 import org.tplatform.util.StringUtil;

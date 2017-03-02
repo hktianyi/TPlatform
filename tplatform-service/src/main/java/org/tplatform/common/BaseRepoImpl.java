@@ -1,6 +1,7 @@
 package org.tplatform.common;
 
 import org.springframework.data.domain.Page;
+import org.tplatform.util.Logger;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +21,7 @@ public abstract class BaseRepoImpl<E> {
   }
 
   public List<E> findWithSql(String sql, Object... param) {
+    Logger.i("findWithSql: " + sql);
     Query query = em.createNativeQuery(sql);
     if (param != null && param.length > 0)
       for (int i = 0, length = param.length; i < length; i++)
@@ -27,14 +29,23 @@ public abstract class BaseRepoImpl<E> {
     return query.getResultList();
   }
 
+  public int executeSql(String sql, Object... param) {
+    Logger.i("executeSql: " + sql);
+    Query query = em.createNativeQuery(sql);
+    if (param != null && param.length > 0)
+      for (int i = 0, length = param.length; i < length; i++)
+        query.setParameter(i, param[i]);
+    return query.executeUpdate();
+  }
+
   /**
    * 查询列表
    *
-   * @param e
-   * @param start
-   * @param length
-   * @param selection
-   * @return
+   * @param e 实体
+   * @param start 起始行
+   * @param length 长度
+   * @param selection 条件
+   * @return Page
    */
   public Page<E> findForTable(E e, Integer start, Integer length, String... selection) {
     return null;

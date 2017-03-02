@@ -3,13 +3,8 @@ package org.tplatform.domain;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.tplatform.config.SpringConfig;
+import org.tplatform.common.BaseTest;
 
 import java.util.List;
 
@@ -20,11 +15,7 @@ import java.util.List;
  * @version 1.0
  * @since <pre>十二月 21, 2016</pre>
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = SpringConfig.class)
-@ActiveProfiles("DEV")
-public class DictServiceImplTest {
+public class DictServiceImplTest extends BaseTest {
 
   @Autowired
   private DictService dictService;

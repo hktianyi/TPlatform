@@ -2,7 +2,7 @@ package org.tplatform.domain;
 
 import lombok.Data;
 import org.tplatform.common.BaseEntity;
-import org.tplatform.core.fsm.DicType;
+import org.tplatform.common.DicType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

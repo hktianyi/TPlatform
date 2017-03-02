@@ -1,4 +1,4 @@
-package org.tplatform.doc;
+package org.tplatform.plugin.doc;
 
 import org.springframework.data.jpa.repository.Query;
 import org.tplatform.common.BaseRepo;

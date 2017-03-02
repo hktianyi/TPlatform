@@ -6,8 +6,6 @@ package org.tplatform.common;
  */
 public class GlobalConstant {
 
-  public final static String REDISHOST = "";
-
   public final static String ENCODE = "UTF-8";
   public static final String PROJECT_CLASS_PATH = GlobalConstant.class.getClassLoader().getResource("/").getFile();// 项目类的根路径
   public static final String PROJECT_ROOT_PATH = PROJECT_CLASS_PATH.replaceAll("WEB-INF/.*", "");// 项目根路径

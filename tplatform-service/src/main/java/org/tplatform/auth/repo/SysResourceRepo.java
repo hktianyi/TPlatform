@@ -4,7 +4,7 @@ package org.tplatform.auth.repo;//package org.tplatform.auth.repo;
 //import org.springframework.data.repository.query.Param;
 //import org.tplatform.auth.entity.SysResource;
 //import org.tplatform.auth.fsm.SysResourceType;
-//import org.tplatform.core.fsm.StatusEnum;
+//import org.tplatform.common.StatusEnum;
 //import org.tplatform.core.repo.BaseRepo;
 //
 //import java.util.List;

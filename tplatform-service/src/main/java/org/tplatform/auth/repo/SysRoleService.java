@@ -1,10 +1,10 @@
-package org.tplatform.auth.repo;//package org.tplatform.auth.service;
+package org.tplatform.auth.repo;//package org.tplatform.auth.form;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
 //import org.tplatform.auth.entity.SysRole;
 //import org.tplatform.auth.repo.SysRoleRepo;
-//import org.tplatform.core.fsm.StatusEnum;
+//import org.tplatform.common.StatusEnum;
 //
 //import java.util.Set;
 //

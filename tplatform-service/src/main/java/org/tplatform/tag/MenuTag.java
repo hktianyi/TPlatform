@@ -5,7 +5,7 @@ import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.entity.SysUser;
 import org.tplatform.auth.service.SysResourceService;
 import org.tplatform.common.GlobalConstant;
-import org.tplatform.core.fsm.StatusEnum;
+import org.tplatform.common.StatusEnum;
 import org.tplatform.util.Logger;
 import org.tplatform.util.SpringContextUtil;
 

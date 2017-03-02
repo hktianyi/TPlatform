@@ -14,11 +14,9 @@ import org.tplatform.common.GlobalConstant;
 import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.listener.SessionListener;
 import org.tplatform.util.DateUtil;
-import org.tplatform.util.Logger;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.SpringContextUtil;
 import org.tplatform.util.StringUtil;
-import org.tplatform.util.ThreadPoolUtil;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -51,7 +49,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
     mvcContext.register(springMvcConfigClass);
     ServletRegistration.Dynamic springMvc = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC, new DispatcherServlet(mvcContext));
     springMvc.setLoadOnStartup(1);
-    
+
     // 验证tomcat版本
     if (!springMvc.addMapping("/").isEmpty()) {
       throw new IllegalStateException("'" + GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC + "' cannot be mapped to '/' under Tomcat versions <= 7.0.14");
@@ -86,7 +84,8 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
       springMvc.setLoadOnStartup(2);
     }
 
-    ThreadPoolUtil.execute(() -> {
+    // 读取数据库配置
+    new Thread(() -> {
       while (SpringContextUtil.getApplicationContext() == null) {
         try {
           Thread.sleep(1000);
@@ -95,13 +94,44 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
         }
       }
       // 应用初始化配置参数
-      Logger.i("========>>>>>应用名称: " + PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
-      Logger.i("========>>>>>文件服务器地址: " + PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
       servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_FILE_DOMAIN));
       servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
       servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_PATH, servletContext.getContextPath());
       servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
-    });
+      System.out.println("/* =========================================================\n" +
+          " *\n" +
+          " * TPlatform ® - V0.0.1\n" +
+          " *\n" +
+          " * =========================================================\n" +
+          " *\n" +
+          " * Copyright © 2017 By TPlatform (http://www.tplatform.org)\n" +
+          " *\n" +
+          " *\n" +
+          " *                       _oo0oo_\n" +
+          " *                      o8888888o\n" +
+          " *                      88\" . \"88\n" +
+          " *                      (| -_- |)\n" +
+          " *                      0\\  =  /0\n" +
+          " *                    ___/`---'\\___\n" +
+          " *                  .' \\|     |// '.\n" +
+          " *                 / \\|||  :  |||// \\\n" +
+          " *                / _||||| -:- |||||- \\\n" +
+          " *               |   | \\\\  -  /// |   |\n" +
+          " *               | \\_|  ''\\---/''  |_/ |\n" +
+          " *               \\  .-\\__  '-'  ___/-. /\n" +
+          " *             ___'. .'  /--.--\\  `. .'___\n" +
+          " *          .\"\" '<  `.___\\_<|>_/___.' >' \"\".\n" +
+          " *         | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |\n" +
+          " *         \\  \\ `_.   \\_ __\\ /__ _/   .-` /  /\n" +
+          " *     =====`-.____`.___ \\_____/___.-`___.-'=====\n" +
+          " *                       `=---='\n" +
+          " *\n" +
+          " *     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+          " *\n" +
+          " *                 Java 是世界上最好的语言！\n" +
+          " *\n" +
+          " * ========================================================= */");
+    }).start();
   }
 
 }

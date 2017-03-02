@@ -1,4 +1,4 @@
-package org.tplatform.core.fsm;
+package org.tplatform.common;
 
 import lombok.Getter;
 

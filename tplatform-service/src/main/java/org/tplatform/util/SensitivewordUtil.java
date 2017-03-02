@@ -21,7 +21,7 @@ public class SensitivewordUtil {
   static {
     Set<String> keyWordSet = new HashSet<>();
 
-    RedisClient cache = RedisClient.getInstance(1);
+    RedisClient cache = RedisClient.getInstance();
     
     List list = cache.lrange("sensitiveWord", 0, -1);
     keyWordSet.addAll(list);

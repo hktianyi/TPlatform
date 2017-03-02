@@ -1,4 +1,4 @@
-package org.tplatform.core.entity;
+package org.tplatform.plugin.form;
 
 import lombok.Data;
 

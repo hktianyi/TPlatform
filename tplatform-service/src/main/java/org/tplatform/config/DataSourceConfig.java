@@ -3,10 +3,12 @@ package org.tplatform.config;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,6 +17,7 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.tplatform.common.BaseRepo;
 import org.tplatform.util.Logger;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.SpringContextUtil;
@@ -31,13 +34,12 @@ import java.util.Hashtable;
 @Configuration
 @DependsOn("springContextUtil")
 @EnableTransactionManagement(proxyTargetClass = true)
-//@PropertySource("classpath:db.properties")
-@ImportResource("classpath:spring-data-jpa.xml")
+@EnableJpaRepositories(basePackages = "**", includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = BaseRepo.class))
 public class DataSourceConfig {
 
-//  @Value("${jndiName}")
-  private String jndiName = PropertyUtil.getProInfo("db", "jndiName");
-//  @Value("${basePackage}")
+  //  @Value("${jndiName}")
+  private String jndiName = PropertyUtil.getProInfo("config", "jndiName");
+  //  @Value("${basePackage}")
   private String[] basePackages = (PropertyUtil.getProInfo("config", "basePackage")).split(",");
 
   // JNDI数据源(未使用)
@@ -54,6 +56,7 @@ public class DataSourceConfig {
 
   /**
    * 生产环境,使用JNDI数据源
+   *
    * @return
    */
   @Profile("PROD")
@@ -69,6 +72,7 @@ public class DataSourceConfig {
 
   /**
    * 开发环境, 使用DruidDataSourceFactory创建数据源
+   *
    * @return
    */
   @Profile("DEV")
@@ -111,4 +115,8 @@ public class DataSourceConfig {
     return transactionManager;
   }
 
+//  @Bean
+//  public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+//    return new PersistenceExceptionTranslationPostProcessor();
+//  }
 }

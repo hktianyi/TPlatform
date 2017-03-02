@@ -1,4 +1,4 @@
-package org.tplatform.doc;
+package org.tplatform.plugin.doc;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

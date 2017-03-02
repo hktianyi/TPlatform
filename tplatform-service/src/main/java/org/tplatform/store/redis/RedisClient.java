@@ -12,18 +12,14 @@ public class RedisClient extends AbstractClient {
 
   private static Map<Integer, RedisClient> instances = new HashMap<>();// 单例
 
-  RedisClient(Integer database) {
-    super(database);
-  }
-
   /**
    * 获得取实例
    */
-  public static RedisClient getInstance(Integer database) {
-    if (database == null) database = 0;
+  public static RedisClient getInstance() {
+    int database = 0;
     RedisClient redisClient = instances.get(database);
     if (redisClient == null) {
-      instances.put(database, redisClient = new RedisClient(database));
+      instances.put(database, redisClient = new RedisClient());
     }
     return redisClient;
   }

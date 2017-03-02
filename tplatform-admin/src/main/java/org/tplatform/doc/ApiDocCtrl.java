@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tplatform.common.BaseCtrl;
 import org.tplatform.common.RespBody;
+import org.tplatform.plugin.doc.Doc;
 import org.tplatform.util.StringUtil;
 
 import javax.persistence.criteria.Predicate;

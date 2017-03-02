@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadPoolUtil {
 
-  private static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(900);
+  private static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
   private static final ScheduledExecutorService schedulePool = Executors.newScheduledThreadPool(10);
 
   private ThreadPoolUtil() {}

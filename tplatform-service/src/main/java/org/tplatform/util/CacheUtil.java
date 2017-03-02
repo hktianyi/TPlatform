@@ -12,8 +12,7 @@ public class CacheUtil {
   private static final RedisClient cache;
 
   static {
-    //TODO 如果redis不可用，换用ehcache
-    cache = RedisClient.getInstance(1);
+    cache = RedisClient.getInstance();
   }
 
   private CacheUtil() {
