@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -13,10 +12,12 @@ import org.springframework.web.util.IntrospectorCleanupListener;
 import org.tplatform.common.GlobalConstant;
 import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.listener.SessionListener;
+import org.tplatform.listener.WebContextLoaderListener;
 import org.tplatform.util.DateUtil;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.SpringContextUtil;
 import org.tplatform.util.StringUtil;
+import org.tplatform.util.ThreadPoolUtil;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -55,7 +56,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
       throw new IllegalStateException("'" + GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC + "' cannot be mapped to '/' under Tomcat versions <= 7.0.14");
     }
 
-    servletContext.addListener(new ContextLoaderListener(mvcContext));
+    servletContext.addListener(new WebContextLoaderListener(mvcContext));
     // Spring 刷新Introspector防止内存泄露
     servletContext.addListener(new IntrospectorCleanupListener());
     servletContext.addListener(new SessionListener());
@@ -85,7 +86,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
     }
 
     // 读取数据库配置
-    new Thread(() -> {
+    ThreadPoolUtil.execute(() -> {
       while (SpringContextUtil.getApplicationContext() == null) {
         try {
           Thread.sleep(1000);
@@ -104,7 +105,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
           " *\n" +
           " * =========================================================\n" +
           " *\n" +
-          " * Copyright © 2017 By TPlatform (http://www.tplatform.org)\n" +
+          " * Copyright © "+DateUtil.getCurrentDate("yyyy")+" By TPlatform (http://www.tplatform.org)\n" +
           " *\n" +
           " *\n" +
           " *                       _oo0oo_\n" +
@@ -131,7 +132,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
           " *                 Java 是世界上最好的语言！\n" +
           " *\n" +
           " * ========================================================= */");
-    }).start();
+    });
   }
 
 }

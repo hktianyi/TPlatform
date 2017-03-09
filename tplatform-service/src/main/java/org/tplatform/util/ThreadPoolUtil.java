@@ -1,7 +1,11 @@
 package org.tplatform.util;
 
+import lombok.Getter;
+
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -12,13 +16,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadPoolUtil {
 
+  @Getter
   private static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
+  @Getter
   private static final ScheduledExecutorService schedulePool = Executors.newScheduledThreadPool(10);
 
   private ThreadPoolUtil() {}
 
   public static void execute(Runnable runnable) {
     fixedThreadPool.execute(runnable);
+  }
+
+  public static Future submit(Callable callable) {
+    return fixedThreadPool.submit(callable);
   }
 
   /**
