@@ -92,10 +92,12 @@ public class DictTag extends TagSupport {
 //  }
 
   public void setValue(Object value) {
-    try {
-      this.value = ExpressionEvaluatorManager.evaluate("value", value.toString(), Object.class, this, pageContext);
-    } catch (JspException e) {
-      Logger.e("[自定义标签]DictTag.setValue异常", e);
+    if (value != null) {
+      try {
+        this.value = ExpressionEvaluatorManager.evaluate("value", value.toString(), Object.class, this, pageContext);
+      } catch (JspException e) {
+        Logger.e("[自定义标签]DictTag.setValue异常", e);
+      }
     }
   }
 }
