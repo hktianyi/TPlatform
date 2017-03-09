@@ -85,6 +85,14 @@
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <attribute>
+            <name>pid</name>
+            <required>false</required>
+        </attribute>
+        <attribute>
+            <name>defaultOpton</name>
+            <required>false</required>
+        </attribute>
     </tag>
 
     <tag>

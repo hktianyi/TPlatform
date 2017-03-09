@@ -18,16 +18,22 @@ import java.util.List;
 public class DictTag extends TagSupport {
 
   @Setter
-  private String type;
+  private String type; // 元素类型（select|checkbox|radio）
   @Setter
-  private String key;
+  private String key;  // 字典key
   @Setter
-  private String name;
+  private String name; // html属性
   @Setter
-  private String className;
+  private String className; // html属性
   @Setter
-  private String attr;
-  private Object value;
+  private String attr; // html自定义属性
+  @Setter
+  private String defaultOpton; // 默认option
+  @Setter
+  private boolean pid; // 父ID，级联选择时使用
+  //  @Setter
+//  private String option;
+  private Object value; // 选中值
 
   @Override
   public int doStartTag() throws JspException {
@@ -35,10 +41,13 @@ public class DictTag extends TagSupport {
     List<Dict> list = SpringContextUtil.getBean(DictService.class).findByDicType(key);
 
     if ("select".equalsIgnoreCase(type)) {
-      html_sbd.append(String.format("<select name=\"%s\" class=\"%s\" %s><option value=\"\"></option>", name, className, attr));
+      html_sbd.append(String.format("<select name=\"%s\" class=\"%s\" %s>", name, className, attr));
+      if (null != defaultOpton) {
+        html_sbd.append(String.format("<option value=\"\">%s</option>", defaultOpton));
+      }
       if (list != null && list.size() > 0) {
-        list.stream().forEach(o -> html_sbd.append(String.format("<option value=\"%s\"%s>%s</option>", o.getValue(),
-            value != null && value.equals(o.getValue()) ? " selected" : "", o.getZhName())));
+        list.stream().forEach(o -> html_sbd.append(String.format("<option value=\"%s\"%s %s>%s</option>", o.getValue(),
+            pid ? " pid=\"" + o.getId() + "\"" : "", value != null && value.equals(o.getValue()) ? " selected" : "", o.getZhName())));
       }
       html_sbd.append("</select>");
     } else if ("checkbox".equalsIgnoreCase(type)) {
@@ -68,6 +77,19 @@ public class DictTag extends TagSupport {
       name = dict.getZhName();
     return name;
   }
+
+//  private String getAttrs(Dict dict) {
+//    String[] attrs = null;
+//    if (StringUtil.isEmpty(option)) {
+//      return "";
+//    }
+//    attrs = option.split("\\|");
+//    StringBuilder sbd = new StringBuilder();
+//    for (String attr : attrs) {
+//      sbd.append(attr).append("=\"").append(dict == null ? "" : dict.getId()).append("\" ");
+//    }
+//    return sbd.toString();
+//  }
 
   public void setValue(Object value) {
     try {
