@@ -15,9 +15,9 @@
 <meta name="keywords" content="tplatform"/>
 <meta name="description" content="tplatform"/>
 
-<%--<link rel="icon" href="${_PATH}/favicon.ico" type="image/x-icon">
-<link rel="shortcut icon" href="${_PATH}/favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="${_PATH}/favicon.ico">--%>
+<link rel="icon" href="${_PATH}/static/common/image/logo-color-128.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${_PATH}/static/common/image/logo-color-128.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="${_PATH}/static/common/image/logo-color-128.ico">
 <!-- Stylesheets-->
 <!--[if lt IE 10]>
 <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>

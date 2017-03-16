@@ -57,6 +57,15 @@ public class RespBody {
     return new RespBody(OK_CODE, page.getContent(), page.getTotalElements(), page.getTotalElements());
   }
 
+  public static RespBody error() {
+    return ERROR;
+  }
+  public static RespBody error(String errorInfo) {
+    return new RespBody(ERROR_CODE, errorInfo);
+  }
+  public static RespBody error(Object error) {
+    return new RespBody(ERROR_CODE, error);
+  }
 
   public int getStatusCode() {
     return statusCode;

@@ -56,7 +56,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
         typeName = typeName.replaceAll(str, "");
       }
       String[] pack = typeName.split("\\.");
-      dir = pack[1];
+      dir = pack[pack.length - 2];
       moduleName = StringUtils.uncapitalize(pack[pack.length - 1]);
     } else {
       dir = "/";

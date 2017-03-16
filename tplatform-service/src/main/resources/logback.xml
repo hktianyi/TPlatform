@@ -60,7 +60,7 @@
     <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="TRACE" />
     <logger name="org.hibernate.SQL" level="INFO" />
     <logger name="org.hibernate.engine.QueryParameters" level="TRACE" />
-    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="TRACE" />
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="INFO" />
 
     <!-- show parameters for mybatis sql -->
     <logger name="com.ibatis" level="TRACE" />

@@ -9,9 +9,9 @@ public interface DynamicFormService extends BaseRepo<DynamicForm> {
 
   /**
    * 根据表单ID查询表单
-   * @param formId 表单ID
+   * @param enName 表单名称
    * @return
    */
-  DynamicForm findByFormId(String formId);
+  DynamicForm findByEnName(String enName);
 
 }

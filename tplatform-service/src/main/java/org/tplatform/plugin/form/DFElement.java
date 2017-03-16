@@ -6,6 +6,7 @@ import org.tplatform.common.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,14 +17,16 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "SYS_DF_ELEMENT")
+//@MappedSuperclass
 public class DFElement extends BaseEntity {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(length = 20)
-  protected Long id;
+  private Long id;
+  @Column(length = 20, nullable = false)
+  private Long formId;
 
-  private String formId;//表单ID
   private String eleType;//元素类型
   private String eleAttr;//属性
   private String eleName;//元素名

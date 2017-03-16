@@ -50,6 +50,11 @@ public class DictTag extends TagSupport {
             pid ? " pid=\"" + o.getId() + "\"" : "", value != null && value.equals(o.getValue()) ? " selected" : "", o.getZhName())));
       }
       html_sbd.append("</select>");
+    } else if ("view".equalsIgnoreCase(type)) {
+      list.parallelStream().filter(dict -> dict.getValue().equals(value)).forEach(dict -> html_sbd.append(",").append(dict.getZhName()));
+      if (html_sbd.length() > 0) {
+        html_sbd.deleteCharAt(0);
+      }
     } else if ("checkbox".equalsIgnoreCase(type)) {
       // todo 复选框
     } else if ("radio".equalsIgnoreCase(type)) {

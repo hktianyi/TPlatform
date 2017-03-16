@@ -7,7 +7,7 @@
     <!-- BEGIN LOGO -->
     <div class="page-logo">
       <a href="${_PATH}/main.html">
-        <img src="${_PATH}/static/common/logo.png" alt="TPlatform" class="logo-default" style="max-width: 120px;max-height: 40px;margin: auto;margin-top: 3px;" /> </a>
+        <img src="${_PATH}/static/common/image/logo-color.png" alt="TPlatform" class="logo-default" style="max-width: 120px;max-height: 40px;margin: auto;margin-top: 3px;" /> </a>
       <%--<div class="menu-toggler sidebar-toggler"> </div>--%>
     </div>
     <!-- END LOGO -->

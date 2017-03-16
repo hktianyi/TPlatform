@@ -5,8 +5,11 @@ import org.tplatform.common.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.List;
@@ -21,15 +24,18 @@ import java.util.List;
 public class DynamicForm extends BaseEntity {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(length = 20)
   protected Long id;
 
   @Column(length = 10, nullable = false, unique = true)
-  private String formId;//表单ID
+  private String enName;//英文名
   private String zhName;//表单名
 
+  @OneToMany(mappedBy = "formId", fetch = FetchType.EAGER)
+  private List<DFElement> elements; // 元素集合
+
   @Transient
-  private List<DFElementRecord> elements; // 元素集合
+  private List<DFElementRecord> records; // 数据
 
 }

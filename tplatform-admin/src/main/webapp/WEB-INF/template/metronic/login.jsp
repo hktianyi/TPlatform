@@ -14,7 +14,7 @@
 <!-- BEGIN LOGO -->
 <div class="logo layer" data-depth="0.6">
   <a href="${_PATH}/index.html">
-    <img src="${_PATH}/static/common/logo.png" alt="" width="120px" height="120px"/> </a>
+    <img src="${_PATH}/static/common/image/logo-color.png" alt="" width="120px" height="120px"/> </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->
