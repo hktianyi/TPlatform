@@ -1,6 +1,5 @@
-package org.tplatform.auth.service;
+package org.tplatform.auth;
 
-import org.tplatform.auth.entity.SysUser;
 import org.tplatform.common.BaseRepo;
 
 /**

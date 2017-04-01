@@ -1,4 +1,4 @@
-package org.tplatform.auth.entity;
+package org.tplatform.auth;
 
 import lombok.Data;
 import org.tplatform.common.BaseEntity;
@@ -39,6 +39,8 @@ public class SysResource extends BaseEntity {
   private String icon;// 资源icon
   @Column(length = 2)
   private Integer sort;// 排序
+  @Column(length = 2)
+  private Integer status;// 状态
 
   @Transient
   private Integer leaf;// 叶子节点

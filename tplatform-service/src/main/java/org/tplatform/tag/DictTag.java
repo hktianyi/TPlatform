@@ -6,6 +6,7 @@ import org.tplatform.domain.Dict;
 import org.tplatform.domain.DictService;
 import org.tplatform.util.Logger;
 import org.tplatform.util.SpringContextUtil;
+import org.tplatform.util.StringUtil;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -21,6 +22,8 @@ public class DictTag extends TagSupport {
   private String type; // 元素类型（select|checkbox|radio）
   @Setter
   private String key;  // 字典key
+  @Setter
+  private String id; // html属性
   @Setter
   private String name; // html属性
   @Setter
@@ -40,6 +43,7 @@ public class DictTag extends TagSupport {
     StringBuilder html_sbd = new StringBuilder();
     List<Dict> list = SpringContextUtil.getBean(DictService.class).findByDicType(key);
 
+    // 下拉框
     if ("select".equalsIgnoreCase(type)) {
       html_sbd.append(String.format("<select name=\"%s\" class=\"%s\" %s>", name, className, attr));
       if (null != defaultOpton) {
@@ -50,10 +54,24 @@ public class DictTag extends TagSupport {
             pid ? " pid=\"" + o.getId() + "\"" : "", value != null && value.equals(o.getValue()) ? " selected" : "", o.getZhName())));
       }
       html_sbd.append("</select>");
+      // 静态展示
     } else if ("view".equalsIgnoreCase(type)) {
       list.parallelStream().filter(dict -> dict.getValue().equals(value)).forEach(dict -> html_sbd.append(",").append(dict.getZhName()));
       if (html_sbd.length() > 0) {
         html_sbd.deleteCharAt(0);
+      }
+      // 列表
+    } else if ("list".equalsIgnoreCase(type)) {
+      if (StringUtil.isNotEmpty(className)) {
+        list.stream().forEach(dict -> html_sbd.append(String.format(className, dict.getValue(), dict.getZhName())));
+      }
+      // JS字典
+    } else if ("js".equalsIgnoreCase(type)) {
+      html_sbd.append("var ").append(StringUtil.isEmpty(name) ? key : name).append(" = {");
+      if (list.size() > 0) {
+        list.stream().forEach(dict -> html_sbd.append(dict.getValue()).append(":'").append(dict.getZhName()).append("',"));
+        int length = html_sbd.length();
+        html_sbd.replace(length-1, length,"};");
       }
     } else if ("checkbox".equalsIgnoreCase(type)) {
       // todo 复选框

@@ -14,17 +14,20 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.tplatform.common.PlatformMappingExceptionResolver;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * spring配置文件
@@ -54,7 +57,7 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
   @Bean
   public SessionThemeResolver sessionThemeResolver() {
     SessionThemeResolver sessionThemeResolver = new SessionThemeResolver();
-    sessionThemeResolver.setDefaultThemeName("metronic");
+    sessionThemeResolver.setDefaultThemeName("inspinia");
     return sessionThemeResolver;
   }
 
@@ -93,6 +96,16 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
   public void initBinder(WebDataBinder binder) {
     SimpleDateFormat sdf = new SimpleDateFormat();
     binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
+  }
+
+  @Override
+  public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+    PlatformMappingExceptionResolver exceptionResolver = new PlatformMappingExceptionResolver();
+    Properties mappings = new Properties();
+    mappings.put(Exception.class, "/base/error");
+    exceptionResolver.setExceptionMappings(mappings);
+    exceptionResolvers.add(exceptionResolver);
+    super.extendHandlerExceptionResolvers(exceptionResolvers);
   }
 
 }

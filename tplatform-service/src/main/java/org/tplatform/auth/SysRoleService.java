@@ -1,7 +1,7 @@
-package org.tplatform.auth.service;
+package org.tplatform.auth;
 
 import org.springframework.data.jpa.repository.Query;
-import org.tplatform.auth.entity.SysRole;
+import org.tplatform.auth.SysRole;
 import org.tplatform.common.BaseRepo;
 
 import java.util.Set;

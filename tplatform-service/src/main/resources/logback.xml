@@ -48,18 +48,18 @@
 
     <!-- 下面配置一些第三方包的日志过滤级别，避免刷屏 -->
     <logger name="org.apache.zookeeper" level="INFO"/>
-    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework" level="WARN"/>
     <logger name="org.alibaba" level="INFO"/>
     <logger name="org.quartz" level="INFO"/>
     <logger name="com.google" level="INFO"/>
     <logger name="net.rubyeye" level="INFO"/>
 
     <!-- show parameters for hibernate sql -->
-    <logger name="org.hibernate" level="INFO" />
+    <logger name="org.hibernate" level="WARN" />
     <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />
     <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="TRACE" />
     <logger name="org.hibernate.SQL" level="INFO" />
-    <logger name="org.hibernate.engine.QueryParameters" level="TRACE" />
+    <logger name="org.hibernate.engine.QueryParameters" level="INFO" />
     <logger name="org.hibernate.engine.query.HQLQueryPlan" level="INFO" />
 
     <!-- show parameters for mybatis sql -->

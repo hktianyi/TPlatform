@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.List;
@@ -33,6 +34,7 @@ public class DynamicForm extends BaseEntity {
   private String zhName;//表单名
 
   @OneToMany(mappedBy = "formId", fetch = FetchType.EAGER)
+  @OrderBy("sort")
   private List<DFElement> elements; // 元素集合
 
   @Transient

@@ -105,6 +105,12 @@
         <attribute>
             <name>parentCode</name>
         </attribute>
+        <attribute>
+            <name>template</name>
+        </attribute>
+        <attribute>
+            <name>arrow</name>
+        </attribute>
     </tag>
     <tag>
         <name>button</name>

@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.Query;
 import org.tplatform.common.BaseRepo;
+import org.tplatform.common.BaseRepoImpl;
 import org.tplatform.common.GlobalConstant;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字典业务类
@@ -15,12 +18,19 @@ import java.util.List;
 public interface DictService extends BaseRepo<Dict> {
 
   /**
+   * 查询字典类型
+   * @return
+   */
+  @Query(value = "select dicType from SYS_DICT group by dicType", nativeQuery = true)
+  List<String> groupByDicType();
+
+  /**
    * 根据字典类型查找字典
    *
    * @param dicType 字典类型
    * @return List
    */
-  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Dict_Type_' + #dicType")
+//  @Cacheable(value = GlobalConstant.KEY_CACHE_SYS, key = "'_Dict_Type_' + #dicType")
   List<Dict> findByDicType(String dicType);
 
   /**
@@ -33,6 +43,14 @@ public interface DictService extends BaseRepo<Dict> {
   List<Dict> findByDicTypeAndPid(String dicType, Long pid);
 
   List<Dict> findByDicTypeAndPidOrderBySort(String dicType, Long pid);
+
+  /**
+   * 根据字典类型生成字典Map
+   * @param dicType
+   * @return
+   */
+  Map<String, String> findForDictMap(String dicType);
+  Map<String, String> findForDictMap(String dicType, boolean reverse);
 
   /**
    * 根据字典类型、状态查找字典
@@ -101,10 +119,30 @@ public interface DictService extends BaseRepo<Dict> {
 }
 
 
-class DictServiceImpl {
+class DictServiceImpl extends BaseRepoImpl<Dict> {
 
   @Autowired
   private DictService dictService;
+
+
+  /**
+   * 根据字典类型生成字典Map
+   * @param dicType
+   * @return
+   */
+  Map<String, String> findForDictMap(String dicType) {
+    return findForDictMap(dicType, false);
+  }
+  Map<String, String> findForDictMap(String dicType, boolean reverse) {
+    Map<String, String> dictMap = new HashMap<>();
+    List<Dict> list = dictService.findByDicType(dicType);
+    if (reverse) {
+      list.parallelStream().forEach(dict -> dictMap.put(dict.getZhName(), dict.getValue()));
+    } else {
+      list.parallelStream().forEach(dict -> dictMap.put(dict.getValue(), dict.getZhName()));
+    }
+    return dictMap;
+  }
 
   /* ***************************** 查询省市信息开始 ******************************* */
   public List<Dict> findProvinceList() {

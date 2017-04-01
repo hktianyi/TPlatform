@@ -1,10 +1,10 @@
-package org.tplatform.auth.service;
+package org.tplatform.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.tplatform.auth.entity.SysResource;
 import org.tplatform.auth.fsm.SysResourceType;
 import org.tplatform.common.BaseRepo;
 import org.tplatform.common.BaseRepoImpl;
@@ -12,6 +12,7 @@ import org.tplatform.common.JsTree;
 import org.tplatform.common.StatusEnum;
 import org.tplatform.util.StringUtil;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,25 +45,28 @@ public interface SysResourceService extends BaseRepo<SysResource> {
 //   * @return
 //   */
 //  List<SysResource> findMenus(Long pid, StatusEnum statusEnum);
-//
-//  /**
-//   * 查询jstree
-//   *
-//   * @param pid
-//   * @param selectedIds
-//   * @param status
-//   * @return
-//   */
-//  List findForTree(Long pid, StatusEnum status, String selectedIds, Class<?> clazz);
-//
-//  /**
-//   * 支持拖拽
-//   * @param id
-//   * @param pid
-//   * @return
-//   */
-//  public boolean updatePid(Long id, Long pid);
-//
+
+  /**
+   * 查询jstree
+   *
+   * @param pid
+   * @param selectedIds
+   * @param status
+   * @return
+   */
+  List findForTree(Long pid, StatusEnum status, String selectedIds, Class<?> clazz);
+
+  /**
+   * 支持拖拽
+   * @param id
+   * @param pid
+   * @return
+   */
+  @Transactional
+  @Modifying
+  @Query(value = "UPDATE sys_auth_resource SET pid = :pid WHERE id = :id", nativeQuery = true)
+  int updatePid(@Param("id") Long id, @Param("pid") Long pid);
+
 //  /**
 //   * 保存
 //   * @param sysResource
@@ -152,17 +156,6 @@ class SysResourceServiceImpl extends BaseRepoImpl<SysResource> {
     return sysResourceList;
   }
 
-
-//  /**
-//   * 支持拖拽
-//   * @param id
-//   * @param pid
-//   * @return
-//   */
-//  public boolean updatePid(Long id, Long pid) {
-//    return sysResourceMapper.updatePid(id, pid) > 0;
-//  }
-//
 //  @Override
 ////  @CacheEvict(value = GlobalConstant.KEY_CACHE_SYS, key = "'_MENU_TREE_*'")
 //  public boolean saveWithRole(SysResource sysResource, Long[] roles) {

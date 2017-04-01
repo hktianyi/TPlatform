@@ -6,7 +6,7 @@ package org.tplatform.auth.mapper;//package org.tplatform.auth.mapper;
 //import org.apache.ibatis.annotations.Select;
 //import org.apache.ibatis.annotations.SelectKey;
 //import org.apache.ibatis.annotations.Update;
-//import org.tplatform.auth.entity.SysResource;
+//import org.tplatform.auth.SysResource;
 //import org.tplatform.auth.fsm.SysResourceType;
 //import org.tplatform.common.StatusEnum;
 //import tk.mybatis.repo.common.Mapper;

@@ -1,6 +1,7 @@
 package org.tplatform.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 import org.tplatform.common.BaseEntity;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "SYS_DICT")
+@DynamicUpdate
 public class Dict extends BaseEntity {
 
   /**
@@ -30,7 +32,7 @@ public class Dict extends BaseEntity {
 
   @Column(length = 10)
   private Long pid;//父ID
-  @Column(length = 32)
+  @Column(length = 32, nullable = false)
   private String dicType;//类型
   @Column(length = 32)
   private String zhName;//中文名称

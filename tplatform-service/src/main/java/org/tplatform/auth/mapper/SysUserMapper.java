@@ -5,7 +5,7 @@ package org.tplatform.auth.mapper;//package org.tplatform.auth.mapper;
 //import org.apache.ibatis.annotations.Param;
 //import org.apache.ibatis.annotations.SelectKey;
 //import org.apache.ibatis.annotations.Update;
-//import org.tplatform.auth.entity.SysUser;
+//import org.tplatform.auth.SysUser;
 //import tk.mybatis.repo.common.Mapper;
 //
 //import java.util.Map;

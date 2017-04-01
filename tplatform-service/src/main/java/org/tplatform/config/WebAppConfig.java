@@ -48,7 +48,9 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
     // SpringMVC 入口
     AnnotationConfigWebApplicationContext mvcContext = new AnnotationConfigWebApplicationContext();
     mvcContext.register(springMvcConfigClass);
-    ServletRegistration.Dynamic springMvc = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC, new DispatcherServlet(mvcContext));
+    DispatcherServlet dispatcherServlet = new DispatcherServlet(mvcContext);
+    dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+    ServletRegistration.Dynamic springMvc = servletContext.addServlet(GlobalConstant.SYSTEM_SERVLET_NAME_SPRINGMVC, dispatcherServlet);
     springMvc.setLoadOnStartup(1);
 
     // 验证tomcat版本
@@ -101,7 +103,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
       servletContext.setAttribute(GlobalConstant.SYSTEM_SERVLET_VERSION, DateUtil.getCurrentDate(DateUtil.FORMAT_DATETIME_SHORT));
       System.out.println("/* =========================================================\n" +
           " *\n" +
-          " * TPlatform ® - V0.0.1\n" +
+          " * TPlatform ®\n" +
           " *\n" +
           " * =========================================================\n" +
           " *\n" +
@@ -129,7 +131,7 @@ public abstract class WebAppConfig implements WebApplicationInitializer {
           " *\n" +
           " *     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
           " *\n" +
-          " *                 Java 是世界上最好的语言！\n" +
+          " *                 Welcome to TPlatform!\n" +
           " *\n" +
           " * ========================================================= */");
     });

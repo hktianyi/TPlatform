@@ -1,4 +1,4 @@
-package org.tplatform.auth.entity;
+package org.tplatform.auth;
 
 import lombok.Data;
 import org.tplatform.common.BaseEntity;
@@ -23,9 +23,9 @@ public class SysOrgan extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(length = 10)
-  protected Long id;
+  private Long id;
 
-  @Column(length = 16)
+  @Column(length = 16, nullable = false, unique = true)
   private String code;// 机构编码
   @Column(length = 16)
   private String pCode;// 父编码

@@ -4,7 +4,6 @@ ext.versions = [
         spring_data_commons: '1.12.4.RELEASE',
         spring_data_jpa: '1.10.4.RELEASE',
         spring_data_redis: '1.7.6.RELEASE',
-        hibernate: '5.2.4.Final',
 
         logback       : '1.1.7',
         slf4j         : '1.7.21',
@@ -12,7 +11,7 @@ ext.versions = [
         jackson       : '2.8.2',
         lombok        : '1.16.10',
 
-        druid         : '1.0.26',
+        druid         : '1.0.29',
         mysql         : '6.0.5'
 ]
 
@@ -66,8 +65,8 @@ dependencies {
             "org.projectlombok:lombok:${versions.lombok}",
             "com.jcraft:jsch:0.1.53",
 
-            "org.hibernate:hibernate-core:${versions.hibernate}",
-            "org.hibernate:hibernate-validator:${versions.hibernate}",
+            "org.hibernate:hibernate-core:5.2.9.Final",
+            "org.hibernate:hibernate-validator:5.4.1.Final",
             "com.alibaba:druid:${versions.druid}",
             "mysql:mysql-connector-java:${versions.mysql}",
 

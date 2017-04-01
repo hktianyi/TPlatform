@@ -1,10 +1,13 @@
 package org.tplatform.tag;
 
 import org.tplatform.domain.ConfigService;
+import org.tplatform.util.Logger;
 import org.tplatform.util.SpringContextUtil;
+import org.tplatform.util.StringUtil;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
+import java.io.IOException;
 
 /**
  * Created by Tianyi on 2015/7/3.
@@ -16,21 +19,21 @@ public class ConfigTag extends TagSupport {
   private String showType;
   @Override
   public int doStartTag() throws JspException {
-//    try {
-//    	 String conf = null;
-////    	if("1".equals(showType))
-////    	  conf = sysConfService.findRemark(key);
-////    	else
-//        conf = sysConfService.findVal(key);
-//
-//      if(StringUtil.isNotEmpty(conf))
-//    	  pageContext.getOut().print(conf);
-//      else
-//        pageContext.getOut().print(sysConfService.findVal(key));
-//
-//    } catch (IOException e) {
-//      Logger.e("配置标签异常", e);
-//    }
+    try {
+    	 String conf = null;
+//    	if("1".equals(showType))
+//    	  conf = sysConfService.findRemark(key);
+//    	else
+        conf = configService.getByKey(key);
+
+      if(StringUtil.isNotEmpty(conf))
+    	  pageContext.getOut().print(conf);
+      else
+        pageContext.getOut().print(configService.getByKey(key));
+
+    } catch (IOException e) {
+      Logger.e("配置标签异常", e);
+    }
     return EVAL_BODY_INCLUDE;
   }
 

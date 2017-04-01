@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "SYS_DF_ELEMENT")
-//@MappedSuperclass
 public class DFElement extends BaseEntity {
 
   @Id

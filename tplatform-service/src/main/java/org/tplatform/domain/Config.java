@@ -1,6 +1,7 @@
 package org.tplatform.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 import org.tplatform.common.BaseEntity;
 
 import javax.persistence.Column;
@@ -16,7 +17,8 @@ import javax.persistence.Table;
  */
 @Data
 @Entity
-@Table(name = "SYS_CONF")
+@Table(name = "SYS_CONFIG")
+@DynamicUpdate
 public class Config extends BaseEntity {
 
   @Id
@@ -36,8 +38,10 @@ public class Config extends BaseEntity {
   private String val;
   @Column(length = 100)
   private String remark;
-  @Column(scale = 1)
+  @Column(length = 2, scale = 1)
   private Integer sort;
-  @Column(scale = 1)
-  private Integer level;
+
+//  @JsonIgnore
+//  @ManyToOne(optional = false)
+//  private SysOrgan organ;
 }
