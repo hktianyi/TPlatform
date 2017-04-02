@@ -25,288 +25,74 @@
 <%--<script src="${_PATH}/static/plugins/bootstrap-modal/js/bootstrap-modalmanager.js" type="text/javascript"></script>--%>
 <script src="${_PATH}/static/plugins/bootstrap-editable/js/bootstrap-editable.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/jquery/jquery.autocomplete.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/jquery-validation/additional-methods.min.js" type="text/javascript"></script>
+<script src="${_PATH}/static/plugins/fine-uploader/fine-uploader.js"></script>
+<script src="${_PATH}/static/plugins/tplatform.js?${_VERSION}" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <script src="${_PATH}/static/themes/metronic/js/layout.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/themes/metronic/js/demo.min.js" type="text/javascript"></script>
 <script src="${_PATH}/static/themes/metronic/js/quick-sidebar.js" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
-<script src="${_PATH}/static/plugins/jquery/jquery.autocomplete.js" type="text/javascript"></script>
-<script src="${_PATH}/static/plugins/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
-<script src="${_PATH}/static/plugins/jquery-validation/additional-methods.min.js" type="text/javascript"></script>
-<script src="${_PATH}/static/plugins/plupload/plupload.min.js" type="text/javascript"></script>
-<script src="${_PATH}/static/plugins/plupload/moxie.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    var _MODULE_NAME = _PATH + '/${_MODULE_NAME}';
-    // 编辑
-    function edit(id, url) {
-        layer.open({
-            type: 2,
-            shadeClose: true,
-            title: '&nbsp;', //不显示标题
-            shift: 0,
-            shade: 0.6,
-            maxmin: true,
-            moveType: 1,
-            area: ['800px', '500px'],
-            content: (url || (_MODULE_NAME + '/edit')) + '?id=' + (id || ''),
-            success: function (layero, index) {
-            },
-            btn: ['确认', '取消'],
-            yes: function(index, layero) {
-                window[layero.find('iframe')[0]['name']].save();
-            },
-            cancel: function(layero, index) {layer.close(index);}
-        });
-    }
-    // 编辑
-    function del(id, url) {
-        layer.confirm('确认删除？', function () {
-            $.post(url || (_MODULE_NAME + '/delete/' + id), function (resp) {
-                layer.alert(resp.data);
-                window.location.reload();
-            })
-        });
-    }
-    /**
-     * 上传文件
-     * @param btnId
-     * @param url
-     * @param filter
-     * @param callback_added
-     * @param callback_progress
-     * @param callback_uploaded
-     */
-    function readyUploader(btnId, url, fileName, filter, callback_added, callback_uploaded, callback_progress) {
-        new plupload.Uploader({
-            runtimes: 'html5,flash,silverlight,html4',
-            url: _PATH + url,
-            browse_button: btnId,
-            file_data_name: fileName || 'file',
-            filters: {
-                max_file_size : ((filter && filter.size) || 10) + 'MB',
-                mime_types: [
-                    {extensions : ((filter && filter.extensions) || 'jpg,jpeg,gif,png')}
-                ]
-            },
-            init: {
-                FilesAdded: function (up, files) {
-                    if(callback_added) callback_added(up, files);
-                    else up.start();
-                },
-                UploadProgress: function (up, file) {
-                    if(callback_progress) callback_progress(up, file);
-                    else $(up.settings.browse_button).text('[上传中:'+ (file.percent-1) + '%]');
-                },
-                FileUploaded: function (up, file, resp) {
-                    if (resp.status === 200 && resp.response) {
-                        if(callback_uploaded)
-                            callback_uploaded(up, file, resp);
-                        else {
-                            $('#' + btnId).prev().val(resp.response);
-                            $(up.settings.browse_button).text('[上传完成]');
-                        }
-                    } else {
-                        alert('上传失败!');
-                    }
-                },
-                Error: function (up, err) {
-                    switch (err.code) {
-                        case -600: alert('上传文件超过最大限制'); break;
-                        case -601: alert('文件格式错误'); break;
-                        default: alert(err.message); break;
-                    }
-                }
-            }
-        }).init();
-    }
-    //plupload中为我们提供了mOxie对象(https://github.com/moxiecode/moxie/wiki/API)
-    function previewImage(file, callback) {
-        if (!file || !/image\//.test(file.type)) return; //确保文件是图片
-        if (file.type == 'image/gif') {//gif使用FileReader进行预览,因为mOxie.Image只支持jpg和png
-            var fr = new mOxie.FileReader();
-            fr.onload = function () {
-                callback(fr.result);
-                fr.destroy();
-                fr = null;
-            };
-            fr.readAsDataURL(file.getSource());
-        } else {
-            var preloader = new mOxie.Image();
-            preloader.onload = function () {
-                var imgsrc = preloader.type == 'image/jpeg' ? preloader.getAsDataURL('image/jpeg', 80) : preloader.getAsDataURL(); //得到图片src,实质为一个base64编码的数据
-                callback && callback(imgsrc);
-                preloader.destroy();
-                preloader = null;
-            };
-            preloader.load(file.getSource());
-        }
-    }
-    !(function () {
-        window.alert = layer.alert;
-        window.confim = layer.confim;
-        $('select[multiple="multiple"]:not(".double")').multiselect();
-        // DataTable配置
-        $.fn.dataTable.ext.errMode = 'throw';
-        $.fn.dataTable.defaults = $.extend($.fn.dataTable.defaults, {
-            language: {'sUrl': _PATH + '/static/plugins/datatables/zh-cn.lang'},
-            dom: "<'row'<'col-sm-6'f>><'row'<'col-sm-12'tr>><'row'<'col-sm-3'l><'col-sm-3'i><'col-sm-6'p>>",
-            lengthMenu: [[10, 50, 100], [10, 50, 100]], info: true, stateSave: true,
-            processing: true, serverSide: true, deferRender: true, searching: false, ordering: false, pageLength: 50,
-            fnCreatedRow: function (nRow, aData, iDataIndex) {
-                $('td:eq(0)', nRow).html(++iDataIndex);
-            }
-        });
-        $.validator.setDefaults({
-            onfocusout: function (element) {
-                $(element).valid();
-            },
-            submitHandler: function (form) {
-                console.log($(form).serialize());
-                $.ajax(_MODULE_NAME + '/save', {
-                    type: 'POST',
-                    data: $(form).serialize(),
-                    success: function (resp) {
-                        if (resp.statusCode === 200) {
-                            layer.alert('保存成功!', function () {
-                                try {
-                                    saveCallback && saveCallback()
-                                } catch (e) {
-                                    window.location.href = _MODULE_NAME + '/list';
-                                }
-                            })
-                        }
-                    },
-                    error: function (resp) {
-                        layer.alert('保存失败!');
-                        var img = new Image();
-                        img.src = _PATH + '/sendJSError?s=' + _MODULE_NAME + '&e=' + encodeURIComponent(JSON.stringify(resp));
-                    }
-                });
-            }
-        });
-        // datepicker配置
-        $.fn.datepicker.defaults = $.extend($.fn.datepicker.defaults, {
-            format: 'yyyy-mm-dd',
-            autoclose: 'true',
-            language: 'en',
-            orientation: 'bottom right'
-        });
-        $(".date-picker").datepicker();
+<script type="text/template" id="qq-template">
+  <div class="qq-uploader-selector qq-uploader qq-gallery" qq-drop-area-text="拖拽文件上传">
+    <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+      <span class="qq-upload-drop-area-text-selector"></span>
+    </div>
+    <button type="button" class="qq-upload-button-selector qq-upload-button btn btn-social btn-fill bg-gold" style="border: none;">
+      <i class="fa fa-cloud-upload"></i> 选择文件
+    </button>
+    <span class="qq-drop-processing-selector qq-drop-processing">
+            <span>处理中...</span>
+            <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+        </span>
+    <div class="row qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals" style="box-shadow:none;">
+      <div class="col-md-6 col-sm-12">
+        <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+        <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+          <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+        </div>
+        <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+        <div class="qq-thumbnail-wrapper fileinput-new thumbnail img-raised">
+          <img class="qq-thumbnail-selector" style="max-height:320px;">
+        </div>
+        <button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>
+        <button type="button" class="qq-upload-retry-selector qq-upload-retry">
+          <span class="qq-btn qq-retry-icon" aria-label="Retry"></span>
+          重试
+        </button>
+        <div class="qq-file-info" style="text-align: center;">
+          <button type="button" class="qq-upload-delete-selector qq-upload-delete btn btn-social btn-fill btn-danger">
+            <i class="fa fa-trash-o"></i> 删除
+          </button>
+        </div>
+      </div>
+    </div>
 
-        $('.page-toolbar').on('click', 'button:has(".fa-plus")', function () {
-            edit();
-        });
-    })(window);
-    (function ($) {
-        'use strict';
-        $.fn.dataList = function (options) {
-            if ($(this).hasClass('dataTable')) {
-                $(this).draw();
-                return;
-            }
-            var setting = {
-                url: _MODULE_NAME + '/load',
-                type: 'POST'
-            };
-            $.extend(true, setting, options);
-            return $(this).DataTable({
-                'ajax': {
-                    'url': setting.url,
-                    'type': setting.type,
-                    'data': function (params) {
-                        if (setting.data)
-                            $.extend(params, setting.data);
-                    }
-                },
-                'columns': setting.columns
-            });
-        };
+    <dialog class="qq-alert-dialog-selector">
+      <div class="qq-dialog-message-selector"></div>
+      <div class="qq-dialog-buttons">
+        <button type="button" class="qq-cancel-button-selector">关闭</button>
+      </div>
+    </dialog>
 
-        //序列化table数据
-        $.fn.serializeTable = function () {
-            var $rows = this.find('tr:not(:hidden)');
-            var headers = [];
-            var index = [];
-            var data = [];
-            var i = 0;
-            // Get the headers (add special header logic here)
-            $($rows.first()).find('th').each(function () {
-                if (typeof $(this).data("name") !== 'undefined') {
-                    headers.push($(this).data("name"));
-                    index.push(i);
-                }
-                i++;
-            });
-            // Turn all existing rows into a loopable array
-            $rows.not(":first").each(function () {
-                var $td = $(this).find('td');
-                var h = {};
-                // Use the headers from earlier to name our hash keys
-                headers.forEach(function (header, i) {
-                    var input = $td.eq(index[i]).find('input');
-                    h[header] = (input.length > 0 && input.val()) || $td.eq(index[i]).data("val") || $td.eq(index[i]).text().replace(/^\s+|\s+$/g, "");
-                });
-                data.push(h);
-            });
-            return data;
-        };
-        //将表单序列化成json格式的数据(但不适用于含有控件的表单，例如复选框、多选的select)
-        $.fn.serializeJson = function () {
-            var jsonData1 = {};
-            var serializeArray = this.serializeArray();
-            // 先转换成{"id": ["12","14"], "name": ["aaa","bbb"], "pwd":["pwd1","pwd2"]}这种形式
-            $(serializeArray).each(function () {
-                if (/.*\..*/.test(this.name)) {
-                    var names = this.name.split('\.');
-                    if (!jsonData1[names[0]]) jsonData1[names[0]] = {};
-                    if (jsonData1[names[0]][names[1]]) {
-                        if ($.isArray(jsonData1[names[0]][names[1]])) {
-                            jsonData1[names[0]][names[1]].push(this.value);
-                        } else {
-                            jsonData1[names[0]][names[1]] = [jsonData1[names[0]][names[1]], this.value];
-                        }
-                    } else {
-                        jsonData1[names[0]][names[1]] = this.value;
-                    }
-                } else {
-                    if (jsonData1[this.name]) {
-                        if ($.isArray(jsonData1[this.name])) {
-                            jsonData1[this.name].push(this.value);
-                        } else {
-                            jsonData1[this.name] = [jsonData1[this.name], this.value];
-                        }
-                    } else {
-                        jsonData1[this.name] = this.value;
-                    }
-                }
+    <dialog class="qq-confirm-dialog-selector">
+      <div class="qq-dialog-message-selector"></div>
+      <div class="qq-dialog-buttons">
+        <button type="button" class="qq-cancel-button-selector">取消</button>
+        <button type="button" class="qq-ok-button-selector btn-danger">删除</button>
+      </div>
+    </dialog>
 
-            });
-            // 再转成[{"id": "12", "name": "aaa", "pwd":"pwd1"},{"id": "14", "name": "bb", "pwd":"pwd2"}]的形式
-            var vCount = 0;
-            // 计算json内部的数组最大长度
-            for (var item in jsonData1) {
-                var tmp = $.isArray(jsonData1[item]) ? jsonData1[item].length : 1;
-                vCount = (tmp > vCount) ? tmp : vCount;
-            }
-
-            if (vCount > 1) {
-                var jsonData2 = new Array();
-                for (var i = 0; i < vCount; i++) {
-                    var jsonObj = {};
-                    for (var item in jsonData1) {
-                        jsonObj[item] = jsonData1[item][i];
-                    }
-                    jsonData2.push(jsonObj);
-                }
-                return jsonData2;
-            } else {
-                return jsonData1;
-            }
-        };
-    })(jQuery);
-    function layerClose(msg) {
-        parent.layer.msg(msg, {icon: 6, time: 1000});
-        parent.layer.close(parent.layer.getFrameIndex(window.name));
-    }
+    <dialog class="qq-prompt-dialog-selector">
+      <div class="qq-dialog-message-selector"></div>
+      <input type="text">
+      <div class="qq-dialog-buttons">
+        <button type="button" class="qq-cancel-button-selector">取消</button>
+        <button type="button" class="qq-ok-button-selector">确认</button>
+      </div>
+    </dialog>
+  </div>
 </script>

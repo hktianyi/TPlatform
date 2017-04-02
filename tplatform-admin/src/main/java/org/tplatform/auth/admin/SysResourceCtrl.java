@@ -3,11 +3,17 @@ package org.tplatform.auth.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.tplatform.auth.entity.SysResource;
-import org.tplatform.auth.service.SysResourceService;
-import org.tplatform.auth.service.SysRoleService;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.tplatform.auth.SysResource;
+import org.tplatform.auth.SysResourceService;
+import org.tplatform.auth.SysRoleService;
 import org.tplatform.common.BaseCtrl;
+import org.tplatform.common.RespBody;
+
+import java.util.List;
 
 /**
  * Created by Tianyi on 2015/12/5.
@@ -31,33 +37,40 @@ public class SysResourceCtrl extends BaseCtrl<SysResource> {
     }
   }
 
-//  /**
-//   * Ajax加载数据
-//   *
-//   * @param pid
-//   * @return
-//   */
-//  @RequestMapping("/loadTree/{type}")
-//  @ResponseBody
-//  public List loadTree(@PathVariable(value = "type") String type, @RequestParam(value = "pid", required = false, defaultValue = "0") Long pid, @RequestParam(value = "selectedIds", required = false) String selectedIds) {
-//    SysResource sysResource = new SysResource();
-//    sysResource.setPid(pid);
+  @Override
+  protected void listHook(ModelMap modelMap) {
+    modelMap.put("roles", sysRoleService.findAll());
+    super.listHook(modelMap);
+  }
+
+  /**
+   * Ajax加载数据
+   *
+   * @param pid
+   * @return
+   */
+  @RequestMapping("/loadTree/{type}")
+  @ResponseBody
+  public List loadTree(@PathVariable(value = "type") String type, @RequestParam(value = "pid", required = false, defaultValue = "0") Long pid, @RequestParam(value = "selectedIds", required = false) String selectedIds) {
+    SysResource sysResource = new SysResource();
+    sysResource.setPid(pid);
+    return sysResourceService.findForTree(pid, null, selectedIds, SysResource.class);
 //    return sysResourceService.findForTree(pid, null, selectedIds, ("jstree".equalsIgnoreCase(type) ? JsTree.class : SysResource.class));
-//  }
-//
-//  /**
-//   * 拖拽节点
-//   *
-//   * @param id
-//   * @param pid
-//   * @return
-//   */
-//  @RequestMapping("/updatePid")
-//  @ResponseBody
-//  public RespBody updatePid(@RequestParam Long id, @RequestParam(required = false, defaultValue = "0") Long pid) {
-//    return RespBody.ok(sysResourceService.updatePid(id, pid));
-//  }
-//
+  }
+
+  /**
+   * 拖拽节点
+   *
+   * @param id
+   * @param pid
+   * @return
+   */
+  @RequestMapping("/updatePid")
+  @ResponseBody
+  public RespBody updatePid(@RequestParam Long id, @RequestParam(required = false, defaultValue = "0") Long pid) {
+    return RespBody.ok(sysResourceService.updatePid(id, pid));
+  }
+
 //  /**
 //   * 保存, status如果为空,则设置为无效(INVALID)
 //   * @param sysResource

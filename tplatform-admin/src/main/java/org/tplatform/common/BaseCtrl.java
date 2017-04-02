@@ -3,6 +3,7 @@ package org.tplatform.common;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.theme.AbstractThemeResolver;
 import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.tplatform.util.DateUtil;
+import org.tplatform.util.Logger;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.StringUtil;
 
@@ -102,7 +104,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
         return cb.or(whereList.toArray(new Predicate[whereList.size()]));
       }, new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
     } else {
-      page = baseService.findAll(new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
+      page = baseService.findAll(Example.of(e), new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
     }
     return RespBody.ok(page);
   }
@@ -148,9 +150,14 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   @RequestMapping(value = "/save", method = RequestMethod.POST)
   @ResponseBody
   public RespBody save(E e) {
-    BeanWrapper bw = new BeanWrapperImpl(e);
-    bw.setPropertyValue("createTime", DateUtil.getCurrentDate());
-    baseService.save((E) bw.getWrappedInstance());
+    try {
+      BeanWrapper bw = new BeanWrapperImpl(e);
+      bw.setPropertyValue("createTime", DateUtil.getCurrentDate());
+      e = (E) bw.getWrappedInstance();
+    } catch (org.springframework.beans.BeansException ex) {
+      Logger.w(ex.getMessage());
+    }
+    baseService.save(e);
     return RespBody.ok();
   }
 
@@ -178,9 +185,5 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   protected String getThemeName() {
     String themeName = (String) session.getAttribute(SessionThemeResolver.THEME_SESSION_ATTRIBUTE_NAME);
     return StringUtil.isEmpty(themeName) ? themeResolver.getDefaultThemeName() : themeName;
-  }
-
-  public String error() {
-    return "";
   }
 }

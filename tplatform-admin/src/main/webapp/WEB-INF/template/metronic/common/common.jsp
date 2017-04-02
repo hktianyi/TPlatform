@@ -13,6 +13,7 @@
 <link href="${_PATH}/static/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css"/>
 <link href="${_PATH}/static/plugins/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet" type="text/css"/>
 <link href="${_PATH}/static/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css"/>
+<link href="${_PATH}/static/plugins/fine-uploader/fine-uploader-new.min.css" rel="stylesheet">
 <%--<link href="${_PATH}/static/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />--%>
 <!-- END PAGE LEVEL STYLES -->
 <!-- BEGIN THEME GLOBAL STYLES -->
@@ -25,5 +26,5 @@
 <link href="${_PATH}/static/themes/metronic/css/custom.css?${_VERSION}" rel="stylesheet" type="text/css"/>
 <!-- END THEME LAYOUT STYLES -->
 <script type="text/javascript">
-    var _PATH = '${_PATH}';
+    var _PATH = '${_PATH}', _MODULE_NAME = _PATH + '/${_MODULE_NAME}';
 </script>

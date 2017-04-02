@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="t" uri="/taglib/tplatform.tld" %>
 <meta charset="utf-8">
 <meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -15,15 +16,13 @@
 <meta name="keywords" content="tplatform"/>
 <meta name="description" content="tplatform"/>
 
-<link rel="icon" href="${_PATH}/static/common/image/logo-color-128.ico" type="image/x-icon">
-<link rel="shortcut icon" href="${_PATH}/static/common/image/logo-color-128.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="${_PATH}/static/common/image/logo-color-128.ico">
+<link rel="icon" href="${_PATH}/static/common/image/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${_PATH}/static/common/image/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="${_PATH}/static/common/image/favicon.ico">
 <!-- Stylesheets-->
 <!--[if lt IE 10]>
 <script src="http://cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
 <![endif]-->
-<%--<script src='${_PATH}/static/plugins/analytics.js'></script>--%>
-<%--<script type="text/javascript">window.ga = window.ga || function () {(ga.q = ga.q || []).push(arguments)};ga.l = +new Date;ga('create', 'UA-86968296-1', 'auto');ga('send', 'pageview');</script>--%>
 <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/jquery-migrate/1.4.1/jquery-migrate.min.js" async></script>
+<%--<script src="http://cdn.bootcss.com/jquery-migrate/1.4.1/jquery-migrate.min.js" async></script>--%>
 <script src="http://cdn.bootcss.com/modernizr/2.8.3/modernizr.min.js"></script>

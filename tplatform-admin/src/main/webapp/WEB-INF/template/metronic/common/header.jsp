@@ -1,4 +1,3 @@
-<%@ taglib prefix="view" uri="/taglib/tplatform.tld" %>
 <%@ page pageEncoding="UTF-8" language="java" %>
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
@@ -17,7 +16,7 @@
     <div class="hor-menu   hidden-sm hidden-xs">
       <ul class="nav navbar-nav">
         <!-- DOC: Remove data-hover="megamenu-dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
-        <view:menu type="H" />
+        <t:menu type="H" />
       </ul>
     </div>
     <!-- END MEGA MENU -->
@@ -42,7 +41,7 @@
       <ul class="nav navbar-nav pull-right">
         <li class="dropdown dropdown-user">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-            <img alt="" class="img-circle" src="${_PATH}/static/themes/metronic/img/avatars/${_USER.avatarUrl}_small.jpg"/>
+            <img alt="" class="img-circle" src="${_PATH}/static/themes/metronic/img/avatars/${_USER.avatarUrl}_small.jpg" onerror="this.src='${_PATH}/static/common/image/logo-color.png'"/>
             <span class="username">
               ${_USER.nickname} </span>
             <i class="fa fa-angle-down"></i>

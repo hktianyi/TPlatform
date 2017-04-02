@@ -6,13 +6,13 @@
 <html lang="zh_cn">
 <!--<![endif]-->
 <head>
-  <%@include file="../../common/common.jsp" %>
+  <%@include file="../common/common.jsp" %>
   <link href="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.css" rel="stylesheet" type="text/css" />
 </head>
 <!-- END HEAD -->
 
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white page-full-width">
-<%@include file="../../common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
   <!-- BEGIN CONTENT -->
@@ -56,7 +56,7 @@
   <!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
-<%@include file="../../common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>
 <script src="${_PATH}/static/plugins/jquery-treetable/jquery.treetable.js" type="text/javascript"></script>
 <script type="text/javascript">
   var treeGrid;

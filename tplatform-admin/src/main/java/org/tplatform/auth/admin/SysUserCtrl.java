@@ -1,18 +1,25 @@
 package org.tplatform.auth.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tplatform.auth.entity.SysUser;
-import org.tplatform.auth.service.SysRoleService;
-import org.tplatform.auth.service.SysUserService;
+import org.tplatform.auth.SysRoleService;
+import org.tplatform.auth.SysUser;
+import org.tplatform.auth.SysUserService;
 import org.tplatform.common.BaseCtrl;
 import org.tplatform.common.GlobalConstant;
 import org.tplatform.common.RespBody;
 import org.tplatform.util.StringUtil;
+
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tianyi on 2015/12/5.
@@ -34,6 +41,39 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
       sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId()));
       modelMap.put("data", sysUser);
     }
+  }
+
+  @Override
+  protected void listHook(ModelMap modelMap) {
+    modelMap.put("roles", sysRoleService.findAll());
+    super.listHook(modelMap);
+  }
+
+  @RequestMapping("/loadByRole")
+  @ResponseBody
+  public RespBody loadByRole(SysUser e, Integer start, Integer length, Long roleId) {
+    Page page;
+    if (StringUtil.isNotEmpty(e.getQ()) && StringUtil.isNotEmpty(e.getQNames())) {
+      page = baseService.findAll((root, query, cb) -> {
+        List<Predicate> andList = new ArrayList<>();
+        List<Predicate> orList = new ArrayList<>();
+        String q = "%" + e.getQ() + "%";
+        String[] qNames = e.getQNames().split(",");
+        for (String qName : qNames) {
+          orList.add(cb.like(root.get(qName), q));
+        }
+        if (orList.size() > 0) {
+          andList.add(cb.or(orList.toArray(new Predicate[orList.size()])));
+        }
+        if (roleId != null && roleId > 0) {
+          andList.add(cb.equal(root.get("roles.id"), roleId));
+        }
+        return cb.and(andList.toArray(new Predicate[andList.size()]));
+      }, new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
+    } else {
+      page = baseService.findAll(new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
+    }
+    return RespBody.ok(page);
   }
 
   /**

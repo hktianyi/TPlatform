@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.theme.AbstractThemeResolver;
 import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.tplatform.auth.entity.SysUser;
-import org.tplatform.auth.service.SysUserService;
+import org.tplatform.auth.SysUser;
+import org.tplatform.auth.SysUserService;
 import org.tplatform.common.GlobalConstant;
 import org.tplatform.util.StringUtil;
 
@@ -39,7 +39,7 @@ public class LoginCtrl {
   @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login() {
     if (session.getAttribute(GlobalConstant.KEY_SESSION_USER) != null) {
-      return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";
+      return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main";
     }
     return getThemeName() + "/login.jsp";
   }
@@ -64,7 +64,7 @@ public class LoginCtrl {
         session.removeAttribute(GlobalConstant.KEY_SESSION_LOGIN_TO_PAGE);
         return InternalResourceViewResolver.REDIRECT_URL_PREFIX + loginTo;
       } else {
-        return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "main.html";
+        return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/";
       }
     } else {
       modelMap.put("errorMsg", "用户名或密码错误！");
@@ -77,12 +77,12 @@ public class LoginCtrl {
    *
    * @return
    */
-  @RequestMapping(value = "/main.html", method = RequestMethod.GET)
+  @RequestMapping(method = RequestMethod.GET)
   public String main(ModelMap modelMap) {
 //    modelMap.put("title", "TPlatform");
 //    modelMap.put("body", "/sys/dashboard.jsp");
-//    return getThemeName() + "/main.jsp";
-    return GlobalConstant.REDIRECT + "/doc/list";
+    return getThemeName() + "/main.jsp";
+//    return GlobalConstant.REDIRECT + "/doc/list";
   }
 
   /**
@@ -90,7 +90,7 @@ public class LoginCtrl {
    *
    * @return
    */
-  @RequestMapping(value = "/logout.html", method = RequestMethod.GET)
+  @RequestMapping(value = "/logout", method = RequestMethod.GET)
   public String logout() {
     session.removeAttribute(GlobalConstant.KEY_SESSION_USER);
     return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/login";

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tplatform.auth.entity.SysRole;
-import org.tplatform.auth.service.SysRoleService;
+import org.tplatform.auth.SysRole;
+import org.tplatform.auth.SysRoleService;
 import org.tplatform.common.BaseCtrl;
 
 import java.util.List;
