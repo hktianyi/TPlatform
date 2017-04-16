@@ -1,4 +1,4 @@
-package org.tplatform.config;//package org.tplatform.config;
+package org.tplatform.config;
 //
 //import com.alibaba.dubbo.common.logger.Logger;
 //import com.alibaba.dubbo.common.logger.LoggerFactory;

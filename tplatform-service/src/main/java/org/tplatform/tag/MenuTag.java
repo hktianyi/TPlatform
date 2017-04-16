@@ -4,7 +4,7 @@ import lombok.Setter;
 import org.tplatform.auth.SysResource;
 import org.tplatform.auth.SysResourceService;
 import org.tplatform.auth.SysUser;
-import org.tplatform.common.GlobalConstant;
+import org.tplatform.auth.SysUserService;
 import org.tplatform.common.StatusEnum;
 import org.tplatform.util.Logger;
 import org.tplatform.util.SpringContextUtil;
@@ -28,22 +28,12 @@ public class MenuTag extends TagSupport {
   @Setter
   private String arrow;
 
-//  // 纵向菜单
-//  private static final String[] menu_V = {"<ul class=\"nav navbar-nav\">{0}</ul>", "<li class=\"classic-menu-dropdown\"><a href=\"{0}\" data-hover=\"megamenu-dropdown\" data-close-others=\"true\"> {1} </a></li>",
-//      "<ul class=\"dropdown-menu pull-left\">{0}</ul>", "<li><a href=\"{0}\"><i class=\"fa fa-bookmark-o\"></i> {1} </a></li>"};
-//  // 横向菜单
-//  private static final String[] menu_H = {"<ul class=\"nav navbar-nav\">{0}</ul>",
-//      "<li class=\"classic-menu-dropdown {0}\"><a href=\"{1}\" data-hover=\"megamenu-dropdown\" data-close-others=\"true\"> {2} </a>{3}</li>",
-//      "<ul class=\"dropdown-menu pull-left\">{0}</ul>",
-//      "<li class=\"{0}\"><a href=\"{1}\"><i class=\"fa fa-{2}\"></i> {3} </a></li>"};
-
-
   @Override
   public int doStartTag() throws JspException {
     List<SysResource> resources;
     StringBuilder roleId = new StringBuilder();
     StringBuilder html = new StringBuilder();
-    SysUser user = (SysUser) SpringContextUtil.getSession().getAttribute(GlobalConstant.KEY_SESSION_USER);
+    SysUser user = SpringContextUtil.getBean(SysUserService.class).findByUsername(SpringContextUtil.getAuthenticatedUsername());
     if (user != null && user.getRoles() != null) {
       user.getRoles().stream().forEach(sysRole -> roleId.append(",").append(sysRole.getId()));
     }

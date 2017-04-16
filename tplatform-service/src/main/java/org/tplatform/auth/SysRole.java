@@ -32,6 +32,8 @@ public class SysRole extends BaseEntity {
   @Column(length = 10)
   private Long pid;
   @Column(length = 32)
+  private String role;
+  @Column(length = 32)
   private String name;
   @Column(length = 16)
   private String icon;

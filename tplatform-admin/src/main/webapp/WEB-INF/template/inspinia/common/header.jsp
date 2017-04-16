@@ -18,10 +18,10 @@
           </a>
           <ul class="dropdown-menu animated fadeInRight m-t-xs">
             <li><a href="${_PATH}/profile">个人信息</a></li>
-            <li><a href="${_PATH}/contacts">联系人</a></li>
+            <%--<li><a href="${_PATH}/contacts">联系人</a></li>
             <li><a href="${_PATH}/mailbox">收件箱</a></li>
             <li class="divider"></li>
-            <li><a href="${_PATH}/logout">退出</a></li>
+            <li><a href="${_PATH}/logout">退出</a></li>--%>
           </ul>
         </div>
         <div class="logo-element">TP</div>

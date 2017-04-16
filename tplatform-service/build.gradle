@@ -45,6 +45,9 @@ dependencies {
             "org.springframework.session:spring-session:${versions.spring_session}",
             "org.springframework.session:spring-session-data-redis:${versions.spring_session}",
 
+            "org.springframework.security:spring-security-config:4.2.2.RELEASE",
+            "org.springframework.security:spring-security-web:4.2.2.RELEASE",
+
             "org.aspectj:aspectjrt:1.8.5",
             "org.aspectj:aspectjweaver:1.7.2",
 

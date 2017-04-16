@@ -12,9 +12,7 @@
       <h1 class="logo-name">CDY</h1>
     </div>
     <h3>${APP_NAME}</h3>
-    <%--<p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.--%>
-    </p>
-    <p>Welcome, please login.</p>
+    <p>${empty SPRING_SECURITY_LAST_EXCEPTION.message ? 'Welcome, please login.' : SPRING_SECURITY_LAST_EXCEPTION.message}</p>
     <form class="m-t login-form" role="form" action="${_PATH}/login" method="post">
       <div class="form-group">
         <input type="text" class="form-control" name="username" placeholder="Username">

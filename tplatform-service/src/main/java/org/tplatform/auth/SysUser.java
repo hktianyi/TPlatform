@@ -42,6 +42,8 @@ public class SysUser extends BaseEntity {
   private String email;   // 邮箱
   @Column(length = 32)
   private String avatarUrl;  // 头像
+  @Column(length = 1)
+  private Integer status;  // 状态
 
   /**
    * 用户角色

@@ -14,6 +14,7 @@ import org.tplatform.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.ForbiddenException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -58,18 +59,25 @@ public class GlobalExceptionHandler {
     return null;
   }
 
+  //403的异常就会被这个方法捕获
+  @ExceptionHandler(ForbiddenException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  public ModelAndView handle403Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
+    return handleError(req, rsp, e, "../base/403.jsp", HttpStatus.FORBIDDEN);
+  }
+
   //404的异常就会被这个方法捕获
   @ExceptionHandler(NoHandlerFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public ModelAndView handle404Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
-    return handleError(req, rsp, e, "404.jsp", HttpStatus.NOT_FOUND);
+    return handleError(req, rsp, e, "../base/404.jsp", HttpStatus.NOT_FOUND);
   }
 
   //500的异常会被这个方法捕获
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ModelAndView handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
-    return handleError(req, rsp, e, "500.jsp", HttpStatus.INTERNAL_SERVER_ERROR);
+    return handleError(req, rsp, e, "../base/500.jsp", HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
 }

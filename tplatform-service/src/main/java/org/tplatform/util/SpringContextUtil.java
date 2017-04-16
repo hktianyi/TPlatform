@@ -3,14 +3,16 @@ package org.tplatform.util;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.tplatform.common.GlobalConstant;
+import org.tplatform.auth.SysUser;
+import org.tplatform.auth.SysUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Field;
 
 /**
  * 手动静态获取bean对象工具类
@@ -78,35 +80,47 @@ public class SpringContextUtil implements ApplicationContextAware {
     return getRequest().getSession();
   }
 
+  public static String getAuthenticatedUsername() {
+    String username;
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof UserDetails) {
+      username = ((UserDetails) principal).getUsername();
+    } else {
+      username = principal.toString();
+    }
+    return username;
+  }
+
   /**
    * SpringMvc下获取操作员登录名
    *
    * @return
    */
-  public static Long getOperator() {
-    Object object = getSession().getAttribute(GlobalConstant.KEY_SESSION_USER);
-    if (object != null) {
-      try {
-        Field field = object.getClass().getDeclaredField("id");
-        field.setAccessible(true);
-        return Long.valueOf(String.valueOf(field.get(object)));
-      } catch (NoSuchFieldException e) {
-        if(object.getClass().getGenericSuperclass()!=null) {
-          try {
-            Field field = object.getClass().getSuperclass().getDeclaredField("id");
-            field.setAccessible(true);
-            return Long.valueOf(String.valueOf(field.get(object)));
-          } catch (NoSuchFieldException e1) {
-            e1.printStackTrace();
-          } catch (IllegalAccessException e1) {
-            e1.printStackTrace();
-          }
-        }
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
+  public static Long getOperatorId() {
+    SysUser sysUser = getBean(SysUserService.class).findByUsername(getAuthenticatedUsername());
+    if (sysUser != null) {
+      return sysUser.getId();
     }
+//      try {
+//        Field field = object.getClass().getDeclaredField("id");
+//        field.setAccessible(true);
+//        return Long.valueOf(String.valueOf(field.get(object)));
+//      } catch (NoSuchFieldException e) {
+//        if (object.getClass().getGenericSuperclass() != null) {
+//          try {
+//            Field field = object.getClass().getSuperclass().getDeclaredField("id");
+//            field.setAccessible(true);
+//            return Long.valueOf(String.valueOf(field.get(object)));
+//          } catch (NoSuchFieldException e1) {
+//            e1.printStackTrace();
+//          } catch (IllegalAccessException e1) {
+//            e1.printStackTrace();
+//          }
+//        }
+//        e.printStackTrace();
+//      } catch (IllegalAccessException e) {
+//        e.printStackTrace();
+//      }
     return null;
   }
 }
