@@ -1,8 +1,13 @@
 group 'org.tplatform'
-version '1.0.1-SNAPSHOT'
+version '0.0.2-SNAPSHOT'
 
 allprojects {
     apply plugin: 'idea'
+
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -23,18 +28,8 @@ idea {
 
 subprojects {
     apply plugin: 'java'
-    apply from: '../center.gradle'
+    apply from: '../sonatype.gradle'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    }
-
-    dependencies {
-        testCompile group: 'junit', name: 'junit', version: '4.11'
-        testCompile group: 'org.springframework', name: 'spring-test', version: '4.2.6.RELEASE'
-    }
 }
