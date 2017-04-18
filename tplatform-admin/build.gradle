@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'war'
+dependencies {
+    compile project(':tplatform-service')
+}
+
+//task explodedWar(type: Sync) {
+//    into "$buildDir/libs/exploded"
+//    with war
+//}
+//
+//war.dependsOn explodedWar
