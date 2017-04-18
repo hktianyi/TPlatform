@@ -1,6 +1,11 @@
 allprojects {
     apply plugin: 'idea'
 
+    repositories {
+        mavenLocal()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    }
+
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
@@ -24,9 +29,4 @@ subprojects {
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    repositories {
-        mavenLocal()
-        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    }
 }
