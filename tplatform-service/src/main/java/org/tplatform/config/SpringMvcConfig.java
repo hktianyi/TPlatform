@@ -8,7 +8,10 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,6 +28,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.tplatform.common.PlatformMappingExceptionResolver;
+import org.tplatform.util.PropertyUtil;
+import org.tplatform.util.StringUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,15 +43,19 @@ import java.util.Properties;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "org.tplatform",includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, RestController.class, ControllerAdvice.class, RestControllerAdvice.class})},
-    excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Configuration.class})})
+@ComponentScan(basePackages = "org.tplatform", /*useDefaultFilters = false,*/
+    includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, RestController.class, ControllerAdvice.class, RestControllerAdvice.class})},
+    excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, Component.class, Repository.class, Configuration.class})})
 public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
   // 视图解析器
   @Bean
   public InternalResourceViewResolver internalResourceViewResolver() {
     InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
-    internalResourceViewResolver.setPrefix("/WEB-INF/template/");
+    String prefix = PropertyUtil.getProInfo("config", "web.prefix");
+    String suffix = PropertyUtil.getProInfo("config", "web.suffix");
+    internalResourceViewResolver.setPrefix(StringUtil.isBlank(prefix) ? "/WEB-INF/template/" : prefix);
+    internalResourceViewResolver.setSuffix(StringUtil.isBlank(suffix) ? "" : suffix);
     internalResourceViewResolver.setOrder(1);
     return internalResourceViewResolver;
   }
@@ -61,7 +70,8 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
   @Bean
   public SessionThemeResolver sessionThemeResolver() {
     SessionThemeResolver sessionThemeResolver = new SessionThemeResolver();
-    sessionThemeResolver.setDefaultThemeName("inspinia");
+    String themeName = PropertyUtil.getProInfo("config", "theme.name");
+    sessionThemeResolver.setDefaultThemeName(StringUtil.isBlank(themeName) ? "" : themeName);
     return sessionThemeResolver;
   }
 
@@ -70,8 +80,10 @@ public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
   public MultipartResolver multipartResolver() {
     CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
     commonsMultipartResolver.setDefaultEncoding("UTF-8");
-    commonsMultipartResolver.setMaxUploadSize(10485760000L);
-    commonsMultipartResolver.setMaxInMemorySize(40960);
+    String MaxUploadSize = PropertyUtil.getProInfo("config", "web.upload.maxSize");
+    String MaxInMemorySize = PropertyUtil.getProInfo("config", "web.upload.maxInMemorySize");
+    commonsMultipartResolver.setMaxUploadSize(StringUtil.isBlank(MaxUploadSize) ? 10485760000L : Long.valueOf(MaxUploadSize));
+    commonsMultipartResolver.setMaxInMemorySize(StringUtil.isBlank(MaxInMemorySize) ? 40960 : Integer.valueOf(MaxInMemorySize));
     return commonsMultipartResolver;
   }
 

@@ -1,4 +1,4 @@
-package org.tplatform.config;
+package org.tplatform.common;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;

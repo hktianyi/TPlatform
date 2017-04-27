@@ -10,6 +10,7 @@ import org.springframework.web.servlet.theme.AbstractThemeResolver;
 import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.tplatform.auth.SysUserService;
+import org.tplatform.util.SessionUtil;
 import org.tplatform.util.SpringContextUtil;
 import org.tplatform.util.StringUtil;
 
@@ -38,9 +39,9 @@ public class LoginCtrl {
    */
   @RequestMapping(value = "/login", method = RequestMethod.GET)
   public String login() {
-    if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-      return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/";
-    }
+//    if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+//      return InternalResourceViewResolver.REDIRECT_URL_PREFIX + "/";
+//    }
     return getThemeName() + "/login.jsp";
   }
 //
@@ -79,7 +80,7 @@ public class LoginCtrl {
    */
   @RequestMapping(method = RequestMethod.GET)
   public String main(ModelMap modelMap) {
-    modelMap.put("_USER", sysUserService.findByUsername(SpringContextUtil.getAuthenticatedUsername()));
+    modelMap.put("_USER", sysUserService.findByUsername(SessionUtil.getAuthenticatedUsername()));
 //    modelMap.put("body", "/sys/dashboard.jsp");
     return getThemeName() + "/main.jsp";
 //    return GlobalConstant.REDIRECT + "/doc/list";

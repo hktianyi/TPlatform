@@ -7,6 +7,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.util.IntrospectorCleanupListener;
 import org.tplatform.common.GlobalConstant;
+import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.listener.SessionListener;
 import org.tplatform.util.DateUtil;
 import org.tplatform.util.PropertyUtil;
@@ -14,6 +15,8 @@ import org.tplatform.util.SpringContextUtil;
 
 import javax.servlet.Filter;
 import javax.servlet.ServletContext;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Web主配置文件，替代web.xml
@@ -21,19 +24,28 @@ import javax.servlet.ServletContext;
  */
 public abstract class WebAppConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
+  protected Class<?>[] springRootConfigClass;
+  protected Map<String, Class> ServletConfig = new LinkedHashMap<>();
+
+  public WebAppConfig() {
+    springRootConfigClass = new Class[]{SpringRootConfig.class, SecurityConfig.class};
+    ServletConfig.put("/", SpringMvcConfig.class);
+    ServletConfig.put("/druid/*", StatViewServlet.class);
+  }
+
   @Override
   protected Class<?>[] getRootConfigClasses() {
-    return new Class[]{SpringRootConfig.class};
+    return springRootConfigClass;
   }
 
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return new Class[]{SpringMvcConfig.class, StatViewServlet.class};
+    return ServletConfig.values().toArray(new Class[ServletConfig.values().size()]);
   }
 
   @Override
   protected String[] getServletMappings() {
-    return new String[]{"/", "/druid/*"};
+    return ServletConfig.keySet().toArray(new String[ServletConfig.values().size()]);
   }
 
   @Override
@@ -91,36 +103,9 @@ class ServletAttributeInit implements Runnable {
     servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
     System.out.println("/* =========================================================\n" +
         " *\n" +
-        " * TPlatform ®\n" +
+        " * TPlatform ® Copyright © 2015 - " + DateUtil.getCurrentDate("yyyy") + " By TPlatform (http://www.tplatform.org)\n" +
         " *\n" +
-        " * =========================================================\n" +
-        " *\n" +
-        " * Copyright © 2015 - " + DateUtil.getCurrentDate("yyyy") + " By TPlatform (http://www.tplatform.org)\n" +
-        " *\n" +
-        " *\n" +
-        " *                       _oo0oo_\n" +
-        " *                      o8888888o\n" +
-        " *                      88\" . \"88\n" +
-        " *                      (| -_- |)\n" +
-        " *                      0\\  =  /0\n" +
-        " *                    ___/`---'\\___\n" +
-        " *                  .' \\|     |// '.\n" +
-        " *                 / \\|||  :  |||// \\\n" +
-        " *                / _||||| -:- |||||- \\\n" +
-        " *               |   | \\\\  -  /// |   |\n" +
-        " *               | \\_|  ''\\---/''  |_/ |\n" +
-        " *               \\  .-\\__  '-'  ___/-. /\n" +
-        " *             ___'. .'  /--.--\\  `. .'___\n" +
-        " *          .\"\" '<  `.___\\_<|>_/___.' >' \"\".\n" +
-        " *         | | :  `- \\`.;`\\ _ /`;.`/ - ` : | |\n" +
-        " *         \\  \\ `_.   \\_ __\\ /__ _/   .-` /  /\n" +
-        " *     =====`-.____`.___ \\_____/___.-`___.-'=====\n" +
-        " *                       `=---='\n" +
-        " *\n" +
-        " *     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
-        " *\n" +
-        " *                 Welcome to TPlatform!\n" +
-        " *\n" +
-        " * ========================================================= */");
+        " * ========================================================= */"
+    );
   }
 }

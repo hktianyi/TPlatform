@@ -22,9 +22,13 @@ import java.util.regex.Pattern;
 public class AuthenticationFilter implements Filter {
   protected static Pattern urlRegex;
 
+  public AuthenticationFilter(String urlRegex) {
+    this.urlRegex = Pattern.compile(urlRegex);
+  }
+
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
-    urlRegex = Pattern.compile(filterConfig.getInitParameter("urlRegex"));
+//    urlRegex = Pattern.compile(filterConfig.getInitParameter("urlRegex"));
   }
 
   @Override

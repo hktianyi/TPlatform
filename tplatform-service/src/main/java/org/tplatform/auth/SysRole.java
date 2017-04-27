@@ -38,7 +38,7 @@ public class SysRole extends BaseEntity {
   @Column(length = 16)
   private String icon;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(name = "SYS_AUTH_ROLE_RESOURCE", joinColumns = @JoinColumn(name = "role_id"),
       inverseJoinColumns = @JoinColumn(name = "resource_id"))
   private List<SysResource> resourceList;

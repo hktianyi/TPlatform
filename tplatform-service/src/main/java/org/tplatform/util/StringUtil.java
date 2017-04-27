@@ -1,12 +1,14 @@
 package org.tplatform.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * 字符串工具类
  * Created by Tianyi on 2014/11/20.
  */
-public class StringUtil {
+public class StringUtil extends StringUtils {
   //工具类禁止实例化
   private StringUtil() {
   }

@@ -1,6 +1,7 @@
 package org.tplatform.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 import org.tplatform.common.BaseEntity;
 
@@ -15,7 +16,8 @@ import javax.persistence.Table;
  * 系统配置实体
  * Created by Tianyi on 2015/1/6.
  */
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "SYS_CONFIG")
 @DynamicUpdate

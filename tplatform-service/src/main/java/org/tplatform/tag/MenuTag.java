@@ -7,6 +7,7 @@ import org.tplatform.auth.SysUser;
 import org.tplatform.auth.SysUserService;
 import org.tplatform.common.StatusEnum;
 import org.tplatform.util.Logger;
+import org.tplatform.util.SessionUtil;
 import org.tplatform.util.SpringContextUtil;
 
 import javax.servlet.jsp.JspException;
@@ -33,7 +34,7 @@ public class MenuTag extends TagSupport {
     List<SysResource> resources;
     StringBuilder roleId = new StringBuilder();
     StringBuilder html = new StringBuilder();
-    SysUser user = SpringContextUtil.getBean(SysUserService.class).findByUsername(SpringContextUtil.getAuthenticatedUsername());
+    SysUser user = SpringContextUtil.getBean(SysUserService.class).findByUsername(SessionUtil.getAuthenticatedUsername());
     if (user != null && user.getRoles() != null) {
       user.getRoles().stream().forEach(sysRole -> roleId.append(",").append(sysRole.getId()));
     }
