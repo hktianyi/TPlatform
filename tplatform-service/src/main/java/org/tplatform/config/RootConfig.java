@@ -25,5 +25,5 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = "org.tplatform",
 includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, Component.class, Repository.class})},
 excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, RestController.class, ControllerAdvice.class, RestControllerAdvice.class, EnableWebMvc.class})})
-public class SpringRootConfig {
+public class RootConfig {
 }

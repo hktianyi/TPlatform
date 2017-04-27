@@ -45,8 +45,8 @@ import java.util.Properties;
 @EnableWebMvc
 @ComponentScan(basePackages = "org.tplatform", /*useDefaultFilters = false,*/
     includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, RestController.class, ControllerAdvice.class, RestControllerAdvice.class})},
-    excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, Component.class, Repository.class, Configuration.class})})
-public abstract class SpringMvcConfig extends WebMvcConfigurerAdapter {
+    excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, /*Component.class,*/ Repository.class, Configuration.class})})
+public abstract class MvcConfig extends WebMvcConfigurerAdapter {
 
   // 视图解析器
   @Bean

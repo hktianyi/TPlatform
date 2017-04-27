@@ -7,7 +7,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.util.IntrospectorCleanupListener;
 import org.tplatform.common.GlobalConstant;
-import org.tplatform.filters.AuthenticationFilter;
 import org.tplatform.listener.SessionListener;
 import org.tplatform.util.DateUtil;
 import org.tplatform.util.PropertyUtil;
@@ -28,8 +27,8 @@ public abstract class WebAppConfig extends AbstractAnnotationConfigDispatcherSer
   protected Map<String, Class> ServletConfig = new LinkedHashMap<>();
 
   public WebAppConfig() {
-    springRootConfigClass = new Class[]{SpringRootConfig.class, SecurityConfig.class};
-    ServletConfig.put("/", SpringMvcConfig.class);
+    springRootConfigClass = new Class[]{RootConfig.class, SecurityConfig.class};
+    ServletConfig.put("/", MvcConfig.class);
     ServletConfig.put("/druid/*", StatViewServlet.class);
   }
 
@@ -103,7 +102,7 @@ class ServletAttributeInit implements Runnable {
     servletContext.setAttribute(GlobalConstant.SYSTEM_APPLICATION_NAME, PropertyUtil.getProInfo(GlobalConstant.SYSTEM_APPLICATION_NAME));
     System.out.println("/* =========================================================\n" +
         " *\n" +
-        " * TPlatform ® Copyright © 2015 - " + DateUtil.getCurrentDate("yyyy") + " By TPlatform (http://www.tplatform.org)\n" +
+        " * Copyright © 2015 - " + DateUtil.getCurrentDate("yyyy") + " By TPlatform ® (http://www.tplatform.org)\n" +
         " *\n" +
         " * ========================================================= */"
     );

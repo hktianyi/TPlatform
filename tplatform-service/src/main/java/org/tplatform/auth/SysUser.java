@@ -48,7 +48,7 @@ public class SysUser extends BaseEntity {
   /**
    * 用户角色
    */
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinTable(name = "SYS_AUTH_USER_ROLE", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<SysRole> roles;
@@ -56,7 +56,7 @@ public class SysUser extends BaseEntity {
   /**
    * 用户机构
    */
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinTable(name = "SYS_AUTH_USER_ORGAN", joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "organ_id"))
   private Set<SysOrgan> organs;
