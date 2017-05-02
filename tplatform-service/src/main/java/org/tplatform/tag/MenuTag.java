@@ -32,14 +32,14 @@ public class MenuTag extends TagSupport {
   @Override
   public int doStartTag() throws JspException {
     List<SysResource> resources;
-    StringBuilder roleId = new StringBuilder();
+    StringBuilder role = new StringBuilder();
     StringBuilder html = new StringBuilder();
-    SysUser user = SpringContextUtil.getBean(SysUserService.class).findByUsername(SessionUtil.getAuthenticatedUsername());
+    SysUser user = SpringContextUtil.getBean(SysUserService.class).findOne(SessionUtil.getAuthenticatedUsername());
     if (user != null && user.getRoles() != null) {
-      user.getRoles().stream().forEach(sysRole -> roleId.append(",").append(sysRole.getId()));
+      user.getRoles().stream().forEach(sysRole -> role.append(",").append(sysRole.getRole()));
     }
-    if (roleId.length() > 0) {
-      resources = SpringContextUtil.getBean(SysResourceService.class).findMenuTree(roleId.substring(1), StatusEnum.INIT, parentCode);
+    if (role.length() > 0) {
+      resources = SpringContextUtil.getBean(SysResourceService.class).findMenuTree(role.substring(1), StatusEnum.INIT, parentCode);
       if (resources != null && resources.size() > 0) {
         String[] htmlTemplate = template.split(",");
         String path = SpringContextUtil.getRequest().getServletPath();

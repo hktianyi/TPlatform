@@ -1,6 +1,7 @@
 package org.tplatform.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -21,30 +22,31 @@ import java.util.Map;
  * Web主配置文件，替代web.xml
  * Created by Tianyi on 2016/3/1.
  */
-public abstract class WebAppConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+@Order(3)
+public abstract class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-  protected Class<?>[] springRootConfigClass;
-  protected Map<String, Class> ServletConfig = new LinkedHashMap<>();
+  protected Class<?>[] rootConfigClasses;
+  protected Map<String, Class> servletConfig = new LinkedHashMap<>();
 
-  public WebAppConfig() {
-    springRootConfigClass = new Class[]{RootConfig.class, SecurityConfig.class};
-    ServletConfig.put("/", MvcConfig.class);
-    ServletConfig.put("/druid/*", StatViewServlet.class);
+  public WebAppInitializer() {
+    rootConfigClasses = new Class[]{RootConfig.class};
+    servletConfig.put("/", MvcServlet.class);
+    servletConfig.put("/druid/*", StatViewServlet.class);
   }
 
   @Override
   protected Class<?>[] getRootConfigClasses() {
-    return springRootConfigClass;
+    return rootConfigClasses;
   }
 
   @Override
   protected Class<?>[] getServletConfigClasses() {
-    return ServletConfig.values().toArray(new Class[ServletConfig.values().size()]);
+    return servletConfig.values().toArray(new Class[servletConfig.values().size()]);
   }
 
   @Override
   protected String[] getServletMappings() {
-    return ServletConfig.keySet().toArray(new String[ServletConfig.values().size()]);
+    return servletConfig.keySet().toArray(new String[servletConfig.values().size()]);
   }
 
   @Override

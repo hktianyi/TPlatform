@@ -1,6 +1,10 @@
 package org.tplatform.auth;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 import org.tplatform.common.BaseEntity;
 
 import javax.persistence.CascadeType;
@@ -8,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,20 +20,18 @@ import javax.persistence.Table;
 import java.util.List;
 
 /**
- * 角色表
- * Created by Tianyi on 2015/3/13.
+ * Created by Colin on 2017/4/26.
  */
-@Data
+@Setter
+@Getter
 @Entity
-@Table(name = "SYS_AUTH_ROLE")
+@Table(name = "sys_auth_role")
+@DynamicInsert
+@DynamicUpdate
 public class SysRole extends BaseEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(length = 10)
-  protected Long id;
-
-  @Column(length = 10)
-  private Long pid;
+  @GeneratedValue(generator = "assigned")
+  @GenericGenerator(name = "assigned", strategy = "assigned")
   @Column(length = 32)
   private String role;
   @Column(length = 32)
@@ -38,8 +39,9 @@ public class SysRole extends BaseEntity {
   @Column(length = 16)
   private String icon;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-  @JoinTable(name = "SYS_AUTH_ROLE_RESOURCE", joinColumns = @JoinColumn(name = "role_id"),
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+  @JoinTable(name = "sys_auth_role_resource", joinColumns = @JoinColumn(name = "role"),
       inverseJoinColumns = @JoinColumn(name = "resource_id"))
   private List<SysResource> resourceList;
 }

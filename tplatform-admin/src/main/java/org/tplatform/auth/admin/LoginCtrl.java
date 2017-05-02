@@ -1,17 +1,14 @@
 package org.tplatform.auth.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.theme.AbstractThemeResolver;
 import org.springframework.web.servlet.theme.SessionThemeResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.tplatform.auth.SysUserService;
 import org.tplatform.util.SessionUtil;
-import org.tplatform.util.SpringContextUtil;
 import org.tplatform.util.StringUtil;
 
 import javax.servlet.http.HttpSession;
@@ -80,10 +77,8 @@ public class LoginCtrl {
    */
   @RequestMapping(method = RequestMethod.GET)
   public String main(ModelMap modelMap) {
-    modelMap.put("_USER", sysUserService.findByUsername(SessionUtil.getAuthenticatedUsername()));
-//    modelMap.put("body", "/sys/dashboard.jsp");
+    modelMap.put("_USER", sysUserService.findOne(SessionUtil.getAuthenticatedUsername()));
     return getThemeName() + "/main.jsp";
-//    return GlobalConstant.REDIRECT + "/doc/list";
   }
 
   /**

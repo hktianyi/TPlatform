@@ -8,7 +8,7 @@
     <!-- 日志最大的历史 30天 -->
     <property name="maxHistory" value="30"/>
 
-    <property name="LEVEL_ROOT" value="INFO"/>
+    <property name="LEVEL" value="WARN"/>
     <property name="LEVEL_OTHER" value="WARN"/>
     <springProfile name="DEV">
         <!-- 第三方日志过滤级别，防止刷屏 -->
@@ -46,32 +46,14 @@
         </rollingPolicy>
     </appender>
 
-    <!-- 下面配置一些第三方包的日志过滤级别，避免刷屏 -->
-    <logger name="org.apache.zookeeper" level="INFO"/>
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="org.alibaba" level="INFO"/>
-    <logger name="org.quartz" level="INFO"/>
-    <logger name="com.google" level="INFO"/>
-    <logger name="net.rubyeye" level="INFO"/>
-
     <!-- show parameters for hibernate sql -->
-    <logger name="org.hibernate" level="WARN" />
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />
-    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="TRACE" />
-    <logger name="org.hibernate.SQL" level="INFO" />
-    <logger name="org.hibernate.engine.QueryParameters" level="INFO" />
-    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="INFO" />
+    <logger name="org.hibernate" level="${LEVEL}" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="${LEVEL}" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="${LEVEL}" />
+    <logger name="org.hibernate.engine.QueryParameters" level="${LEVEL}" />
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="${LEVEL}" />
 
-    <!-- show parameters for mybatis sql -->
-    <logger name="com.ibatis" level="TRACE" />
-    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="TRACE" />
-    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="TRACE" />
-    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="TRACE" />
-    <logger name="java.sql.Connection" level="TRACE" />
-    <logger name="java.sql.Statement" level="TRACE" />
-    <logger name="java.sql.PreparedStatement" level="TRACE" />
-
-    <root level="DEBUG">
+    <root level="WARN">
         <appender-ref ref="StdoutAppender"/>
     </root>
 </configuration>

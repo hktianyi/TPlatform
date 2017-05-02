@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
         .antMatchers("/static/**").permitAll()
         .antMatchers("/druid/**").access("hasRole('ADMIN') and hasRole('SYS')")
-        .antMatchers("/**").hasRole("ADMIN" )
+        .antMatchers("/**").authenticated()
         .anyRequest().authenticated()
         .and().formLogin().loginPage( "/login").permitAll()
         .and().logout().permitAll();

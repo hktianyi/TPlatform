@@ -28,7 +28,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    SysUser sysUser = sysUserService.findByUsername(username);
+    SysUser sysUser = sysUserService.findOne(username);
     if (sysUser == null) {
       throw new UsernameNotFoundException("User: " + username + " not fond");
     }

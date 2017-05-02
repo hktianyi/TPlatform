@@ -18,6 +18,7 @@ import org.tplatform.common.RespBody;
 import org.tplatform.util.StringUtil;
 
 import javax.persistence.criteria.Predicate;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,19 +35,15 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
   private SysRoleService sysRoleService;
 
   @Override
-  protected void editHook(Long id, ModelMap modelMap) {
+  public String list(ModelMap modelMap) {
     modelMap.put("roles", sysRoleService.findAll());
-    if (id != null) {
-      SysUser sysUser = sysUserService.findOne(id);
-      sysUser.setRoles(sysRoleService.findByUserId(sysUser.getId()));
-      modelMap.put("data", sysUser);
-    }
+    return super.list(modelMap);
   }
 
   @Override
-  protected void listHook(ModelMap modelMap) {
+  public String edit(Serializable id, ModelMap modelMap) {
     modelMap.put("roles", sysRoleService.findAll());
-    super.listHook(modelMap);
+    return super.edit(id, modelMap);
   }
 
   @RequestMapping("/loadByRole")
@@ -139,15 +136,4 @@ public class SysUserCtrl extends BaseCtrl<SysUser> {
     }
   }
 
-//  /**
-//   * 保存, status如果为空,则设置为无效(INVALID)
-//   * @param sysUser
-//   * @return
-//   */
-//  @RequestMapping(value = "/saveWithRole", method = RequestMethod.POST)
-//  @ResponseBody
-//  public RespBody saveWithRole(SysUser sysUser, @RequestParam("role[]") Long[] roles) {
-//    if(sysUser.getStatus() == null) sysUser.setStatus(StatusEnum.INVALID.getCode());
-//    return RespBody.ok(sysUserService.saveWithRole(sysUser, roles));
-//  }
 }

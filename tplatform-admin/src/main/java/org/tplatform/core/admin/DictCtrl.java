@@ -6,7 +6,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.tplatform.common.BaseCtrl;
 import org.tplatform.domain.Dict;
-import org.tplatform.domain.DictService;
 import org.tplatform.domain.DictTypeService;
 
 /**
@@ -17,13 +16,11 @@ import org.tplatform.domain.DictTypeService;
 public class DictCtrl extends BaseCtrl<Dict> {
 
   @Autowired
-  private DictService dictService;
-  @Autowired
   private DictTypeService dictTypeService;
 
   @Override
-  protected void listHook(ModelMap modelMap) {
+  public String list(ModelMap modelMap) {
     modelMap.put("dicTypeList", dictTypeService.findAll());
-    super.listHook(modelMap);
+    return super.list(modelMap);
   }
 }

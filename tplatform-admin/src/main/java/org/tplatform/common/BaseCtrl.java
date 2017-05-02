@@ -24,6 +24,7 @@ import org.tplatform.util.StringUtil;
 import javax.persistence.criteria.Predicate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -117,11 +118,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
   @RequestMapping("/list")
   public String list(ModelMap modelMap) {
     request.setAttribute(GlobalConstant.APP_MODULE_NAME, moduleName);
-    this.listHook(modelMap);
     return getDir() + "/" + this.moduleName + "List.jsp";
-  }
-
-  protected void listHook(ModelMap modelMap) {
   }
 
   /**
@@ -131,14 +128,10 @@ public abstract class BaseCtrl<E extends BaseEntity> {
    * @return
    */
   @RequestMapping("/edit")
-  public String edit(@RequestParam(value = "id", required = false) Long id, ModelMap modelMap) {
+  public String edit(@RequestParam(value = "id", required = false) Serializable id, ModelMap modelMap) {
     request.setAttribute(GlobalConstant.APP_MODULE_NAME, moduleName);
-    this.editHook(id, modelMap);
-    return getDir() + "/" + this.moduleName + "Edit.jsp";
-  }
-
-  protected void editHook(Long id, ModelMap modelMap) {
     if (id != null) modelMap.put("data", baseService.findOne(id));
+    return getDir() + "/" + this.moduleName + "Edit.jsp";
   }
 
   /**
@@ -169,7 +162,7 @@ public abstract class BaseCtrl<E extends BaseEntity> {
    */
   @RequestMapping("/delete/{id}")
   @ResponseBody
-  public RespBody delete(@PathVariable(value = "id") Long id) {
+  public RespBody delete(@PathVariable(value = "id") Serializable id) {
     baseService.delete(id);
     return RespBody.ok("删除成功！");
   }

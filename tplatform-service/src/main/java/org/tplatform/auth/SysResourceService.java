@@ -35,8 +35,8 @@ public interface SysResourceService extends BaseRepo<SysResource> {
   List<SysResource> findMenuTree(String roleId, StatusEnum status, Long parentCode);
 
   @Query(value = "select t1.* from sys_auth_resource t1, sys_auth_role_resource t2 " +
-      "where t1.id = t2.resource_id and t2.role_id in (:roleId) and t1.type = :type and t1.status = :status order by t1.pid, t1.sort", nativeQuery = true)
-  List<SysResource> findByRole(@Param("roleId") String roleId, @Param("type") String type, @Param("status") String status);
+      "where t1.id = t2.resource_id and t2.role in (:role) and t1.type = :type and t1.status = :status order by t1.pid, t1.sort", nativeQuery = true)
+  List<SysResource> findByRole(@Param("role") String role, @Param("type") String type, @Param("status") String status);
 
 //  /**
 //   * 查询菜单

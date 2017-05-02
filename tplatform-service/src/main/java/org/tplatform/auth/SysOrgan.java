@@ -17,7 +17,7 @@ import javax.persistence.Transient;
  */
 @Data
 @Entity
-@Table(name = "SYS_AUTH_ORGAN")
+@Table(name = "sys_auth_organ")
 public class SysOrgan extends BaseEntity {
 
   @Id

@@ -13,6 +13,7 @@ import org.tplatform.auth.SysRoleService;
 import org.tplatform.common.BaseCtrl;
 import org.tplatform.common.RespBody;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -28,19 +29,15 @@ public class SysResourceCtrl extends BaseCtrl<SysResource> {
   private SysRoleService sysRoleService;
 
   @Override
-  protected void editHook(Long id, ModelMap modelMap) {
+  public String list(ModelMap modelMap) {
     modelMap.put("roles", sysRoleService.findAll());
-    if (id != null) {
-      SysResource sysResource = sysResourceService.findOne(id);
-      sysResource.setRoles(sysRoleService.findByResourceId(sysResource.getId()));
-      modelMap.put("data", sysResource);
-    }
+    return super.list(modelMap);
   }
 
   @Override
-  protected void listHook(ModelMap modelMap) {
+  public String edit(Serializable id, ModelMap modelMap) {
     modelMap.put("roles", sysRoleService.findAll());
-    super.listHook(modelMap);
+    return super.edit(id, modelMap);
   }
 
   /**

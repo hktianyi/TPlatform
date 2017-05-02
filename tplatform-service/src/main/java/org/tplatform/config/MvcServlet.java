@@ -8,7 +8,6 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -43,10 +42,10 @@ import java.util.Properties;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "org.tplatform", /*useDefaultFilters = false,*/
+@ComponentScan(basePackages = "org.tplatform",
     includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, RestController.class, ControllerAdvice.class, RestControllerAdvice.class})},
-    excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, /*Component.class,*/ Repository.class, Configuration.class})})
-public abstract class MvcConfig extends WebMvcConfigurerAdapter {
+    excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Service.class, Repository.class, Configuration.class})})
+public class MvcServlet extends WebMvcConfigurerAdapter {
 
   // 视图解析器
   @Bean
