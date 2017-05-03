@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -103,9 +102,9 @@ public abstract class BaseCtrl<E extends BaseEntity> {
           whereList.add(cb.like(root.get(qName), q));
         }
         return cb.or(whereList.toArray(new Predicate[whereList.size()]));
-      }, new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
+      }, new PageRequest(start / length, length));
     } else {
-      page = baseService.findAll(Example.of(e), new PageRequest(start / length, length, new Sort(Sort.Direction.DESC, "id")));
+      page = baseService.findAll(Example.of(e), new PageRequest(start / length, length));
     }
     return RespBody.ok(page);
   }

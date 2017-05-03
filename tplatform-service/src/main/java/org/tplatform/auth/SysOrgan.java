@@ -1,12 +1,12 @@
 package org.tplatform.auth;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.tplatform.common.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,11 +21,9 @@ import javax.persistence.Transient;
 public class SysOrgan extends BaseEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(length = 10)
-  private Long id;
-
-  @Column(length = 16, nullable = false, unique = true)
+  @GeneratedValue(generator = "assigned")
+  @GenericGenerator(name = "assigned", strategy = "assigned")
+  @Column(length = 16)
   private String code;// 机构编码
   @Column(length = 16)
   private String pCode;// 父编码

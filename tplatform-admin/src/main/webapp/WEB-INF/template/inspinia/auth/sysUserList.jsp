@@ -16,7 +16,7 @@
               <div id="roleBtns" data-toggle="buttons-radio" class="btn-group" style="margin-left: 30px;">
                 <button class="btn btn-primary btn-xs active" type="button"><i class="fa fa-group"></i> 全部</button>
                 <c:forEach items="${roles}" var="role">
-                  <button class="btn btn-primary btn-xs" type="button" data-role-id="${role.id}"><i class="fa fa-${role.icon}"></i> ${role.name}</button>
+                  <button class="btn btn-primary btn-xs" type="button" data-role-id="${role.role}"><i class="fa fa-${role.icon}"></i> ${role.name}</button>
                 </c:forEach>
               </div>
             </div>

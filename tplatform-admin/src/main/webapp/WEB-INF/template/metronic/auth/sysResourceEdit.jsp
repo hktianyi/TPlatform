@@ -63,12 +63,12 @@
                     <div class="md-checkbox-inline">
                       <c:forEach items="${roles}" var="role">
                         <div class="md-checkbox">
-                          <input type="checkbox" id="role${role.id}" name="role[]" class="md-check" value="${role.id}"
+                          <input type="checkbox" id="role${role.role}" name="role[]" class="md-check" value="${role.role}"
                           <c:forEach items="${data.roles}" var="r">
-                                 <c:if test="${r.id eq role.id}">checked</c:if>
+                                 <c:if test="${r.id eq role.role}">checked</c:if>
                           </c:forEach>
                           >
-                          <label for="role${role.id}">
+                          <label for="role${role.role}">
                             <span></span>
                             <span class="check"></span>
                             <span class="box"></span> ${role.name} </label>

@@ -64,6 +64,6 @@ public class SysUser extends BaseEntity {
    */
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
   @JoinTable(name = "sys_auth_user_organ", joinColumns = @JoinColumn(name = "username"),
-      inverseJoinColumns = @JoinColumn(name = "role"))
+      inverseJoinColumns = @JoinColumn(name = "code"))
   private Set<SysOrgan> organs;
 }
