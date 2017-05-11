@@ -21,7 +21,7 @@ public interface DictService extends BaseRepo<Dict> {
    * 查询字典类型
    * @return
    */
-  @Query(value = "select dicType from SYS_DICT group by dicType", nativeQuery = true)
+  @Query(value = "select dicType from sys_dict group by dicType", nativeQuery = true)
   List<String> groupByDicType();
 
   /**

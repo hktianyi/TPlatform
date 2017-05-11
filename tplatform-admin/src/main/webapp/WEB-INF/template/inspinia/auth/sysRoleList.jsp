@@ -35,12 +35,13 @@
         var dataTable = $('table').dataList({
             columns: [
                 {"sTitle": "序号", "sWidth": "3%", "defaultContent": ''},
-                {"sTitle": "角色名称", "name": "name", "data": "name", "sWidth": "8%"},
+                {"sTitle": "角色", "name": "role", "data": "role", "sWidth": "8%"},
+                {"sTitle": "名称", "name": "name", "data": "name", "sWidth": "8%"},
                 {
-                    "sTitle": "操作", "name": "createTime", "data": function (d) {
+                    "sTitle": "操作", "data": function (data) {
                     return '<div class="btn-group btn-group-xs btn-group-solid">' +
-                        '<button onclick="edit(\'' + d.id + '\');" type="button" class="btn blue" title="修改"><i class="fa fa-edit"></i> 修改</button>' +
-                        '<button onclick="del(\'' + d.id + '\');" type="button" class="btn red" title="删除"><i class="fa fa-trash"></i> 删除</button>' +
+                        '<button onclick="edit(\'' + data.role + '\');" type="button" class="btn btn-primary" title="修改"><i class="fa fa-edit"></i> 修改</button>' +
+                        '<button onclick="del(\'' + data.role + '\');" type="button" class="btn btn-danger" title="删除"><i class="fa fa-trash"></i> 删除</button>' +
                         '</div>';
                 }, "sWidth": "8%"
                 }

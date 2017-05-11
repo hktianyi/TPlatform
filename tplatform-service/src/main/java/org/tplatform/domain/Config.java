@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @Entity
-@Table(name = "SYS_CONFIG")
+@Table(name = "sys_config")
 @DynamicUpdate
 public class Config extends BaseEntity {
 

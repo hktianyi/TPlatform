@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Data
 @Entity
-@Table(name = "SYS_DICT")
+@Table(name = "sys_dict")
 @DynamicUpdate
 public class Dict extends BaseEntity {
 

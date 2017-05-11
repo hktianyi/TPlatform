@@ -4,7 +4,10 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.util.IntrospectorCleanupListener;
 import org.tplatform.common.GlobalConstant;
@@ -47,6 +50,13 @@ public abstract class WebAppInitializer extends AbstractAnnotationConfigDispatch
   @Override
   protected String[] getServletMappings() {
     return servletConfig.keySet().toArray(new String[servletConfig.values().size()]);
+  }
+
+  @Override
+  protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+    final DispatcherServlet dispatcherServlet = (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
+    dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+    return dispatcherServlet;
   }
 
   @Override

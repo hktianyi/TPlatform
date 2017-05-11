@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "SYS_DICT_TYPE")
+@Table(name = "sys_dict_type")
 public class DictType extends BaseEntity {
 
   /**

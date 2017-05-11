@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Data
 @Entity
-@Table(name = "SYS_AUTH_RESOURCE")
+@Table(name = "sys_auth_resource")
 public class SysResource extends BaseEntity {
 
   @Id

@@ -4,6 +4,12 @@ dependencies {
     compile project(':tplatform-service')
 }
 
+processResources {
+    from('src/main') {
+        include 'webapp/**/*'
+    }
+}
+
 //task explodedWar(type: Sync) {
 //    into "$buildDir/libs/exploded"
 //    with war

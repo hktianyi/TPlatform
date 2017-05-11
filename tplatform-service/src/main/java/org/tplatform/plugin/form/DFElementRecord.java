@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Data
 @Entity
-@Table(name = "SYS_DF_RECORD")
+@Table(name = "sys_df_record")
 public class DFElementRecord extends BaseEntity {
 
   @Id

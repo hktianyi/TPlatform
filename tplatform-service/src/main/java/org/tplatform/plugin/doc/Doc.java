@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "T_DOC")
+@Table(name = "t_doc")
 public class Doc extends BaseEntity {
 
   public Doc(Long id, String title, String summary, String author, String keyword, String imgUrl) {

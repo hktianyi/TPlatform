@@ -3,11 +3,14 @@ package org.tplatform.common;
 import com.google.common.base.Throwables;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import org.tplatform.util.DateUtil;
 import org.tplatform.util.Logger;
 import org.tplatform.util.StringUtil;
@@ -67,10 +70,24 @@ public class GlobalExceptionHandler {
   }
 
   //404的异常就会被这个方法捕获
-  @ExceptionHandler(NoHandlerFoundException.class)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ExceptionHandler({NoHandlerFoundException.class, NoSuchRequestHandlingMethodException.class})
+  @ResponseStatus(HttpStatus.OK)
   public ModelAndView handle404Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
     return handleError(req, rsp, e, "../base/404.jsp", HttpStatus.NOT_FOUND);
+  }
+
+  //400的异常就会被这个方法捕获
+  @ExceptionHandler(BindException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ModelAndView handle400Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
+    return handleError(req, rsp, e, "../base/400.jsp", HttpStatus.NOT_FOUND);
+  }
+
+  //405的异常就会被这个方法捕获
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+  public ModelAndView handle405Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
+    return handleError(req, rsp, e, "../base/405.jsp", HttpStatus.NOT_FOUND);
   }
 
   //500的异常会被这个方法捕获

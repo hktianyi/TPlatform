@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Data
 @Entity
-@Table(name = "SYS_DF")
+@Table(name = "sys_df")
 public class DynamicForm extends BaseEntity {
 
   @Id
