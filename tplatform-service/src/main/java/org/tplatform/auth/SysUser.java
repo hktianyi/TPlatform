@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class SysUser extends BaseEntity {
   @Id
   @GeneratedValue(generator = "assigned")
   @GenericGenerator(name = "assigned", strategy = "assigned")
-  @Column(length = 16, updatable = false)
+  @Column(length = 16)
   private String username;// 登录名，唯一，不可修改
   @Column(length = 16)
   private String nickname;// 昵称
@@ -60,10 +61,9 @@ public class SysUser extends BaseEntity {
   private Set<SysRole> roles;
 
   /**
-   * 用户机构
+   * 用户所属机构
    */
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-  @JoinTable(name = "sys_auth_user_organ", joinColumns = @JoinColumn(name = "username"),
-      inverseJoinColumns = @JoinColumn(name = "code"))
-  private Set<SysOrgan> organs;
+  @ManyToOne
+  @JoinColumn(name = "organId")
+  private SysOrgan organ;
 }

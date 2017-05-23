@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,8 +37,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     for (SysRole sysRole : sysUser.getRoles()) {
       setAuths.add(new SimpleGrantedAuthority("ROLE_" + sysRole.getRole()));
     }
-    List<GrantedAuthority> authorities = new ArrayList<>(setAuths);
 
-    return new User(sysUser.getUsername(), sysUser.getPassword(), 1 == sysUser.getStatus(), true, true, true, authorities);
+    return new User(sysUser.getUsername(), sysUser.getPassword(), 1 == sysUser.getStatus(), true, true, true, setAuths);
   }
 }

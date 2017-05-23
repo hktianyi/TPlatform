@@ -38,6 +38,8 @@ public class SysRole extends BaseEntity {
   private String name;
   @Column(length = 16)
   private String icon;
+  @Column(length = 1)
+  private Integer dataAuthType;// 授权类型(1:查看下级，2:查看同级，3:查看自己，4:禁止查看数据)
 
 
   @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)

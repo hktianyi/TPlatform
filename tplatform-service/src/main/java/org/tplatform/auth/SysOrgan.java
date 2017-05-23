@@ -23,10 +23,10 @@ public class SysOrgan extends BaseEntity {
   @Id
   @GeneratedValue(generator = "assigned")
   @GenericGenerator(name = "assigned", strategy = "assigned")
-  @Column(length = 16)
-  private String code;// 机构编码
-  @Column(length = 16)
-  private String pCode;// 父编码
+  @Column(length = 10)
+  private Long code;// 机构编码
+  @Column(length = 10)
+  private Long pCode;// 父编码
   @Column(length = 8)
   private String type;// 机构类型
   @Column(length = 32)
