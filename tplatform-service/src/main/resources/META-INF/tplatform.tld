@@ -73,6 +73,10 @@
             <required>false</required>
         </attribute>
         <attribute>
+            <name>id</name>
+            <required>false</required>
+        </attribute>
+        <attribute>
             <name>className</name>
             <required>false</required>
         </attribute>
@@ -87,6 +91,10 @@
         </attribute>
         <attribute>
             <name>pid</name>
+            <required>false</required>
+        </attribute>
+        <attribute>
+            <name>pidAttr</name>
             <required>false</required>
         </attribute>
         <attribute>

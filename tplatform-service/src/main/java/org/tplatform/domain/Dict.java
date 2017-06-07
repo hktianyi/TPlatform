@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * Created by Tianyi on 2015/12/13.
@@ -42,4 +44,7 @@ public class Dict extends BaseEntity {
   private Integer sort;//排序索引
   @Column(length = 2)
   private Integer status;//状态 0 禁用，1 启用（行政区划：1省，2 市，3 县，4 直辖市，5 虚拟[市辖区、县]）
+
+  @Transient
+  private List<Dict> children;
 }

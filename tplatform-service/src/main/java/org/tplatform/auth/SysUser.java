@@ -37,6 +37,10 @@ public class SysUser extends BaseEntity {
   @GenericGenerator(name = "assigned", strategy = "assigned")
   @Column(length = 16)
   private String username;// 登录名，唯一，不可修改
+
+  @Column(length = 10)
+  private Long organId;
+
   @Column(length = 16)
   private String nickname;// 昵称
   @Column(length = 64, nullable = false)
@@ -64,6 +68,6 @@ public class SysUser extends BaseEntity {
    * 用户所属机构
    */
   @ManyToOne
-  @JoinColumn(name = "organId")
+  @JoinColumn(name = "organId", updatable = false, insertable = false)
   private SysOrgan organ;
 }

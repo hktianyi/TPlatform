@@ -1,7 +1,9 @@
 package org.tplatform.tag;
 
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.tplatform.domain.Dict;
 import org.tplatform.domain.DictService;
 import org.tplatform.util.Logger;
@@ -18,6 +20,9 @@ import java.util.List;
  */
 public class DictTag extends TagSupport {
 
+  @Autowired
+  private DictService dictService;
+
   @Setter
   private String type; // 元素类型（select|checkbox|radio）
   @Setter
@@ -33,7 +38,9 @@ public class DictTag extends TagSupport {
   @Setter
   private String defaultOpton; // 默认option
   @Setter
-  private boolean pid; // 父ID，级联选择时使用
+  private Long pid; // 父ID，级联选择时使用
+  @Setter
+  private boolean pidAttr; // 父ID，级联选择时使用
   //  @Setter
 //  private String option;
   private Object value; // 选中值
@@ -41,35 +48,38 @@ public class DictTag extends TagSupport {
   @Override
   public int doStartTag() throws JspException {
     StringBuilder html_sbd = new StringBuilder();
-    List<Dict> list = SpringContextUtil.getBean(DictService.class).findByDicType(key);
+    List<Dict> list = pid == null ? dictService.findByDicTypeAndStatusOrderBySort(key, 1) : dictService.findByDicTypeAndPidAndStatusOrderBySort(key, pid, 1);
 
     // 下拉框
     if ("select".equalsIgnoreCase(type)) {
-      html_sbd.append(String.format("<select name=\"%s\" class=\"%s\" %s>", name, className, attr));
+      html_sbd.append(String.format("<select name=\"%s\" class=\"%s\" %s>", name, className, (StringUtils.isBlank(id) ? "" : "id=\"" + id + "\" ") + attr));
       if (null != defaultOpton) {
         html_sbd.append(String.format("<option value=\"\">%s</option>", defaultOpton));
       }
       if (list != null && list.size() > 0) {
-        list.stream().forEach(o -> html_sbd.append(String.format("<option value=\"%s\"%s %s>%s</option>", o.getValue(),
-            pid ? " pid=\"" + o.getId() + "\"" : "", value != null && value.equals(o.getValue()) ? " selected" : "", o.getZhName())));
+        list.stream().forEach(dict -> {
+          String val = StringUtil.isBlank(dict.getValue()) ? dict.getId().toString() : dict.getValue();
+          html_sbd.append(String.format("<option value=\"%s\"%s %s>%s</option>", val,
+              pidAttr ? " pid=\"" + dict.getId() + "\"" : "", value != null && value.equals(val) ? " selected" : "", dict.getZhName()));
+        });
       }
       html_sbd.append("</select>");
       // 静态展示
     } else if ("view".equalsIgnoreCase(type)) {
-      list.parallelStream().filter(dict -> dict.getValue().equals(value)).forEach(dict -> html_sbd.append(",").append(dict.getZhName()));
+      list.parallelStream().filter(dict -> (StringUtil.isBlank(dict.getValue()) ? dict.getId().toString() : dict.getValue()).equals(value)).forEach(dict -> html_sbd.append(",").append(dict.getZhName()));
       if (html_sbd.length() > 0) {
         html_sbd.deleteCharAt(0);
       }
       // 列表
     } else if ("list".equalsIgnoreCase(type)) {
       if (StringUtil.isNotEmpty(className)) {
-        list.stream().forEach(dict -> html_sbd.append(String.format(className, dict.getValue(), dict.getZhName())));
+        list.stream().forEach(dict -> html_sbd.append(String.format(className, (StringUtil.isBlank(dict.getValue()) ? dict.getId().toString() : dict.getValue()), dict.getZhName())));
       }
       // JS字典
     } else if ("js".equalsIgnoreCase(type)) {
       html_sbd.append("var ").append(StringUtil.isEmpty(name) ? key : name).append(" = {");
       if (list.size() > 0) {
-        list.stream().forEach(dict -> html_sbd.append(dict.getValue()).append(":'").append(dict.getZhName()).append("',"));
+        list.stream().forEach(dict -> html_sbd.append((StringUtil.isBlank(dict.getValue()) ? dict.getId().toString() : dict.getValue())).append(":'").append(dict.getZhName()).append("',"));
         int length = html_sbd.length();
         html_sbd.replace(length-1, length,"};");
       }

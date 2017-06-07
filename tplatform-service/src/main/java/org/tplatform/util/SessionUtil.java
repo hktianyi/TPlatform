@@ -1,15 +1,13 @@
 package org.tplatform.util;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.tplatform.auth.SysRole;
 import org.tplatform.auth.SysUser;
-import org.tplatform.common.GlobalConstant;
+import org.tplatform.auth.SysUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,36 +49,48 @@ public class SessionUtil {
     return username;
   }
 
+  public static SysUser getUser() {
+    SysUser sysUser;
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof User) {
+      sysUser = SpringContextUtil.getBean(SysUserService.class).findOne(((User) principal).getUsername());
+    } else if (principal instanceof SysUser) {
+      sysUser = (SysUser) principal;
+    } else {
+      sysUser = null;
+    }
+    return sysUser;
+  }
+
   /**
-   * SpringMvc下获取操作员登录名
-   *
-   * @return
+   * 获取所属机构ID
+   * @return Long
    */
-//  public static Long getOperatorId() {
-////    SysUser sysUser = getBean(SysUserService.class).findByUsername(getAuthenticatedUsername());
-////    if (sysUser != null) {
-////      return sysUser.getId();
-////    }
-////      try {
-////        Field field = object.getClass().getDeclaredField("id");
-////        field.setAccessible(true);
-////        return Long.valueOf(String.valueOf(field.get(object)));
-////      } catch (NoSuchFieldException e) {
-////        if (object.getClass().getGenericSuperclass() != null) {
-////          try {
-////            Field field = object.getClass().getSuperclass().getDeclaredField("id");
-////            field.setAccessible(true);
-////            return Long.valueOf(String.valueOf(field.get(object)));
-////          } catch (NoSuchFieldException e1) {
-////            e1.printStackTrace();
-////          } catch (IllegalAccessException e1) {
-////            e1.printStackTrace();
-////          }
-////        }
-////        e.printStackTrace();
-////      } catch (IllegalAccessException e) {
-////        e.printStackTrace();
-////      }
-//    return null;
-//  }
+  public static Long getOrganId() {
+    Long organId;
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof User) {
+      organId = SpringContextUtil.getBean(SysUserService.class).findOne(((User) principal).getUsername()).getOrganId();
+    } else if (principal instanceof SysUser) {
+      organId = ((SysUser) principal).getOrganId();
+    } else {
+      organId = null;
+    }
+    return organId;
+  }
+
+  /**
+   * 获取角色数据类型
+   * @return Integer
+   */
+  public static Integer getDataAuthType() {
+    SysUser sysUser = getUser();
+    SysRole role = sysUser.getRoles().parallelStream().min((o1, o2) -> o1.getDataAuthType() - o1.getDataAuthType()).orElse(null);
+    if (role == null) {
+      return null;
+    } else {
+      return role.getDataAuthType();
+    }
+  }
+
 }
