@@ -20,7 +20,6 @@ public class PlatformMappingExceptionResolver extends SimpleMappingExceptionReso
   protected ModelAndView doResolveException(HttpServletRequest request,
                                             HttpServletResponse response, Object handler, Exception ex) {
 
-    System.out.println("======================>" + request);
     String viewName = determineViewName(ex, request);
     // vm方式返回
     if (viewName != null) {

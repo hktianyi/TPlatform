@@ -2,6 +2,10 @@ apply plugin: 'java'
 apply plugin: 'war'
 dependencies {
     compile project(':tplatform-service')
+    testCompile(
+            "junit:junit:4.12",
+            "org.springframework:spring-test:4.3.7.RELEASE"
+    )
 }
 
 processResources {

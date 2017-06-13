@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by Tianyi on 2016/3/1.
  */
 @Order(3)
-public abstract class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
   protected Class<?>[] rootConfigClasses;
   protected Map<String, Class> servletConfig = new LinkedHashMap<>();

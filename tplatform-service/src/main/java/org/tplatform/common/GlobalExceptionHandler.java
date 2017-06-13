@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     rsp.setCharacterEncoding("UTF-8");
     rsp.setStatus(status.value());
     PrintWriter writer = rsp.getWriter();
-    writer.write(errorMessage);
+    writer.write(errorMessage == null ? "" : errorMessage);
     writer.flush();
     return null;
   }

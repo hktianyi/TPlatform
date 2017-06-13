@@ -26,6 +26,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.theme.SessionThemeResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.tplatform.common.LogInterceptor;
 import org.tplatform.common.PlatformMappingExceptionResolver;
 import org.tplatform.util.PropertyUtil;
 import org.tplatform.util.StringUtil;
@@ -104,6 +105,7 @@ public class MvcServlet extends WebMvcConfigurerAdapter {
   // 拦截器
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(new LogInterceptor());
     super.addInterceptors(registry);
   }
 

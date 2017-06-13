@@ -3,7 +3,6 @@ package org.tplatform.tag;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.tplatform.domain.Dict;
 import org.tplatform.domain.DictService;
 import org.tplatform.util.Logger;
@@ -19,9 +18,6 @@ import java.util.List;
  * Created by tianyi on 2016/11/23.
  */
 public class DictTag extends TagSupport {
-
-  @Autowired
-  private DictService dictService;
 
   @Setter
   private String type; // 元素类型（select|checkbox|radio）
@@ -48,6 +44,7 @@ public class DictTag extends TagSupport {
   @Override
   public int doStartTag() throws JspException {
     StringBuilder html_sbd = new StringBuilder();
+    DictService dictService = SpringContextUtil.getBean(DictService.class);
     List<Dict> list = pid == null ? dictService.findByDicTypeAndStatusOrderBySort(key, 1) : dictService.findByDicTypeAndPidAndStatusOrderBySort(key, pid, 1);
 
     // 下拉框
@@ -125,12 +122,10 @@ public class DictTag extends TagSupport {
 //  }
 
   public void setValue(Object value) {
-    if (value != null) {
-      try {
-        this.value = ExpressionEvaluatorManager.evaluate("value", value.toString(), Object.class, this, pageContext);
-      } catch (JspException e) {
-        Logger.e("[自定义标签]DictTag.setValue异常", e);
-      }
+    try {
+      this.value = value != null ? ExpressionEvaluatorManager.evaluate("value", value.toString(), Object.class, this, pageContext) : null;
+    } catch (JspException e) {
+      Logger.e("[自定义标签]DictTag.setValue异常", e);
     }
   }
 }
