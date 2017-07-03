@@ -3,6 +3,7 @@ package org.tplatform.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.tplatform.common.BaseRepo;
 import org.tplatform.common.BaseRepoImpl;
 import org.tplatform.common.GlobalConstant;
@@ -43,6 +44,17 @@ public interface DictService extends BaseRepo<Dict> {
   List<Dict> findByDicTypeAndPid(String dicType, Long pid);
 
   List<Dict> findByDicTypeAndPidOrderBySort(String dicType, Long pid);
+
+  /**
+   * 获取中文名
+   * @param dicType
+   * @param v
+   * @return
+   */
+  @Query(value = "select zhName from sys_dict where dictype = :dicType and `value` = :v", nativeQuery = true)
+  String getZhNameByDicTypeAndValue(@Param("dicType") String dicType, @Param("v") String v);
+  @Query(value = "select GROUP_CONCAT(zhName) from sys_dict where dictype = :dicType and `value` in (:vs)", nativeQuery = true)
+  String getZhNameByDicTypeAndValueIn(@Param("dicType") String dicType, @Param("vs") String vs);
 
   /**
    * 根据字典类型生成字典Map

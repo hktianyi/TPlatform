@@ -121,6 +121,15 @@ public class DictTag extends TagSupport {
 //    return sbd.toString();
 //  }
 
+  public void setKey(String key) {
+    try {
+      Object result = StringUtils.isNotBlank(key) ? ExpressionEvaluatorManager.evaluate("key", key, String.class, this, pageContext) : "";
+      this.key = result.toString();
+    } catch (JspException e) {
+      Logger.e("[自定义标签]DictTag.setValue异常", e);
+    }
+  }
+
   public void setValue(Object value) {
     try {
       this.value = value != null ? ExpressionEvaluatorManager.evaluate("value", value.toString(), Object.class, this, pageContext) : null;

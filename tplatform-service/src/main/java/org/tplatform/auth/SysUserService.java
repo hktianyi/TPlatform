@@ -16,4 +16,12 @@ public interface SysUserService extends BaseRepo<SysUser> {
    * @return
    */
   List<SysUser> findByOrganIdAndStatus(Long organId, Integer status);
+
+  /**
+   * 根据机构和状态查询用户
+   * @param organIdList
+   * @param status
+   * @return
+   */
+  List<SysUser> findByOrganIdInAndStatus(List<Long> organIdList, Integer status);
 }

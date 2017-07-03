@@ -66,6 +66,10 @@ public class SFTPUtil {
     return channel;
   }
 
+  public static ChannelSftp getChannel() throws JSchException {
+    return init();
+  }
+
   /**
    * 上传文件
    * @param in 文件输入流
@@ -102,6 +106,11 @@ public class SFTPUtil {
     return absolutePath;
   }
 
+  /**
+   * 删除文件
+   * @param dst
+   * @return
+   */
   public static boolean rm(String dst) {
     Assert.hasText(dst);
     try {
